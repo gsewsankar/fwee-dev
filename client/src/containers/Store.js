@@ -1,0 +1,97 @@
+import React from 'react';
+import './Store.css';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
+
+import SignOut from '../components/SignOut';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+import { useParams } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+
+
+function Store(){
+
+    const db = firebase.firestore();
+
+    const { storeid } = useParams();
+
+    const[user, isLoading] = useAuthState(firebase.auth());
+    const [userData, dataLoading] = useDocumentData(db.collection('users').doc(storeid));
+
+    if(isLoading){
+      return(
+        <div>
+          Loading user auth...
+        </div>
+      );
+    }
+
+    if(dataLoading){
+      return(
+        <div>
+          Loading User Data...
+        </div>
+      );
+    }
+    
+    //owner
+    if(user){
+      if(user.uid === userData.uid){
+        return(
+          <div>
+          <div>
+          <button><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
+            {userData && <p>{userData.displayName + "'s Store"}</p>}
+          
+          <p>2 total visitors</p>
+          <p>0 supporters</p>
+          </div>
+          <div className="grid-container">
+            <div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div>
+            <div className="grid-item">milk</div>
+            <div className="grid-item">bread</div>
+            <div className="grid-item">tea</div>
+            <div className="grid-item">juice</div>
+            <div className="grid-item">butter</div>
+            <div className="grid-item">cheese</div>
+            <div className="grid-item">lettuce</div>
+            <div className="grid-item">carrots</div>
+          </div>
+  
+          <div>
+          <SignOut></SignOut>
+          </div>
+        </div>
+        );}}
+      
+
+      //unauthorized or not owner
+      return(
+        <div>
+          <div>
+          {userData && <p>{userData.displayName + "'s Store"}</p>}
+          <button>Support</button>
+          <p>2 total visitors</p>
+          <p>0 supporters</p>
+          </div>
+          <div className="grid-container">
+            <div className="grid-item">eggs</div>
+            <div className="grid-item">milk</div>
+            <div className="grid-item">bread</div>
+            <div className="grid-item">tea</div>
+            <div className="grid-item">juice</div>
+            <div className="grid-item">butter</div>
+            <div className="grid-item">cheese</div>
+            <div className="grid-item">lettuce</div>
+            <div className="grid-item">carrots</div>
+          </div>
+        </div>
+      );
+  }
+
+export default Store;

@@ -1,0 +1,10 @@
+.dash-container h3 button{
+    padding: 0;
+    border: none;
+    border-radius: 50px;
+    color: rgb(5, 54, 0);
+}
+
+.dash-container h3 button:hover{
+    background-color: white;
+}
