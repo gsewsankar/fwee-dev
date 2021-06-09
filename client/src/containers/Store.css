@@ -25,3 +25,7 @@
     color: rgb(5, 54, 0);
     margin: 20px;
 }
+
+.grid-item1:hover {
+    background-color: rgb(235, 235, 235);
+}

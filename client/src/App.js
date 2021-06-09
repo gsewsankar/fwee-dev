@@ -8,6 +8,7 @@ import NotFound from './containers/NotFound';
 import Leaderboards from './containers/Leaderboards';
 import DirectMessages from './containers/DirectMessages';
 import Settings from './containers/Settings';
+import NewItem from './containers/NewItem';
 
 import {
   BrowserRouter as Router,
@@ -39,6 +40,7 @@ function App(props) {
           <Route exact path={"/leaders"}><Leaderboards/></Route>
           <Route exact path={"/dms"}><DirectMessages/></Route>
           <Route exact path={"/settings"}>{user ? <Settings/> : <Redirect to="/"/>}</Route>
+          <Route exact path={"/newItem"}>{user ? <NewItem/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/store/:storeid"}><Store/></Route>
           <Route><NotFound/></Route>
         </Switch>

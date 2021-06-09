@@ -8,6 +8,7 @@ export const typeDefs = gql`
     balance: Float!
     username: String!
     createdAt: String!
+    amount_bought: Float!
   }
   type Store {
     name: String!
@@ -15,6 +16,7 @@ export const typeDefs = gql`
     items: [Item]!
     visitors: [User]!
     supporters: [User]!
+    amount_sold: Float!
   }
   type Item {
     id: ID!
@@ -24,7 +26,7 @@ export const typeDefs = gql`
     image: String!
     likes: [Like]!
     comments: [Comment]!
-    buyers: [User]!
+    buyers: [User]! 
   }
   type Comment{
     id: ID!
@@ -39,6 +41,8 @@ export const typeDefs = gql`
   }
   type Query{
     getUsers: [User]
+    getUser(uid: String!): User
+    getStore(owner: String!): [Store]
   }
   type Mutation{
     createItem: Item!

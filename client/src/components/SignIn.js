@@ -27,6 +27,7 @@ function SignIn(){
               displayName: cred.user.displayName,
               photoURL:cred.user.photoURL,
               balance:0,
+              amount_bought:0,
               username: "@" + cred.user.uid,
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             });
@@ -36,6 +37,7 @@ function SignIn(){
               owner: cred.user.uid,
               items: null,
               visitors: null,
+              amount_sold:0,
               supporters: null,
             });
           }

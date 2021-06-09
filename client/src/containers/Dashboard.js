@@ -20,12 +20,7 @@ function Dashboard(){
     let docRef = db.collection('users').doc(user.uid);
     const [docData, docloading] = useDocumentData(docRef); 
 
-    if(loading)
-    {
-      return(<div>Loading user data...</div>);
-    }
-
-    if(docloading)
+    if(loading || docloading)
     {
       return(<div>Loading user data...</div>);
     }

@@ -3,6 +3,7 @@ import './Store.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 import SignOut from '../components/SignOut';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
@@ -13,28 +14,30 @@ import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
+import {Link} from 'react-router-dom';
+
+// import {
+//   useQuery,
+//   gql
+// } from "@apollo/client";
 
 function Store(){
 
     const db = firebase.firestore();
+    //const bucket = firebase.storage();
 
     const { storeid } = useParams();
 
     const[user, isLoading] = useAuthState(firebase.auth());
     const [userData, dataLoading] = useDocumentData(db.collection('users').doc(storeid));
+    //const[URL, setURL] = useState("");
 
-    if(isLoading){
+    //bucket.ref(user.uid+"/3.png").getDownloadURL().then(url=>setURL(()=>url));
+
+    if(dataLoading || isLoading){
       return(
         <div>
-          Loading user auth...
-        </div>
-      );
-    }
-
-    if(dataLoading){
-      return(
-        <div>
-          Loading User Data...
+          LOADING...
         </div>
       );
     }
@@ -52,7 +55,7 @@ function Store(){
           <p>0 supporters</p>
           </div>
           <div className="grid-container">
-            <div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div>
+            <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
             <div className="grid-item">milk</div>
             <div className="grid-item">bread</div>
             <div className="grid-item">tea</div>

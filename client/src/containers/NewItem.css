@@ -1,0 +1,27 @@
+.form-section{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: flex-start;
+    color: rgb(5, 54, 0);
+}
+
+.form-section input{
+    padding: 13px;
+    font-size: large; 
+}
+
+.form-section select{
+    padding: 13px;
+    font-size: large;
+}
+
+.form-section button{
+    background-color: rgb(30, 114, 13);
+    border-radius: 20px;
+    color: white;
+}
+
+label{
+    float: left;
+}
