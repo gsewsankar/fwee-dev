@@ -1,31 +1,33 @@
 import React from 'react';
-import './Settings.css';
+import Loading from '../components/Loading';
 import SignOut from '../components/SignOut';
+import './Settings.css';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 function Settings(){
 
-    let available = false;
-    const[user,loading]=useAuthState(firebase.auth());
+    const[user,loading] = useAuthState(firebase.auth());
     const db = firebase.firestore();
-    const userDocRef = db.collection('users').doc(user.uid);
-    const[userData, dataloading] = useDocumentData(userDocRef); 
+    const userRef = db.collection('users').doc(user.uid);
+    const[userData, dataloading] = useDocumentData(userRef); 
 
     if(loading || dataloading){
-        return(<div>Loading...</div>);
+        return(<Loading/>);
     }
 
     let input;
+    let available = false;
     
-    //FIXME
     const checkUsername = (e) => {
       input = e.target.value;
       if(input){
-        db.collection('users').doc(input).get().then(doc=>{
+        db.collection('usernames').doc(input).get().then(doc=>{
           if(!doc.exists){
             available = true;
           }
@@ -38,7 +40,8 @@ function Settings(){
 
     const updateUsername = () => {
       if(available){
-        userDocRef.update({username: "@"+input});
+        db.collection('usernames').doc(input).set({uid:user.uid});
+        userRef.update({username: "@"+input});
         console.log("username updated");
       }
     }
@@ -47,7 +50,7 @@ function Settings(){
       <div>
           <h1>Settings</h1>
           <input className="setting" placeholder={userData.username} onChange={checkUsername}></input> 
-          <button onClick={updateUsername}>update username</button>
+          <button onClick={updateUsername}>Update Username</button>
 
          <div>
            <SignOut/>

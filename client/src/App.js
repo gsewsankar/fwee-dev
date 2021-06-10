@@ -17,15 +17,14 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import { useAuthState } from 'react-firebase-hooks/auth';
-//import { useCollectionData } from 'react-firebase-hooks/firestore';
-
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-function App(props) {
+
+function App() {
   const auth = firebase.auth();
   const [user] = useAuthState(auth);
 
@@ -38,14 +37,13 @@ function App(props) {
           <Route exact path="/"><Home/></Route>
           <Route exact path={"/dashboard"}>{user ? <Dashboard/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/leaders"}><Leaderboards/></Route>
-          <Route exact path={"/dms"}><DirectMessages/></Route>
+          <Route exact path={"/dms"}>{user ? <DirectMessages/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/settings"}>{user ? <Settings/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/newItem"}>{user ? <NewItem/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/store/:storeid"}><Store/></Route>
           <Route><NotFound/></Route>
         </Switch>
       </div>
-      
     </div>
     </Router>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
+import Loading from '../components/Loading';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -7,7 +9,6 @@ import 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
-//import {Canvas} from 'react-three-fiber';
 import { DateTime, Interval } from "luxon";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,22 +18,21 @@ function Dashboard(){
 
     const[user, loading] = useAuthState(firebase.auth());
     const db = firebase.firestore();
-    let docRef = db.collection('users').doc(user.uid);
-    const [docData, docloading] = useDocumentData(docRef); 
+    let userRef = db.collection('users').doc(user.uid);
+    const [userData, userloading] = useDocumentData(userRef); 
 
-    if(loading || docloading)
+    if(loading || userloading)
     {
-      return(<div>Loading user data...</div>);
+      return(<Loading/>);
     }
 
-    function calculateBalance(){
-        let created = docData.createdAt.toDate();
+    const calculateBalance = () => {
+        let created = userData.createdAt.toDate();
         let now = DateTime.now();
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
         score = (score*0.01).toFixed(2);
-        docRef.update({balance: score});
-        console.log("doc updated");
+        userRef.update({balance: score});
     }
 
     if(user){
@@ -40,12 +40,12 @@ function Dashboard(){
         <div className="dash-container">
           <h1>Dashboard</h1>
           
-          <h3>Account Balance: {docData && docData.balance} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
+          <h3>Account Balance: {userData && userData.balance} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
           <div>Your Coin</div>
-          <p>Established {docData && docData.createdAt.toDate().toString()} </p>
+          <p>Established {userData && userData.createdAt.toDate().toString()}</p>
           <div>Central Clock</div>
           <div>Economy Size</div>  
-          
+          <br/>
           <div>Notifications</div>
           
         </div>

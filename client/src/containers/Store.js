@@ -1,5 +1,7 @@
 import React from 'react';
 import './Store.css';
+import Loading from '../components/Loading';
+
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -35,11 +37,7 @@ function Store(){
     //bucket.ref(user.uid+"/3.png").getDownloadURL().then(url=>setURL(()=>url));
 
     if(dataLoading || isLoading){
-      return(
-        <div>
-          LOADING...
-        </div>
-      );
+      return(<Loading/>);
     }
     
     //owner
