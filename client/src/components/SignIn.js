@@ -40,6 +40,8 @@ function SignIn(){
               amount_sold:0,
               supporters: null,
             });
+
+            db.collection('usernames').doc('@' + cred.user.uid).set({uid:cred.user.uid});
           }
         })
       });
