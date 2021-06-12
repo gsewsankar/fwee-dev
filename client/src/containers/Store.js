@@ -34,7 +34,7 @@ function Store(){
     const [userData, dataLoading] = useDocumentData(db.collection('users').doc(storeid));
     //const[URL, setURL] = useState("");
 
-    //bucket.ref(user.uid+"/3.png").getDownloadURL().then(url=>setURL(()=>url));
+    //bucket.ref(user.uid+"/3.png").getDownloadURL().then(url=>setURL(url));
 
     if(dataLoading || isLoading){
       return(<Loading/>);

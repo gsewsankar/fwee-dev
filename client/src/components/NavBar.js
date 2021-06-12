@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './NavBar.css';
 import SignIn from './SignIn';
+import Loading from './Loading';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -20,7 +21,7 @@ function NavBar(){
     const toggleSideBar = () => {setSidebar(!sidebar)}
 
     if(loading){
-        return(<div>Loading...</div>);
+        return(<Loading/>);
     }
 
     return(
