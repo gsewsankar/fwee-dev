@@ -29,7 +29,7 @@
     border: none;
 }
 
-img{
+.right img{
     height: auto;
     width: auto;
     max-width: 50px;
@@ -55,26 +55,30 @@ a:hover{
 a{
     color: rgb(5, 54, 0);
     text-decoration: none;
-    
 }
 
-.menu a{
-    color: rgb(5, 54, 0);
+svg.bars{
+    padding: 5px;
 }
 
-.menu a:hover{
-    color: rgb(24, 117, 14);
-    cursor: pointer;
-    background-color: rgb(236,236,236)
-}
-
-svg:hover{
+svg.bars:hover{
+    color: green;
     cursor: pointer;
 }
 
 .menu{
     display: flex;
     align-items: center;
+}
+
+.menu a{
+    background-color: rgb(236, 236, 236);
+}
+
+.menu img:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    background-color: rgb(236, 236, 236);
 }
 
 .side-menu-on{

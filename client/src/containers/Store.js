@@ -46,8 +46,8 @@ function Store(){
         return(
           <div>
           <div>
-          <button><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
-            {userData && <p>{userData.displayName + "'s Store"}</p>}
+          <button className="edit"><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
+            {userData && <h2>{userData.displayName + "'s Store"}</h2>}
           
           <p>2 total visitors</p>
           <p>0 supporters</p>

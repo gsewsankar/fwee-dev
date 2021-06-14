@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './NavBar.css';
 import SignIn from './SignIn';
 import Loading from './Loading';
+import logo from '../fwee_logo.svg';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -38,8 +39,8 @@ function NavBar(){
                 </div>}
                 
                 <div className="menu">
-                    {user && <FontAwesomeIcon icon={faBars} size="lg" onClick={toggleSideBar}/>}
-                    <Link to="/"><p>Free World Exchange</p></Link>
+                    {user && <FontAwesomeIcon className="bars" icon={faBars} size="lg" onClick={toggleSideBar}/>}
+                    <Link to="/"><img width="160" height="90" src={logo} alt={"logo"}></img></Link>
                 </div>
                 
                 <div className='search'>

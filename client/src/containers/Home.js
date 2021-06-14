@@ -1,5 +1,7 @@
 import React from 'react';
+import './Home.css';
 import Loading from '../components/Loading';
+import logo from '../fwee_logo.svg';
 
 import { Link } from "react-router-dom";
 
@@ -26,7 +28,9 @@ function Home(){
     function renderLander(){ 
       return(
         <div>
-          <h1>Free World Exchange</h1>
+          <div>
+          <img src={logo} alt="My logo" width="640" height="360"/>
+          </div>
           <p>It's a Free World</p>
           <Link to="/leaders"><button>See Leaders</button></Link>
         </div>

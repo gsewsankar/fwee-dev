@@ -88,7 +88,7 @@ function NewItem(){
 
     return(
       <div>
-          <h1>New Item</h1>
+          <h2>New Item</h2>
           <form>
           <div className="form-section"><input type="file" onChange={uploadFile}/></div>
               <div><progress value={value} max='100'></progress> {value}%</div>
