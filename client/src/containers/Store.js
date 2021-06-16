@@ -30,25 +30,25 @@ function Store(){
     const { username } = useParams();    
 
     const[user, isLoading] = useAuthState(firebase.auth());
-    const [userData, dataLoading] = useDocumentData(db.collection('users').doc(username));
     const [storeid, setStoreid] = useState("default");
     const [storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
 
     useEffect(() => {
       async function fetchData(){
-      const ref = await db.collection("stores").where("owner", "==", username).get();
-      setStoreid(ref.docs[0].id);
+      const ref1 = (await db.collection("usernames").doc(username).get()).data().uid;
+      const ref2 = await db.collection("stores").where("owner", "==", ref1).get();
+      setStoreid(ref2.docs[0].id);
       }
-      fetchData();
-    },[db,username])
+      user && fetchData();
+    },[db,user,username])
 
-    if(isLoading || dataLoading || storeLoading){
+    if(isLoading || storeLoading){
       return(<Loading/>);
     }
     
     //owner
-    if(user){
-      if(user.uid === userData.uid){
+    if(user && storeData){
+      if(user.uid === storeData.owner){
         return(
           <div>
           <div>

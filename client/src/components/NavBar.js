@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NavBar.css';
 import SignIn from './SignIn';
 import Loading from './Loading';
@@ -6,6 +6,7 @@ import logo from '../fwee_logo.svg';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -17,9 +18,19 @@ import { Link } from "react-router-dom";
 function NavBar(){
 
     const[user, loading] = useAuthState(firebase.auth());
+    const db = firebase.firestore();
 
     const[sidebar, setSidebar] = useState(false);
     const toggleSideBar = () => {setSidebar(!sidebar)}
+    const[username, setUsername] = useState("username");
+
+    useEffect(() => {
+        async function fetchData(){
+        const ref1 = (await db.collection("users").doc(user.uid).get()).data().username;
+        setUsername(ref1);
+        }
+        user && fetchData();
+      },[db,username,user])
 
     if(loading){
         return(<Loading/>);
@@ -49,7 +60,7 @@ function NavBar(){
                 </div>
 
                 {user ? 
-                (<Link to={`/store/${user.uid}`}>
+                (<Link to={`/${username}`}>
                 <div className='right'>
                     <p>{user && user.displayName}</p>
                     {<img src={user && user.photoURL} alt={user && user.photoURL}></img>}
