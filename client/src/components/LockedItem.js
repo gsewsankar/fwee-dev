@@ -1,10 +1,10 @@
 import React from 'react';
 
-function LockedItem(){
+function LockedItem(props){
 
     return(
       <div>
-          <h1>LockedItem</h1>
+          <h1>LockedItem {props}</h1>
       </div>
     )
   }

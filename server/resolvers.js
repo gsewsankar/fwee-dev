@@ -12,7 +12,7 @@ export const resolvers = {
       },
       async getStore(_, {owner}){
           const storeRef = await admin.firestore().collection('stores').where("owner","==",owner).get();
-          return storeRef.docs.map(doc=>doc.data());
+          return storeRef.docs[0].data();
       },
     }
   };

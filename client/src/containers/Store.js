@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Store.css';
+import SignOut from '../components/SignOut';
 import Loading from '../components/Loading';
+import ItemCard from '../components/ItemCard';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-import SignOut from '../components/SignOut';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -26,17 +27,22 @@ import {Link} from 'react-router-dom';
 function Store(){
 
     const db = firebase.firestore();
-    //const bucket = firebase.storage();
-
-    const { storeid } = useParams();
+    const { username } = useParams();    
 
     const[user, isLoading] = useAuthState(firebase.auth());
-    const [userData, dataLoading] = useDocumentData(db.collection('users').doc(storeid));
-    //const[URL, setURL] = useState("");
+    const [userData, dataLoading] = useDocumentData(db.collection('users').doc(username));
+    const [storeid, setStoreid] = useState("default");
+    const [storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
 
-    //bucket.ref(user.uid+"/3.png").getDownloadURL().then(url=>setURL(url));
+    useEffect(() => {
+      async function fetchData(){
+      const ref = await db.collection("stores").where("owner", "==", username).get();
+      setStoreid(ref.docs[0].id);
+      }
+      fetchData();
+    },[db,username])
 
-    if(dataLoading || isLoading){
+    if(isLoading || dataLoading || storeLoading){
       return(<Loading/>);
     }
     
@@ -47,23 +53,14 @@ function Store(){
           <div>
           <div>
           <button className="edit"><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
-            {userData && <h2>{userData.displayName + "'s Store"}</h2>}
-          
+          <h2>{storeData && storeData.name}</h2>
           <p>2 total visitors</p>
           <p>0 supporters</p>
           </div>
           <div className="grid-container">
             <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
-            <div className="grid-item">milk</div>
-            <div className="grid-item">bread</div>
-            <div className="grid-item">tea</div>
-            <div className="grid-item">juice</div>
-            <div className="grid-item">butter</div>
-            <div className="grid-item">cheese</div>
-            <div className="grid-item">lettuce</div>
-            <div className="grid-item">carrots</div>
+            {storeData && storeData.items.map(item=>{return <ItemCard itemID={item}/>}).reverse()}
           </div>
-  
           <div>
           <SignOut></SignOut>
           </div>
@@ -75,21 +72,13 @@ function Store(){
       return(
         <div>
           <div>
-          {userData && <p>{userData.displayName + "'s Store"}</p>}
+          <h2>{storeData && storeData.name}</h2>
           <button>Support</button>
           <p>2 total visitors</p>
           <p>0 supporters</p>
           </div>
           <div className="grid-container">
-            <div className="grid-item">eggs</div>
-            <div className="grid-item">milk</div>
-            <div className="grid-item">bread</div>
-            <div className="grid-item">tea</div>
-            <div className="grid-item">juice</div>
-            <div className="grid-item">butter</div>
-            <div className="grid-item">cheese</div>
-            <div className="grid-item">lettuce</div>
-            <div className="grid-item">carrots</div>
+          {storeData && storeData.items.map(item=>{return<ItemCard itemID={item}/>}).reverse()}
           </div>
         </div>
       );

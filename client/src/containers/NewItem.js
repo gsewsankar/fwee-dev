@@ -22,9 +22,9 @@ function NewItem(){
         description: "",
         location:"",
         category:"",
-        likes: null,
-        comments: null,
-        buyers: null,
+        likes: [],
+        comments: [],
+        buyers: [],
         owner:"",
       });
 

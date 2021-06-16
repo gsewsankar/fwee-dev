@@ -13,7 +13,7 @@ export const typeDefs = gql`
   type Store {
     name: String!
     owner: String!
-    items: [Item]!
+    items: [String]!
     visitors: [User]!
     supporters: [User]!
     amount_sold: Float!
@@ -42,7 +42,7 @@ export const typeDefs = gql`
   type Query{
     getUsers: [User]
     getUser(uid: String!): User
-    getStore(owner: String!): [Store]
+    getStore(owner: String!): Store
   }
   type Mutation{
     createItem: Item!
