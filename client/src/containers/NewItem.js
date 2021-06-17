@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './NewItem.css';
+import Loading from '../components/Loading';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -31,7 +32,7 @@ function NewItem(){
     const [formData, updateFormData] = useState(initialFormData);
 
     if(isLoading){
-        return(<div>Loading...</div>);
+        return(<Loading/>);
     }
 
     const handleChange = (e) => {

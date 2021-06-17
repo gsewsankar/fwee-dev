@@ -41,6 +41,11 @@
     display: flex;
 }
 
+.right .row{
+    display: flex;
+    flex-direction: column;
+}
+
 p{
     padding-right: 5px;
     padding-left: 5px;

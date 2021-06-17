@@ -3,6 +3,7 @@ import './Store.css';
 import SignOut from '../components/SignOut';
 import Loading from '../components/Loading';
 import ItemCard from '../components/ItemCard';
+import NotFound from '../containers/NotFound';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -32,16 +33,38 @@ function Store(){
     const[user, isLoading] = useAuthState(firebase.auth());
     const [storeid, setStoreid] = useState("default");
     const [storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
+    const[notFound, setNotFound] = useState(false);
 
     useEffect(() => {
       async function fetchData(){
-      const ref1 = (await db.collection("usernames").doc(username).get()).data().uid;
-      const ref2 = await db.collection("stores").where("owner", "==", ref1).get();
-      setStoreid(ref2.docs[0].id);
+        const ref1 = (await db.collection("usernames").doc(username).get()).data().uid;
+        const ref2 = await db.collection("stores").where("owner", "==", ref1).get();
+        setStoreid(ref2.docs[0].id);
       }
-      user && fetchData();
-    },[db,user,username])
 
+      db.collection('usernames').doc(username).get().then((docSnapshot) => {
+        if(docSnapshot.exists){
+          fetchData();
+        }
+        else{
+          setNotFound(true);
+        }
+      });
+
+      if(user){
+        if(storeData && storeData.visitors.find(person=>person === user.uid) === undefined){
+          db.collection('stores').doc(storeid).update({
+            visitors:firebase.firestore.FieldValue.arrayUnion(user.uid)
+          });
+        }
+      }
+      
+    },[db,user,username,storeData,storeid])
+
+    if(notFound){
+      return(<NotFound/>);
+    }
+    
     if(isLoading || storeLoading){
       return(<Loading/>);
     }
@@ -51,11 +74,13 @@ function Store(){
       if(user.uid === storeData.owner){
         return(
           <div>
-          <div>
+          <div className="store-header">
+          <div className="quantics">
+            <img className="store-photo" src={user.photoURL} alt={"pp"}/>
+            <h2>{storeData && storeData.name}</h2>
+            </div>
+          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>0 supporters</button></div>
           <button className="edit"><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
-          <h2>{storeData && storeData.name}</h2>
-          <p>2 total visitors</p>
-          <p>0 supporters</p>
           </div>
           <div className="grid-container">
             <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
@@ -70,12 +95,13 @@ function Store(){
 
       //unauthorized or not owner
       return(
-        <div>
           <div>
-          <h2>{storeData && storeData.name}</h2>
+          <div className="store-header">
+          <div className="quantics">
+            <h2>{storeData && storeData.name}</h2>
+            </div>
+          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>0 supporters</button></div>
           <button>Support</button>
-          <p>2 total visitors</p>
-          <p>0 supporters</p>
           </div>
           <div className="grid-container">
           {storeData && storeData.items.map(item=>{return<ItemCard itemID={item}/>}).reverse()}

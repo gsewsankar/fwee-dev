@@ -35,10 +35,10 @@ function SignIn(){
             db.collection('stores').add({
               name: cred.user.displayName +"'s Store",
               owner: cred.user.uid,
-              items: null,
-              visitors: null,
+              items: [],
+              visitors: [],
               amount_sold:0,
-              supporters: null,
+              supporters: [],
             });
 
             db.collection('usernames').doc('@' + cred.user.uid).set({uid:cred.user.uid});

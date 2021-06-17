@@ -26,8 +26,8 @@ function NavBar(){
 
     useEffect(() => {
         async function fetchData(){
-        const ref1 = (await db.collection("users").doc(user.uid).get()).data().username;
-        setUsername(ref1);
+            const ref1 = (await db.collection("users").doc(user.uid).get()).data();
+            setUsername(ref1.username);
         }
         user && fetchData();
       },[db,username,user])
