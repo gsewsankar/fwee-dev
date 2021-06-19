@@ -48,7 +48,7 @@ function SignIn(){
     }
   
     return(
-      <button onClick={signInWithGoogle}> <FontAwesomeIcon icon={faSignInAlt}/> Sign In with Google</button>
+      <button className="sign" onClick={signInWithGoogle}> <FontAwesomeIcon icon={faSignInAlt}/> Sign In with Google</button>
     )
 }
 

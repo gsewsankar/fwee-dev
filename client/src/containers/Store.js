@@ -80,11 +80,12 @@ function Store(){
             <h2>{storeData && storeData.name}</h2>
             </div>
           <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>0 supporters</button></div>
+          <h3>Sales: +{storeData&&storeData.amount_sold}</h3>
           <button className="edit"><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
           </div>
           <div className="grid-container">
             <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
-            {storeData && storeData.items.map(item=>{return <ItemCard itemID={item}/>}).reverse()}
+            {storeData && storeData.items.map(item=>{return <ItemCard key={item} itemID={item}/>}).reverse()}
           </div>
           <div>
           <SignOut></SignOut>

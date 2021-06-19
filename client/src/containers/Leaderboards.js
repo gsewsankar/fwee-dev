@@ -21,12 +21,14 @@ function Leaderboards(){
       <div>
           <h1>Leaderboards</h1>
           <table>
+            <tbody>
             <tr>
               <th>Rank</th>
               <th>Name</th>
               <th>Score</th>
             </tr>
-            {data.map(person=>{return<tr><td>{count++}</td><td>{person.displayName}</td><td>{person.balance}</td> </tr>})}
+            {data.map(person=>{return<tr key={count}><td>{count++}</td><td>{person.displayName}</td><td>{person.balance}</td></tr>})}
+            </tbody>
           </table>
       </div>
     )

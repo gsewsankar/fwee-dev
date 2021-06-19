@@ -59,6 +59,7 @@ function NewItem(){
                 ...formData,
       
                 location: user.uid + '/' + file.name.trim(),
+                filename:file.name.trim(),
                 owner:user.uid,
                 createdAt:firebase.firestore.FieldValue.serverTimestamp(),
               });
