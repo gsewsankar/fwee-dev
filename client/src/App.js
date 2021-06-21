@@ -41,7 +41,7 @@ function App() {
           <Route exact path={"/dms"}>{user ? <DirectMessages/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/settings"}>{user ? <Settings/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/newItem"}>{user ? <NewItem/> : <Redirect to="/"/>}</Route>
-          <Route exact path={"/item/:itemid"}><ItemPage/></Route>
+          <Route exact path={"/item/:itemid"}>{user ? <ItemPage/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/:username"}><Store/></Route>
           <Route><NotFound/></Route>
         </Switch>

@@ -1,4 +1,4 @@
-import React,  {useEffect, useState} from 'react';
+import React from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
 
@@ -6,39 +6,25 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/storage';
 
+import { Link } from "react-router-dom";
+
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCamera, faComment, faCube, faEye, faGamepad, faHeart, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
 
 function ItemCard(props){
-    
+
     const db = firebase.firestore();
     const [itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
-    const bucket = firebase.storage();
-    const[URL, setURL] = useState("");
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let category = faEye;
     let cat_name = "";
 
-    useEffect(()=>{
-      db.collection('items')
-      .doc(props.itemID)
-      .get()
-      .then(d=>{bucket.ref().child(d.data().location)
-        .getDownloadURL()
-        .then(url=>{setURL(url);
-        });
-      });
-    },[bucket,db,props.itemID])
-
     if(itemLoading || ownerLoading){
       return(<Loading/>);
     }
-    
-    //FIXME
-    //bucket.ref().child(itemData&&itemData.location).getDownloadURL().then(url=>{setURL(url);});
 
     if(itemData.category === 'image'){
       category = faCamera;
@@ -81,14 +67,15 @@ function ItemCard(props){
     }
 
     return(
-      <div className="card">
+     <div className="card">
         <FontAwesomeIcon className={cat_name} icon={category}/>
         <div className="top-row">
           <img className="pp" src={ownerData && ownerData.photoURL} alt="broken"/>
           <p>{ownerData&&ownerData.username}</p>
         </div>
-          <h3>{itemData && itemData.title}</h3>
-          {(itemData.category === 'art' || itemData.category === 'image') &&<img width="300px" height="auto" src={URL} alt={"broken"}></img>}
+        <Link to={'/item/'+itemData.id}><h3>{itemData && itemData.title}</h3>
+          {(itemData.category === 'art' || itemData.category === 'image') &&<img width="300px" height="auto" src={itemData&&itemData.location} alt={"broken"}></img>}
+          </Link>
           <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
           <button><FontAwesomeIcon className="comment" icon={faComment}/> {itemData&&itemData.comments.length}</button>

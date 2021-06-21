@@ -14,6 +14,7 @@ function NewItem(){
     const db = firebase.firestore();
     const[user, isLoading] = useAuthState(firebase.auth());
     const[value, setValue] = useState(0);
+    const[path,setPath]=useState("");
     const[success, setSuccess] = useState(false);
     const initialFormData = Object.freeze({
         id: "",
@@ -54,11 +55,11 @@ function NewItem(){
         },
         function error(err){
         },
-        function complete(){
+        async function complete(){
             updateFormData({
                 ...formData,
       
-                location: user.uid + '/' + file.name.trim(),
+                location: await storageRef.getDownloadURL(),
                 filename:file.name.trim(),
                 owner:user.uid,
                 createdAt:firebase.firestore.FieldValue.serverTimestamp(),
@@ -85,6 +86,7 @@ function NewItem(){
           items:firebase.firestore.FieldValue.arrayUnion(itemID)
         });
 
+        setPath(itemID);
         setSuccess(true);
     }
 
@@ -112,7 +114,7 @@ function NewItem(){
                 </select>
                 </div>
                 <div className="form-section"><button onClick={handleSubmit}>Post</button></div>
-                {success && <div> Posted Successfully! <Link to={`/item/${itemID}`}><button>VIEW NEW ITEM</button></Link></div>}
+                {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
           </form>
       </div>
     )

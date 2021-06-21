@@ -21,12 +21,6 @@ import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import {Link} from 'react-router-dom';
 
-
-// import {
-//   useQuery,
-//   gql
-// } from "@apollo/client";
-
 function Store(){
 
     const db = firebase.firestore();
@@ -107,7 +101,7 @@ function Store(){
           <button>Support</button>
           </div>
           <div className="grid-container">
-          {storeData && storeData.items.map(item=>{return<LockedItem itemID={item}/>}).reverse()}
+          {storeData && storeData.items.map(item=>{return<LockedItem key={item} itemID={item}/>}).reverse()}
           </div>
         </div>
       );

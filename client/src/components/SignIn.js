@@ -30,6 +30,8 @@ function SignIn(){
               amount_bought:0,
               username: "@" + cred.user.uid,
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              purchases:[],
+              supporting:[]
             });
 
             db.collection('stores').add({
