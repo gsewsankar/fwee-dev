@@ -1,11 +1,11 @@
 import React from 'react';
 import './Loading.css';
 
-function Leaderboards(){
+function Loading(){
 
     return(
       <div className="loader"></div>
     )
   }
 
-export default Leaderboards;
+export default Loading;

@@ -1,0 +1,118 @@
+.card{
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    padding: 10px 0;
+    font-size: 30px;
+    text-align: center;
+    color: rgb(5, 54, 0);
+    margin: 20px;
+}
+
+.card button{
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 300ms;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border: 1px solid rgb(142, 197, 211,0.8);
+}
+
+p{
+    font-size: medium;
+}
+
+img.pp{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.card .top-row{
+    padding-left: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: center;
+}
+
+h3{
+    margin: 0;
+}
+
+.card .image{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(85, 85, 85);
+    float: right;
+}
+
+.card .video{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(89, 0, 255);
+    float: right;
+}
+
+.card .music{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(226, 31, 151);
+    float: right;
+}
+
+.card .art{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(255, 170, 95);
+    float: right;
+}
+
+.card .story{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(21, 23, 141);
+    float: right;
+}
+
+.card .model{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(197, 38, 38);
+    float: right;
+}
+
+.card .game{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(46, 187, 116);
+    float: right;
+}
+
+.card .link{
+    border: 1px solid rgba(5, 54, 0, 0.8);
+    border-right: 0;
+    padding: 10px;
+    color: rgb(119, 95, 255);
+    float: right;
+}
+
+.card .heart{
+    color: rgb(255, 123, 200);
+}
+
+.card .comment{
+    color: rgb(119, 178, 255);
+}

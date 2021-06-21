@@ -112,7 +112,7 @@ function NewItem(){
                 </select>
                 </div>
                 <div className="form-section"><button onClick={handleSubmit}>Post</button></div>
-                {success && <div> Posted Successfully! <Link to={`/store/${user.uid}`}><button>VIEW NEW ITEM</button></Link></div>}
+                {success && <div> Posted Successfully! <Link to={`/item/${itemID}`}><button>VIEW NEW ITEM</button></Link></div>}
           </form>
       </div>
     )

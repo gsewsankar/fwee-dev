@@ -1,4 +1,4 @@
-import React,  {useState} from 'react';
+import React,  {useEffect, useState} from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
 
@@ -22,12 +22,23 @@ function ItemCard(props){
     let category = faEye;
     let cat_name = "";
 
+    useEffect(()=>{
+      db.collection('items')
+      .doc(props.itemID)
+      .get()
+      .then(d=>{bucket.ref().child(d.data().location)
+        .getDownloadURL()
+        .then(url=>{setURL(url);
+        });
+      });
+    },[bucket,db,props.itemID])
+
     if(itemLoading || ownerLoading){
       return(<Loading/>);
     }
     
     //FIXME
-    bucket.ref().child(itemData&&itemData.location).getDownloadURL().then(url=>{setURL(url);});
+    //bucket.ref().child(itemData&&itemData.location).getDownloadURL().then(url=>{setURL(url);});
 
     if(itemData.category === 'image'){
       category = faCamera;

@@ -4,6 +4,7 @@ import SignOut from '../components/SignOut';
 import Loading from '../components/Loading';
 import ItemCard from '../components/ItemCard';
 import NotFound from '../containers/NotFound';
+import LockedItem from '../components/LockedItem';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -19,6 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import {Link} from 'react-router-dom';
+
 
 // import {
 //   useQuery,
@@ -105,7 +107,7 @@ function Store(){
           <button>Support</button>
           </div>
           <div className="grid-container">
-          {storeData && storeData.items.map(item=>{return<ItemCard itemID={item}/>}).reverse()}
+          {storeData && storeData.items.map(item=>{return<LockedItem itemID={item}/>}).reverse()}
           </div>
         </div>
       );
