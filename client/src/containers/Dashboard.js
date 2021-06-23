@@ -1,6 +1,7 @@
 import React from 'react';
 import './Dashboard.css';
 import Loading from '../components/Loading';
+// import '../components/Coin';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -19,7 +20,7 @@ function Dashboard(){
     const[user, loading] = useAuthState(firebase.auth());
     const db = firebase.firestore();
     let userRef = db.collection('users').doc(user.uid);
-    const [userData, userloading] = useDocumentData(userRef); 
+    const [userData, userloading] = useDocumentData(userRef);
 
     if(loading || userloading)
     {
@@ -39,16 +40,16 @@ function Dashboard(){
       return(
         <div className="dash-container">
           <h1>Dashboard</h1>
-          
           <h3>Account Balance: {userData && userData.balance} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
           <div>Your Coin</div>
+          <canvas id="bg" width='500px' height='500px'></canvas>
           <p>Established {userData && userData.createdAt.toDate().toString()}</p>
           <div>Central Clock</div>
           <div>Economy Size</div>  
           <br/>
           <div>Notifications</div>
-          
         </div>
+        
       )
     }
   }
