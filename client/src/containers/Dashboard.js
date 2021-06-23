@@ -1,7 +1,6 @@
 import React from 'react';
 import './Dashboard.css';
 import Loading from '../components/Loading';
-// import '../components/Coin';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';

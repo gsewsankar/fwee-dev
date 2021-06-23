@@ -1,29 +1,51 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
+import LockedItem from './LockedItem';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 import 'firebase/storage';
 
 import { Link } from "react-router-dom";
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCamera, faComment, faCube, faEye, faGamepad, faHeart, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
 
 function ItemCard(props){
 
+    //console.log("item card loaded");
+
     const db = firebase.firestore();
+    const[user, authLoading] = useAuthState(firebase.auth());
+    const[locked, setLocked] = useState(true);
     const [itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let category = faEye;
     let cat_name = "";
 
-    if(itemLoading || ownerLoading){
+    if(authLoading || itemLoading || ownerLoading){
       return(<Loading/>);
+    }
+
+    //check if item exists in purchases
+    const query = db.collection('users').doc(user.uid);
+
+    query.get().then((docSnapshot) => {
+      docSnapshot.data().purchases.forEach((id)=>{
+        if(id === props.itemID){
+          setLocked(false);
+        }
+      });
+    });
+
+    if(!user || locked){
+      return(<LockedItem itemID={props.itemID}/>);
     }
 
     if(itemData.category === 'image'){

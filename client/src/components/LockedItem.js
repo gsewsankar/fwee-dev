@@ -1,6 +1,7 @@
 import React from 'react';
 import './LockedItem.css';
-import Loading from '../components/Loading';
+import Loading from './Loading';
+import BuyButton from './BuyButton';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -8,7 +9,7 @@ import 'firebase/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faCamera, faCube, faGamepad, faLink, faMusic, faPalette, faVideo, faUnlockAlt, faTags } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faCamera, faCube, faGamepad, faLink, faMusic, faPalette, faVideo, faTags } from '@fortawesome/free-solid-svg-icons';
 
 
 function LockedItem(props){
@@ -74,7 +75,7 @@ function LockedItem(props){
           <h3>{itemData && itemData.title}</h3>
           <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <button><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
+          <BuyButton itemID={props.itemID}/>
       </div>
     )
   }
