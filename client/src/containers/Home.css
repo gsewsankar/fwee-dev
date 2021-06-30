@@ -1,4 +1,4 @@
-.logo{
+/* .logo{
     animation: world 2s linear infinite;
 }
 
@@ -6,4 +6,8 @@
     0% { transform: translate(0px,0px) }
     25% { transform: translate(1000px) } 
     100% { transform: translate(0px,0px) }
+} */
+
+.section{
+    padding: 50px;
 }
