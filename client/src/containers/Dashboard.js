@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect}  from 'react';
 import './Dashboard.css';
 import Loading from '../components/Loading';
 
@@ -20,8 +20,18 @@ function Dashboard(){
     const db = firebase.firestore();
     let userRef = db.collection('users').doc(user.uid);
     const [userData, userloading] = useDocumentData(userRef);
+    const[storeid, setStoreid] = useState("default");
+    const[storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
 
-    if(loading || userloading)
+    useEffect(() => {
+        async function fetchData(){
+          const ref2 = await db.collection("stores").where("owner", "==", user.uid).get();
+          setStoreid(ref2.docs[0].id);
+        }
+        fetchData();
+    },[db, user.uid]);
+
+    if(loading || userloading || storeLoading)
     {
       return(<Loading/>);
     }
@@ -31,8 +41,8 @@ function Dashboard(){
         let now = DateTime.now();
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
-        score = (score*0.01).toFixed(2);
-        userRef.update({balance: score});
+        score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(userData.amount_bought))).toFixed(2);
+        userRef.update({balance: parseFloat(score)});
     }
 
     if(user){

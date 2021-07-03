@@ -5,8 +5,10 @@ import BuyButton from './BuyButton';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCamera, faCube, faGamepad, faLink, faMusic, faPalette, faVideo, faTags } from '@fortawesome/free-solid-svg-icons';
@@ -15,13 +17,14 @@ import { faBook, faCamera, faCube, faGamepad, faLink, faMusic, faPalette, faVide
 function LockedItem(props){
 
   const db = firebase.firestore();
+  const[user, authLoading] = useAuthState(firebase.auth());
   const [itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
   const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   let category;
   let cat_name = "";
 
-  if(itemLoading || ownerLoading){
+  if(itemLoading || ownerLoading || authLoading){
     return(<Loading/>);
   }
 
@@ -75,7 +78,7 @@ function LockedItem(props){
           <h3>{itemData && itemData.title}</h3>
           <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <BuyButton itemID={props.itemID}/>
+          {user ? <BuyButton itemID={props.itemID}/> : <button>Sign in to Buy</button>}
       </div>
     )
   }

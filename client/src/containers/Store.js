@@ -4,7 +4,6 @@ import SignOut from '../components/SignOut';
 import Loading from '../components/Loading';
 import ItemCard from '../components/ItemCard';
 import NotFound from '../containers/NotFound';
-import LockedItem from '../components/LockedItem';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -30,6 +29,7 @@ function Store(){
     const [storeid, setStoreid] = useState("default");
     const [storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
     const[notFound, setNotFound] = useState(false);
+    const[supporting, setSupporting] = useState(false);
 
     useEffect(() => {
       async function fetchData(){
@@ -53,9 +53,31 @@ function Store(){
             visitors:firebase.firestore.FieldValue.arrayUnion(user.uid)
           });
         }
+
+        if(storeData && storeData.supporters.find(person=>person === user.uid) !== undefined){
+          setSupporting(true);
+        }
       }
       
     },[db,user,username,storeData,storeid])
+
+
+    function supportButton(){
+      if(user){
+        if(storeData && storeData.supporters.find(person=>person === user.uid) === undefined){
+          db.collection('stores').doc(storeid).update({
+            supporters:firebase.firestore.FieldValue.arrayUnion(user.uid)
+          });
+          setSupporting(true);
+        }
+        else{
+          db.collection('stores').doc(storeid).update({
+            supporters:firebase.firestore.FieldValue.arrayRemove(user.uid)
+          });
+          setSupporting(false);
+        }
+      }
+    }
 
     if(notFound){
       return(<NotFound/>);
@@ -97,11 +119,11 @@ function Store(){
           <div className="quantics">
             <h2>{storeData && storeData.name}</h2>
             </div>
-          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>0 supporters</button></div>
-          <button>Support</button>
+          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
+          <button onClick={supportButton}>{supporting ? 'Supporting' : 'Support'}</button>
           </div>
           <div className="grid-container">
-          {storeData && storeData.items.map(item=>{return<LockedItem key={item} itemID={item}/>}).reverse()}
+          {storeData && storeData.items.map(item=>{return<ItemCard key={item} itemID={item}/>}).reverse()}
           </div>
         </div>
       );
