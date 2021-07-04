@@ -29,6 +29,10 @@ function ItemCard(props){
     let category = faEye;
     let cat_name = "";
 
+    if(!user){
+      return(<LockedItem itemID={props.itemID}/>);
+    }
+
     //check if item exists in purchases
     const query = db.collection('users').doc(user.uid);
 
@@ -40,7 +44,7 @@ function ItemCard(props){
       });
     });
 
-    if(!user || locked){
+    if(locked){
       return(<LockedItem itemID={props.itemID}/>);
     }
 

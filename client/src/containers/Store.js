@@ -68,11 +68,18 @@ function Store(){
           db.collection('stores').doc(storeid).update({
             supporters:firebase.firestore.FieldValue.arrayUnion(user.uid)
           });
+
+          db.collection('users').doc(user.uid).update({
+            supporting: firebase.firestore.FieldValue.arrayUnion(storeData.owner)
+          });
           setSupporting(true);
         }
         else{
           db.collection('stores').doc(storeid).update({
             supporters:firebase.firestore.FieldValue.arrayRemove(user.uid)
+          });
+          db.collection('users').doc(user.uid).update({
+            supporting: firebase.firestore.FieldValue.arrayRemove(storeData.owner)
           });
           setSupporting(false);
         }

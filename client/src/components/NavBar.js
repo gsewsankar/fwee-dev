@@ -23,14 +23,17 @@ function NavBar(){
     const[sidebar, setSidebar] = useState(false);
     const toggleSideBar = () => {setSidebar(!sidebar)}
     const[username, setUsername] = useState("username");
+    const[supporting, setSupporting] = useState([]);
 
     useEffect(() => {
         async function fetchData(){
             const ref1 = (await db.collection("users").doc(user.uid).get()).data();
             setUsername(ref1.username);
+            setSupporting(ref1.supporting);
         }
         user && fetchData();
       },[db,username,user])
+
 
     if(loading){
         return(<Loading/>);
@@ -46,6 +49,7 @@ function NavBar(){
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
                     <p>Stores You Support</p>
+                    {supporting.map(userID=>{return<Link id={userID} onClick={toggleSideBar}>name</Link>})}
                     <p>Recently Bought Items</p>
                 </div>}
                 
