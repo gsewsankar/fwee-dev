@@ -16,6 +16,7 @@ import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog } from
 import { Link } from "react-router-dom";
 
 function NavBar(){
+    console.log("navbar reset");
 
     const[user, loading] = useAuthState(firebase.auth());
     const db = firebase.firestore();
@@ -24,17 +25,32 @@ function NavBar(){
     const toggleSideBar = () => {setSidebar(!sidebar)}
     const[username, setUsername] = useState("username");
     const[supporting, setSupporting] = useState([]);
+    const[recentlyBought, setRecentlyBought] = useState([]);
 
     useEffect(() => {
         async function fetchData(){
             const ref1 = (await db.collection("users").doc(user.uid).get()).data();
             setUsername(ref1.username);
-            setSupporting(ref1.supporting);
+            let names = [];
+            for(let i = 0; i < ref1.supporting.length; i++){
+                const person = (await db.collection('users').doc(ref1.supporting[i]).get()).data().username;
+                names.push(person);
+            }
+            setSupporting(names);
+            let items = [];
+            for(let j = ref1.purchases.length - 1; j > 0; j--){
+                const id = ref1.purchases[j];
+                const title = (await db.collection('items').doc(ref1.purchases[j]).get()).data().title;
+                items.push({id,title});
+            }
+            setRecentlyBought(items);
         }
+        
         user && fetchData();
+
       },[db,username,user])
 
-
+    
     if(loading){
         return(<Loading/>);
     }
@@ -49,8 +65,9 @@ function NavBar(){
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
                     <p>Stores You Support</p>
-                    {supporting.map(userID=>{return<Link id={userID} onClick={toggleSideBar}>name</Link>})}
-                    <p>Recently Bought Items</p>
+                    {supporting.map(name=>{return<Link to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
+                    <p><u>Recently Bought Items</u></p>
+                    {recentlyBought.map((item)=>{return<Link to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
                 </div>}
                 
                 <div className="menu">

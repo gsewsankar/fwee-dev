@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css';
-//import ItemCard from '../components/ItemCard';
+import ItemCard from '../components/ItemCard';
 import Loading from '../components/Loading';
 import logo from '../fwee_logo.svg';
 
@@ -8,11 +8,25 @@ import { Link } from "react-router-dom";
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Home(){
 
     const[user, isLoading] = useAuthState(firebase.auth());
+    const[feed,setFeed] = useState([])
+    const db = firebase.firestore();
+
+    useEffect(()=>{
+      async function fetchData(){
+        let q1 = (await db.collection('users').doc(user.uid).get()).data().purchases;
+        let q2 = (await db.collection('items').where('id','not-in',q1).limit(10).get()).docs;
+        setFeed(q2);
+      }
+
+      user && fetchData();
+
+    },[db,user]);
 
     if(isLoading){
       return(<Loading/>)
@@ -22,6 +36,7 @@ function Home(){
       return(
         <div>
           <h1>Feed</h1>
+          {feed.map(item=>{return <ItemCard itemID={item.id}/>})}
         </div>
       )
     }
@@ -70,8 +85,8 @@ function Home(){
           </div>
 
           <div className="section">
-              <h3>Stop Losing Time Credits</h3>
-              <p>start using, join now</p>
+              <h3>Stop Wasting Time</h3>
+              <p>start using it, join now</p>
           </div>
 
           <div className="section">

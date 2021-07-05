@@ -5,12 +5,13 @@ import Loading from '../components/Loading';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 function Leaderboards(){
+  console.log("loaded leaderboard")
 
   const db = firebase.firestore();
-  const[data,dataLoading] = useCollectionData(db.collection('users').orderBy('balance','desc').limit(10));
+  const[data,dataLoading] = useCollectionDataOnce(db.collection('users').orderBy('balance','desc').limit(10));
   let count = 1;
 
   if(dataLoading){

@@ -104,7 +104,7 @@ function Store(){
             <img className="store-photo" src={user.photoURL} alt={"pp"}/>
             <h2>{storeData && storeData.name}</h2>
             </div>
-          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>0 supporters</button></div>
+          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
           <h3>+{storeData&&storeData.amount_sold} sales</h3>
           <button className="edit"><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
           </div>
@@ -125,7 +125,8 @@ function Store(){
           <div className="store-header">
           <div className="quantics">
             <h2>{storeData && storeData.name}</h2>
-            </div>
+          </div>
+          <h3>+{storeData&&storeData.amount_sold} sales</h3>
           <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
           <button onClick={supportButton}>{supporting ? 'Supporting' : 'Support'}</button>
           </div>
