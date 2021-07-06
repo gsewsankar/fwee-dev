@@ -36,7 +36,7 @@ function Home(){
       return(
         <div>
           <h1>Feed</h1>
-          {feed.map(item=>{return <ItemCard itemID={item.id}/>})}
+          {feed.map(item=>{return <ItemCard key={item.id} itemID={item.id}/>})}
         </div>
       )
     }

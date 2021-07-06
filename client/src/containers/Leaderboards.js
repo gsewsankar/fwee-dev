@@ -8,7 +8,6 @@ import 'firebase/firestore';
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 function Leaderboards(){
-  console.log("loaded leaderboard")
 
   const db = firebase.firestore();
   const[data,dataLoading] = useCollectionDataOnce(db.collection('users').orderBy('balance','desc').limit(10));

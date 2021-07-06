@@ -13,6 +13,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCamera, faCube, faGamepad, faLink, faMusic, faPalette, faVideo, faTags } from '@fortawesome/free-solid-svg-icons';
 
+import { Link } from "react-router-dom";
+
 
 function LockedItem(props){
 
@@ -71,10 +73,12 @@ function LockedItem(props){
     return(
       <div className="card">
           <FontAwesomeIcon className={cat_name} icon={category}/>
+          <Link to={'/'+ownerData.username}>
           <div className="top-row">
           <img className="pp" src={ownerData && ownerData.photoURL} alt="broken"/>
           <p>{ownerData&&ownerData.username}</p>
           </div>
+          </Link>
           <h3>{itemData && itemData.title}</h3>
           <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>

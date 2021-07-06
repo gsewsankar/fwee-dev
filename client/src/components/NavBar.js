@@ -16,7 +16,6 @@ import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog } from
 import { Link } from "react-router-dom";
 
 function NavBar(){
-    console.log("navbar reset");
 
     const[user, loading] = useAuthState(firebase.auth());
     const db = firebase.firestore();
@@ -65,9 +64,9 @@ function NavBar(){
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
                     <p>Stores You Support</p>
-                    {supporting.map(name=>{return<Link to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
+                    {supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
                     <p><u>Recently Bought Items</u></p>
-                    {recentlyBought.map((item)=>{return<Link to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
+                    {recentlyBought.map((item)=>{return<Link key={item.id} to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
                 </div>}
                 
                 <div className="menu">
