@@ -71,7 +71,7 @@ function Home(){
 
           <div className="section">
               <h3>Set Your Prices</h3>
-              <p>money is a means of exchange</p>
+              <p>money is a means of exchange, money is not real</p>
           </div>
 
           <div className="section">
