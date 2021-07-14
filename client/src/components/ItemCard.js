@@ -19,8 +19,6 @@ import { faHeart as openHeart } from '@fortawesome/free-regular-svg-icons';
 
 function ItemCard(props){
 
-    //console.log("item card loaded");
-
     const db = firebase.firestore();
     const[user, authLoading] = useAuthState(firebase.auth());
     const[locked, setLocked] = useState(true);
@@ -39,15 +37,19 @@ function ItemCard(props){
           }
         });
       }
-
       user && fetchData();
     },[db, props.itemID, user]);
 
     async function likeButton(){
       if(liked){
         //delete like
-        const q1 = (await db.collection('likes').where('uid','==',user.uid).get()).docs;
-        let idToDelete = q1[0].id;
+        let idToDelete;
+        const q1 = (await db.collection('likes').where('itemid', '==', props.itemID).get()).docs
+        q1.forEach(doc=>{
+          if(doc.data().uid === user.uid){
+            idToDelete = doc.id;
+          }
+        });
         db.collection('likes').doc(idToDelete).delete();
         db.collection('items').doc(props.itemID).update({
           likes: firebase.firestore.FieldValue.arrayRemove(idToDelete)
