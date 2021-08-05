@@ -12,7 +12,7 @@ import {
 
 let config = {
   apiKey: "AIzaSyAV52VYVKVpqnbASyHgFvJnKPHd-8jfihs",
-  authDomain: "time-73ed0.firebaseapp.com",
+  authDomain: "fwee.io",
   projectId: "time-73ed0",
   storageBucket: "time-73ed0.appspot.com",
   messagingSenderId: "197843951748",
