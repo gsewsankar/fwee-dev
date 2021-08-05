@@ -46,7 +46,7 @@ function Home(){
         <div>
           <div>
           <img src={logo} alt="My logo" width="640" height="360"/>
-          <p>It's a Free World</p>
+          <p>It's a Free World (BETA)</p>
           <Link to="/leaders"><button>See Leaders</button></Link>
           <h3>You get 0.01 time credits every minute for the rest of your life.</h3>
               <p>How will you spend your time?</p>
