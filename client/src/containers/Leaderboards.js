@@ -2,6 +2,8 @@ import React from 'react';
 import './Leaderboards.css';
 import Loading from '../components/Loading';
 
+import { Link } from "react-router-dom";
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
@@ -27,7 +29,7 @@ function Leaderboards(){
               <th>Name</th>
               <th>Score</th>
             </tr>
-            {data.map(person=>{return<tr key={count}><td>{count++}</td><td>{person.displayName}</td><td>{person.balance}</td></tr>})}
+            {data.map(person=>{return<tr key={count}><td>{count++}</td><td><Link to={"/"+person.username}>{person.displayName}</Link></td><td>{person.balance}</td></tr>})}
             </tbody>
           </table>
       </div>
