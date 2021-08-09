@@ -12,7 +12,6 @@ import 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Home(){
-
     const[user, isLoading] = useAuthState(firebase.auth());
     const[feed,setFeed] = useState([])
     const db = firebase.firestore();
@@ -43,7 +42,7 @@ function Home(){
 
     function renderLander(){ 
       return(
-        <div>
+        <div className="lander">
           <div>
           <img src={logo} alt="My logo" width="640" height="360"/>
           <p>It's a Free World (BETA)</p>

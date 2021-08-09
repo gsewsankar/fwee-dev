@@ -25,11 +25,10 @@ import 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
-  const auth = firebase.auth();
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(firebase.auth());
 
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
     <div className="App">
       <NavBar ></NavBar>
       <div className="App-header">

@@ -118,3 +118,10 @@ svg.bars:hover{
     left: -100%;
     transition: 350ms;
 }
+
+/* when screen width is less than 600px (mobile)*/
+@media only screen and (max-width: 600px) {
+    .search{
+        display: none;
+    }
+}
