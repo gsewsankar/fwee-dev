@@ -3,6 +3,7 @@ import './Home.css';
 import ItemCard from '../components/ItemCard';
 import Loading from '../components/Loading';
 import logo from '../fwee_logo.svg';
+import jar from '../assets/coinjar.gif';
 
 import { Link } from "react-router-dom";
 
@@ -43,12 +44,18 @@ function Home(){
     function renderLander(){ 
       return(
         <div className="lander">
-          <div>
+          <div className="topsection">
+          <div className="left">
           <img src={logo} alt="My logo" width="640" height="360"/>
           <p>It's a Free World (BETA)</p>
           <Link to="/leaders"><button>See Leaders</button></Link>
+          </div>
+          
+          <div className="right1">
+          <img src={jar} alt="jar" height="350px" width="auto"/>
           <h3>You get 0.01 time credits every minute for the rest of your life.</h3>
               <p>How will you spend your time?</p>
+          </div>
           </div>
 
           <div className="section">
@@ -88,7 +95,7 @@ function Home(){
               <p>start using it, join now</p>
           </div>
 
-          <div className="section">
+          <div className="footer">
               <h3>Footer</h3>
               <p>all rights reserved. about. privacy policy. tos.</p>
           </div>

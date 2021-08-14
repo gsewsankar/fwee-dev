@@ -2,13 +2,39 @@
     padding: 50px;
 }
 
+.topsection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.topsection .right1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 500px;
+}
+
+.footer{
+    padding: 1rem;
+    background-color: lightgrey;
+}
+
 @media only screen and (max-width: 600px) {
     .lander{
+        display: flex;
+        flex-direction: column;
         max-width: 500px;
     }
 
+    .topsection{
+        flex-direction: column;
+    }
+
     .lander img{
-        width: 450px;
-        height: auto;
+        width: auto;
+        height: 200px;
     }
 }

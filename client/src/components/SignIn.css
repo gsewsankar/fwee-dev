@@ -10,6 +10,7 @@ button{
     background-color: white;
     color: black;
     border: 2px solid #e7e7e7;
+    border-radius: 50px;
   }
   
 button:hover {

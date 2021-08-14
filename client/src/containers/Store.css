@@ -9,6 +9,7 @@
 .grid-item1 {
     background-color: rgba(207, 207, 207, 0.8);
     border: 1px solid rgba(5, 54, 0, 0.8);
+    border-radius: 30px;
     padding: 20px;
     font-size: 30px;
     text-align: center;
@@ -26,7 +27,8 @@
     align-items: center;
     justify-content: center;
     min-height: 300px;
-    border: 1px solid rgba(5, 54, 0, 0.8);
+    border: 1px solid rgba(150, 150, 150, 0.8);
+    border-radius: 30px;
 }
 
 .store-header .quantics{
