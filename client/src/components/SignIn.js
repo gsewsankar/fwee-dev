@@ -1,13 +1,10 @@
 import React from 'react';
-import './SignIn.css';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-
-//use luxon
 
 function SignIn(){
 
@@ -50,7 +47,7 @@ function SignIn(){
     }
   
     return(
-      <button className="sign" onClick={signInWithGoogle}> <FontAwesomeIcon icon={faSignInAlt}/> Sign In with Google</button>
+      <button onClick={signInWithGoogle}> <FontAwesomeIcon icon={faSignInAlt}/> Sign In with Google</button>
     )
 }
 

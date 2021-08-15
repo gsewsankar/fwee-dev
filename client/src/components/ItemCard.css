@@ -1,6 +1,6 @@
 .card{
     background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(150, 150, 150, 0.8);
+    box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
     border-radius: 30px;
     padding: 10px 0;
     font-size: 30px;
@@ -47,72 +47,48 @@ h3{
 }
 
 .card .image{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(85, 85, 85);
     float: right;
 }
 
 .card .video{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(89, 0, 255);
     float: right;
 }
 
 .card .music{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(226, 31, 151);
     float: right;
 }
 
 .card .art{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(255, 170, 95);
     float: right;
 }
 
 .card .story{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(21, 23, 141);
     float: right;
 }
 
 .card .model{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(197, 38, 38);
     float: right;
 }
 
 .card .game{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(46, 187, 116);
     float: right;
 }
 
 .card .link{
-    border: 1px solid rgba(5, 54, 0, 0.8);
-    border-right: 0;
-    border-radius: 30px;
     padding: 10px;
     color: rgb(119, 95, 255);
     float: right;

@@ -3,7 +3,7 @@ import './Home.css';
 import ItemCard from '../components/ItemCard';
 import Loading from '../components/Loading';
 import logo from '../fwee_logo.svg';
-import jar from '../assets/coinjar.gif';
+import jar from '../assets/coins.gif';
 
 import { Link } from "react-router-dom";
 
@@ -44,20 +44,20 @@ function Home(){
     function renderLander(){ 
       return(
         <div className="lander">
-          <div className="topsection">
-          <div className="left">
-          <img src={logo} alt="My logo" width="640" height="360"/>
+          <img src={logo} alt="My logo" width="1000" height="auto"/>
           <p>It's a Free World (BETA)</p>
           <Link to="/leaders"><button>See Leaders</button></Link>
+          
+          <div className="section">
+            <div className="left">
+              <h3>You get 0.01 time credits every minute for the rest of your life.</h3>
+                  <p>How will you spend your time?</p>
+            </div>
+            <div className="section-right">
+              <img src={jar} alt="jar" height="350px" width="auto"/>
+            </div>
           </div>
           
-          <div className="right1">
-          <img src={jar} alt="jar" height="350px" width="auto"/>
-          <h3>You get 0.01 time credits every minute for the rest of your life.</h3>
-              <p>How will you spend your time?</p>
-          </div>
-          </div>
-
           <div className="section">
               <h3>Design Your Store</h3>
               <p>cool custom looking store picture</p>
@@ -77,7 +77,7 @@ function Home(){
 
           <div className="section">
               <h3>Set Your Prices</h3>
-              <p>money is a means of exchange, money is not real</p>
+              <p>the currency is a means of exchange, it is not "real"</p>
           </div>
 
           <div className="section">

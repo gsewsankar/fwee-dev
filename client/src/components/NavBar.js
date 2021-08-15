@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './NavBar.css';
 import SignIn from './SignIn';
 import Loading from './Loading';
-import logo from '../fwee_logo.svg';
+import logo from '../assets/fweetxt.png';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -71,11 +71,11 @@ function NavBar(){
                 
                 <div className="menu">
                     {user && <FontAwesomeIcon className="bars" icon={faBars} size="lg" onClick={toggleSideBar}/>}
-                    <Link to="/"><img width="160" height="90" src={logo} alt={"logo"}></img></Link>
+                    <Link to="/"><img width="80" height="45" src={logo} alt={"logo"}></img></Link>
                 </div>
                 
                 <div className='search'>
-                    <input placeholder="Search"></input>
+                    <input className="search" placeholder="Search"></input>
                     <button><FontAwesomeIcon icon={faSearch}/></button>
                 </div>
 

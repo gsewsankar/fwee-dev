@@ -1,8 +1,9 @@
 .nav-frame{
     position: sticky;
     top: 0;
-    padding: 10px;
-    background-color: rgba(236, 236, 236, 0.8);
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgba(183, 219, 163, 0.8);
     display: flex;                 
     justify-content: space-between; 
     align-items: center;
@@ -17,21 +18,29 @@
 
 .search button{
     padding: 7px;
-    
 }
 
-.search button:hover {
-    background-color: white;
-}
-
-.search input{
+.search input.search{
     padding:9px;
     border: none;
     border-radius: 50px;
+    background-color: rgb(164, 196, 147);
+    color: white;
+}
+
+.search input.search::placeholder{
+    color: white;
+}
+
+.search input.search:focus{
+    border-radius: 50px;
+    outline:none;
+    box-shadow: 0 0 2pt 1pt rgb(133, 158, 119);
+    background-color: rgb(159, 185, 145);
 }
 
 .right img{
-    height: auto;
+    height: 30px;
     width: auto;
     max-width: 50px;
     max-height: 50px;
@@ -40,11 +49,9 @@
 
 .right{
     display: flex;
-}
-
-.right .row{
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 p{
@@ -59,12 +66,16 @@ a:hover{
 }
 
 a{
-    color: rgb(5, 54, 0);
+    color: rgb(5,54,0);
     text-decoration: none;
+    transition: 300ms;
+    border-radius: 50px;
 }
 
 svg.bars{
     padding: 5px;
+    color: white;
+    transition: 300ms;
 }
 
 svg.bars:hover{
@@ -84,11 +95,12 @@ svg.bars:hover{
 
 .menu img:hover{
     transform: scale(1.05);
+    opacity: .7;
     cursor: pointer;
 }
 
 .side-menu-on{
-    background-color: rgb(236, 236, 236);
+    background-color: whitesmoke;
     width: 250px;
     height: 100vh;
     display: flex;

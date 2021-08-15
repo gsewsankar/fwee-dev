@@ -12,3 +12,23 @@
   font-size: calc(10px + 2vmin);
   color: rgb(5, 54, 0);
 }
+
+button{
+  padding: 16px 32px;
+  margin: 4px 2px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 300ms;
+  cursor: pointer;
+  background-color: white;
+  color:rgb(119, 153, 101);
+  border: 2px solid rgba(183, 219, 163);
+  border-radius: 50px;
+}
+
+button:hover{
+  background-color: rgb(119, 153, 101);
+  color: white;
+}

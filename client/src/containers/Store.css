@@ -7,18 +7,20 @@
 }
 
 .grid-item1 {
-    background-color: rgba(207, 207, 207, 0.8);
-    border: 1px solid rgba(5, 54, 0, 0.8);
+    background-color: white;
+    box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
     border-radius: 30px;
     padding: 20px;
     font-size: 30px;
     text-align: center;
-    color: rgb(5, 54, 0);
+    color:rgb(119, 153, 101);
     margin: 20px;
 }
 
 .grid-item1:hover {
-    background-color: rgb(235, 235, 235);
+    background-color:rgb(119, 153, 101);
+    color: white;
+
 }
 
 .store-header{
@@ -26,8 +28,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10px;
     min-height: 300px;
-    border: 1px solid rgba(150, 150, 150, 0.8);
+    box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
     border-radius: 30px;
 }
 

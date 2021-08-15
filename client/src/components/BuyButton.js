@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Loading from '../components/Loading';
+import './BuyButton.css';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -75,7 +76,7 @@ function BuyButton(props){
     }
 
     return(
-        <button onClick={transaction}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
+        <button className="buy" onClick={transaction}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
     )
   }
 

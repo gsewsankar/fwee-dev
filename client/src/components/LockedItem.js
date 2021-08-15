@@ -71,7 +71,7 @@ function LockedItem(props){
   }
 
     return(
-      <div className="card">
+      <div className="locked-card">
           <FontAwesomeIcon className={cat_name} icon={category}/>
           <Link to={'/'+ownerData.username}>
           <div className="top-row">
