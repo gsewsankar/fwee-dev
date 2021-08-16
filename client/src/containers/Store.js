@@ -59,7 +59,7 @@ function Store(){
         }
       }
       
-    },[db,user,username,storeData,storeid])
+    },[db,user,username,storeData,storeid]);
 
 
     function supportButton(){
@@ -128,7 +128,7 @@ function Store(){
           </div>
           <h3>+{storeData&&storeData.amount_sold} sales</h3>
           <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
-          <button onClick={supportButton}>{supporting ? 'Supporting' : 'Support'}</button>
+          {user&&<button onClick={supportButton}>{supporting ? 'Supporting' : 'Support'}</button>}
           </div>
           <div className="grid-container">
           {storeData && storeData.items.map(item=>{return<ItemCard key={item} itemID={item}/>}).reverse()}

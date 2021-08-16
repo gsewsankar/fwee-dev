@@ -22,7 +22,7 @@ function ItemCard(props){
     const db = firebase.firestore();
     const[user, authLoading] = useAuthState(firebase.auth());
     const[locked, setLocked] = useState(true);
-    const [itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
+    const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let category = faEye;

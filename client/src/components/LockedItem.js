@@ -70,21 +70,21 @@ function LockedItem(props){
     cat_name = 'link';
   }
 
-    return(
-      <div className="locked-card">
-          <FontAwesomeIcon className={cat_name} icon={category}/>
-          <Link to={'/'+ownerData.username}>
-          <div className="top-row">
-          <img className="pp" src={ownerData && ownerData.photoURL} alt="broken"/>
-          <p>{ownerData&&ownerData.username}</p>
-          </div>
-          </Link>
-          <h3>{itemData && itemData.title}</h3>
-          <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
-          <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          {user ? <BuyButton itemID={props.itemID}/> : <button>Sign in to Buy</button>}
-      </div>
-    )
-  }
+  return(
+    <div className="locked-card">
+        <FontAwesomeIcon className={cat_name} icon={category}/>
+        <Link to={'/'+ownerData.username}>
+        <div className="top-row">
+        <img className="pp" src={ownerData && ownerData.photoURL} alt="broken"/>
+        <p>{ownerData&&ownerData.username}</p>
+        </div>
+        </Link>
+        <h3>{itemData && itemData.title}</h3>
+        <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
+        <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
+        {user ? <BuyButton itemID={props.itemID}/> : <button>Sign in to Buy</button>}
+    </div>
+  )
+}
 
 export default LockedItem;

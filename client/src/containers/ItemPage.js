@@ -21,7 +21,7 @@ function ItemPage(){
   const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
 
   //const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
+  
   if(itemLoading || authLoading || ownerLoading){
     return(<Loading/>);
   }
