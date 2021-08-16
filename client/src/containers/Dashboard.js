@@ -50,13 +50,14 @@ function Dashboard(){
         <div className="dash-container">
           <h1>Dashboard</h1>
           <h3>Account Balance: {userData && userData.balance} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
-          <div>Your Coin</div>
+          <br/>
+          <div>Notifications</div>
+          <br/>
+          <div>Your Coin and Achievements</div>
           <canvas id="bg" width='500px' height='500px'></canvas>
           <p>Established {userData && userData.createdAt.toDate().toString()}</p>
           <div>Central Clock</div>
           <div>Economy Size</div>  
-          <br/>
-          <div>Notifications</div>
         </div>
         
       )

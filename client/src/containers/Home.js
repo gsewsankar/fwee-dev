@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Home.css';
 import ItemCard from '../components/ItemCard';
 import Loading from '../components/Loading';
-import logo from '../fwee_logo.svg';
+import logo from '../assets/fwee_logo.svg';
 import jar from '../assets/coins.gif';
 
 import { Link } from "react-router-dom";

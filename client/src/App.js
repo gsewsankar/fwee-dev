@@ -10,6 +10,7 @@ import DirectMessages from './containers/DirectMessages';
 import Settings from './containers/Settings';
 import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
+import CurrentBalance from './components/CurrentBalance';
 
 import {
   BrowserRouter as Router,
@@ -43,6 +44,7 @@ function App() {
           <Route exact path={"/:username"}><Store/></Route>
           <Route><NotFound/></Route>
         </Switch>
+        {user && <CurrentBalance/>}
       </div>
     </div>
     </Router>

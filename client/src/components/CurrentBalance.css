@@ -1,0 +1,14 @@
+.myBalance {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    color:rgb(119, 153, 101);
+    box-shadow: 0 0 2pt 1pt rgb(133, 158, 119);
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
