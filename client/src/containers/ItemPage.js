@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import Loading from '../components/Loading';
+import LockedItem from '../components/LockedItem';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -9,16 +10,15 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { useParams } from 'react-router-dom';
-import LockedItem from '../components/LockedItem';
 
 function ItemPage(){
 
   const { itemid } = useParams();  
   const db = firebase.firestore();
   const[user, authLoading] = useAuthState(firebase.auth());
-  const[locked, setLocked] = useState(true);
   const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(itemid));
   const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
+  const[locked, setLocked] = useState(true);
 
   //const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   
@@ -34,20 +34,15 @@ function ItemPage(){
   const query = db.collection('users').doc(user.uid);
 
   query.get().then((docSnapshot) => {
-    docSnapshot.data().purchases.forEach((id)=>{
-      if(id === itemid){
-        setLocked(false);
-      }
-    });
+        docSnapshot.data().purchases.forEach((id)=>{
+          if(id === itemid){
+            setLocked(false);
+          }
+      });
   });
 
-  //signed in but item is locked
-  if(locked){
-    return(<LockedItem itemID={itemid}/>);
-  }
-
   //signed in and item is owned
-  return(
+  return(locked ?<LockedItem itemID={itemid}/> :
     <div>
         <h1>{itemData&&itemData.title}</h1>
         <img src={itemData&&itemData.location} alt="brkn"/>

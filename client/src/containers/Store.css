@@ -1,13 +1,13 @@
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
-    background-color: #ffffff;
+    background-color: whitesmoke;
     padding: 10px;
     color: rgb(5, 54, 0);
 }
 
 .grid-item1 {
-    background-color: white;
+    background-color: whitesmoke;
     box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
     border-radius: 30px;
     padding: 20px;

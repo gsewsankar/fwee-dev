@@ -3,6 +3,7 @@ import './Store.css';
 import SignOut from '../components/SignOut';
 import Loading from '../components/Loading';
 import ItemCard from '../components/ItemCard';
+import SupportButton from '../components/SupportButton';
 import NotFound from '../containers/NotFound';
 
 import firebase from 'firebase/app';
@@ -20,6 +21,7 @@ import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import {Link} from 'react-router-dom';
 
+
 function Store(){
 
     const db = firebase.firestore();
@@ -29,7 +31,7 @@ function Store(){
     const [storeid, setStoreid] = useState("default");
     const [storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
     const[notFound, setNotFound] = useState(false);
-    const[supporting, setSupporting] = useState(false);
+    
 
     useEffect(() => {
       async function fetchData(){
@@ -53,38 +55,9 @@ function Store(){
             visitors:firebase.firestore.FieldValue.arrayUnion(user.uid)
           });
         }
-
-        if(storeData && storeData.supporters.find(person=>person === user.uid) !== undefined){
-          setSupporting(true);
-        }
       }
       
     },[db,user,username,storeData,storeid]);
-
-
-    function supportButton(){
-      if(user){
-        if(storeData && storeData.supporters.find(person=>person === user.uid) === undefined){
-          db.collection('stores').doc(storeid).update({
-            supporters:firebase.firestore.FieldValue.arrayUnion(user.uid)
-          });
-
-          db.collection('users').doc(user.uid).update({
-            supporting: firebase.firestore.FieldValue.arrayUnion(storeData.owner)
-          });
-          setSupporting(true);
-        }
-        else{
-          db.collection('stores').doc(storeid).update({
-            supporters:firebase.firestore.FieldValue.arrayRemove(user.uid)
-          });
-          db.collection('users').doc(user.uid).update({
-            supporting: firebase.firestore.FieldValue.arrayRemove(storeData.owner)
-          });
-          setSupporting(false);
-        }
-      }
-    }
 
     if(notFound){
       return(<NotFound/>);
@@ -110,31 +83,32 @@ function Store(){
           </div>
           <div className="grid-container">
             <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
-            {storeData && storeData.items.map(item=>{return <ItemCard key={item} itemID={item}/>}).reverse()}
+            {storeData && storeData.items.map(item=>{return(<ItemCard key={item} itemID={item}/>)}).reverse()}
           </div>
           <div>
           <SignOut></SignOut>
           </div>
         </div>
-        );}}
+        );
+      }
+    }
       
-
-      //unauthorized or not owner
-      return(
-          <div>
-          <div className="store-header">
-          <div className="quantics">
-            <h2>{storeData && storeData.name}</h2>
-          </div>
-          <h3>+{storeData&&storeData.amount_sold} sales</h3>
-          <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
-          {user&&<button onClick={supportButton}>{supporting ? 'Supporting' : 'Support'}</button>}
-          </div>
-          <div className="grid-container">
-          {storeData && storeData.items.map(item=>{return<ItemCard key={item} itemID={item}/>}).reverse()}
-          </div>
+    //not store owner
+    return(
+        <div>
+        <div className="store-header">
+        <div className="quantics">
+          <h2>{storeData && storeData.name}</h2>
         </div>
-      );
+        <h3>+{storeData&&storeData.amount_sold} sales</h3>
+        <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
+        {user&&<SupportButton storeid={storeid}/>}
+        </div>
+        <div className="grid-container">
+        {storeData && storeData.items.map(item=>{return<ItemCard key={item} itemID={item}/>}).reverse()}
+        </div>
+      </div>
+    );
   }
 
 export default Store;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css';
-import ItemCard from '../components/ItemCard';
 import Loading from '../components/Loading';
 import logo from '../assets/fwee_logo.svg';
 import jar from '../assets/coins.gif';
@@ -11,6 +10,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import LockedItem from '../components/LockedItem';
 
 function Home(){
     const[user, isLoading] = useAuthState(firebase.auth());
@@ -19,9 +19,8 @@ function Home(){
 
     useEffect(()=>{
       async function fetchData(){
-        let q1 = (await db.collection('users').doc(user.uid).get()).data().purchases;
-        let q2 = (await db.collection('items').where('id','not-in',q1).limit(10).get()).docs;
-        setFeed(q2);
+        let query = (await db.collection('items').orderBy('createdAt', 'desc').limit(10).get()).docs;
+        setFeed(query);
       }
 
       user && fetchData();
@@ -36,7 +35,7 @@ function Home(){
       return(
         <div>
           <h1>Feed</h1>
-          {feed.map(item=>{return <ItemCard key={item.id} itemID={item.id}/>})}
+          {feed.map(item=>{return<LockedItem key={item.id} itemID={item.id}/>})}
         </div>
       )
     }

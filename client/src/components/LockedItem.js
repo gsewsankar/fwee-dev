@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import './LockedItem.css';
 import Loading from './Loading';
 import BuyButton from './BuyButton';
@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCamera, faCube, faGamepad, faLink, faMusic, faPalette, faVideo, faTags } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
+import ItemCard from './ItemCard';
 
 
 function LockedItem(props){
@@ -25,6 +26,7 @@ function LockedItem(props){
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   let category;
   let cat_name = "";
+  const[locked, setLocked] = useState(true);
 
   if(itemLoading || ownerLoading || authLoading){
     return(<Loading/>);
@@ -70,7 +72,18 @@ function LockedItem(props){
     cat_name = 'link';
   }
 
-  return(
+  //check if item exists in purchases
+  const query = db.collection('users').doc(user.uid);
+
+  query.get().then((docSnapshot) => {
+        docSnapshot.data().purchases.forEach((id)=>{
+          if(id === props.itemID){
+            setLocked(false);
+          }
+      });
+  });
+
+  return(locked ?
     <div className="locked-card">
         <FontAwesomeIcon className={cat_name} icon={category}/>
         <Link to={'/'+ownerData.username}>
@@ -83,8 +96,8 @@ function LockedItem(props){
         <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
         <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
         {user ? <BuyButton itemID={props.itemID}/> : <button>Sign in to Buy</button>}
-    </div>
-  )
+    </div>: <ItemCard itemID={props.itemID}/>);
 }
+  
 
 export default LockedItem;
