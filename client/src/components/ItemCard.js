@@ -2,6 +2,7 @@ import React from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
 import LikeButton from './LikeButton';
+import VideoCard from './all_cards/VideoCard';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -79,7 +80,8 @@ function ItemCard(props){
         </Link>
         <Link to={'/item/'+itemData.id}><h3>{itemData.title}</h3>
           {(itemData.category === 'art' || itemData.category === 'image') &&<img width="300px" height="auto" src={itemData.location} alt={"broken"}></img>}
-          </Link>
+          {(itemData.category === 'video') && <VideoCard itemID={props.itemID}/>}
+        </Link>
           <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
           <button><FontAwesomeIcon className="comment" icon={faComments}/> {itemData.comments.length}</button>

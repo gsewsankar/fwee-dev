@@ -45,7 +45,8 @@ function ItemPage(){
   return(locked ?<LockedItem itemID={itemid}/> :
     <div>
         <h1>{itemData&&itemData.title}</h1>
-        <img src={itemData&&itemData.location} alt="brkn"/>
+        {(itemData.category === 'art' || itemData.category === 'image') &&<img src={itemData.location} alt={"broken"}></img>}
+        {(itemData.category === 'video') && <video src={itemData&&itemData.location} width="600px" height="auto" controls></video>}
         <h1>{ownerData.displayName}</h1>
     </div>
   )

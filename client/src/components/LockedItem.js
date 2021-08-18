@@ -73,15 +73,17 @@ function LockedItem(props){
   }
 
   //check if item exists in purchases
-  const query = db.collection('users').doc(user.uid);
+  if(user){
+    const query = db.collection('users').doc(user.uid);
 
-  query.get().then((docSnapshot) => {
-        docSnapshot.data().purchases.forEach((id)=>{
-          if(id === props.itemID){
-            setLocked(false);
-          }
-      });
-  });
+    query.get().then((docSnapshot) => {
+          docSnapshot.data().purchases.forEach((id)=>{
+            if(id === props.itemID){
+              setLocked(false);
+            }
+        });
+    });
+  }
 
   return(locked ?
     <div className="locked-card">

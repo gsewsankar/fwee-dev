@@ -45,3 +45,17 @@ img.store-photo{
     border-radius: 50%;
     padding-right: 5px;
 }
+
+@media only screen and (max-width: 600px) {
+    .store-container{
+        max-width: 500px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto;
+        background-color: whitesmoke;
+        padding: 10px;
+        color: rgb(5, 54, 0);
+    }
+}
