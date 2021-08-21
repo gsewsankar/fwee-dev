@@ -113,6 +113,7 @@ svg.bars:hover{
     left: 0;
     transition: 250ms;
     border-right: 1pt solid rgb(160, 192, 150);
+    overflow-y: auto;
 }
 
 .side-menu-on a{

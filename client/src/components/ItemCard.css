@@ -20,7 +20,12 @@
     cursor: pointer;
     background-color: white;
     color: black;
-    border: 1px solid rgb(142, 197, 211,0.8);
+    border: 1px solid rgb(118, 179, 112);
+}
+
+.comments-container{
+    min-height: 300px;
+    overflow-y: auto;
 }
 
 p{

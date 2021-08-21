@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
 import LikeButton from './LikeButton';
@@ -20,6 +20,7 @@ function ItemCard(props){
     const db = firebase.firestore();
     const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData && itemData.owner));
+    const[showComments, setShowComments]= useState(false);
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let category = faEye;
@@ -69,6 +70,17 @@ function ItemCard(props){
       cat_name = 'link';
     }
 
+    if(showComments){
+      return((ownerData&&itemData) ?
+      <div className="card">
+        <button onClick={()=>setShowComments(false)}>close</button>
+        <div className="comments-container">
+          
+        </div>
+        <input type="text"></input><button>send</button>
+      </div>:<Loading/>);
+    }
+
     return((ownerData&&itemData)?
      <div className="card">
         <FontAwesomeIcon className={cat_name} icon={category}/>
@@ -84,7 +96,7 @@ function ItemCard(props){
         </Link>
           <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <button><FontAwesomeIcon className="comment" icon={faComments}/> {itemData.comments.length}</button>
+          <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="comment" icon={faComments}/> {itemData.comments.length}</button>
           <LikeButton itemID={props.itemID}/>
       </div>:<Loading/>
     );
