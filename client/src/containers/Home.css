@@ -3,11 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .section{
     padding: 30px;
-    width: 100%;
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -23,6 +24,45 @@
     background-color: whitesmoke;
 }
 
+.custom-shape-divider-top{
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top svg {
+    
+    display: block;
+    width: calc(139% + 1.3px);
+    height: 300px;
+}
+
+.custom-shape-divider-top .shape-fill {
+    fill: #BCE6AD;
+}
+
+.custom-shape-divider-bot{
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bot svg {
+    
+    display: block;
+    width: calc(139% + 1.3px);
+    height: 300px;
+}
+
+.custom-shape-divider-bot .shape-fill {
+    fill: #BCE6AD;
+}
+
 @media only screen and (max-width: 600px) {
     .lander{
         display: flex;
@@ -31,7 +71,7 @@
     }
 
     .lander img{
-        width: 350px;
+        width: 500px;
         height: auto;
     }
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './Store.css';
 import SignOut from '../components/SignOut';
 import Loading from '../components/Loading';
-import ItemCard from '../components/ItemCard';
 import SupportButton from '../components/SupportButton';
 import NotFound from '../containers/NotFound';
 import LockedItem from '../components/LockedItem';
@@ -84,7 +83,7 @@ function Store(){
           </div>
           <div className="grid-container">
             <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
-            {storeData && storeData.items.map(item=>{return(<ItemCard key={item} itemID={item}/>)}).reverse()}
+            {storeData && storeData.items.map(item=>{return(<LockedItem key={item} itemID={item}/>)}).reverse()}
           </div>
           <div>
           <SignOut></SignOut>
