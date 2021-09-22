@@ -24,6 +24,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
+import SignUpPage from './containers/SignUpPage';
 
 function App() {
   const [user] = useAuthState(firebase.auth());
@@ -35,6 +36,7 @@ function App() {
       <div className="App-header">
         <Switch>
           <Route exact path="/"><Home/></Route>
+          <Route exact path="/join">{user ? <Redirect to="/"/> : <SignUpPage/>}</Route>
           <Route exact path={"/dashboard"}>{user ? <Dashboard/> : <Redirect to="/"/>}</Route>
           <Route exact path={"/leaders"}><Leaderboards/></Route>
           <Route exact path={"/dms"}>{user ? <DirectMessages/> : <Redirect to="/"/>}</Route>
@@ -46,6 +48,9 @@ function App() {
         </Switch>
         {user && <CurrentBalance/>}
       </div>
+      {!user&&<div className="footer">
+        <p>all rights reserved. about. privacy policy. tos.</p>
+      </div>}
     </div>
     </Router>
   );

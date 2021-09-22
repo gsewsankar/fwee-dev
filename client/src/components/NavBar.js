@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './NavBar.css';
-import SignIn from './SignIn';
 import Loading from './Loading';
 import logo from '../assets/fweetxt.png';
 
@@ -86,7 +85,7 @@ function NavBar(){
                     {<img src={user && user.photoURL} alt={user && user.photoURL}></img>}
                 </div>
                 </Link>)  
-                : <SignIn/>}    
+                : <Link to="/join"><button>Login / SignUp</button></Link>}    
         </div>
     );
 }

@@ -6,6 +6,14 @@
     width: 100%;
 }
 
+.divider{
+    width: 100%;
+    height: 3px;
+    background-color: rgb(183, 219, 163);
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .section{
     padding: 30px;
     width: 90%;
@@ -15,53 +23,21 @@
     align-items: center;
 }
 
+.section img.l{
+    height: auto;
+    width: 200px;
+}
+
+.section img.items{
+    height: auto;
+    width: 600px;
+}
+
 .section .left{
     max-width: 500px;
 }
 
-.footer{
-    width: 100%;
-    background-color: whitesmoke;
-}
 
-.custom-shape-divider-top{
-    top: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-}
-
-.custom-shape-divider-top svg {
-    
-    display: block;
-    width: calc(139% + 1.3px);
-    height: 300px;
-}
-
-.custom-shape-divider-top .shape-fill {
-    fill: #BCE6AD;
-}
-
-.custom-shape-divider-bot{
-    top: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-    transform: rotate(180deg);
-}
-
-.custom-shape-divider-bot svg {
-    
-    display: block;
-    width: calc(139% + 1.3px);
-    height: 300px;
-}
-
-.custom-shape-divider-bot .shape-fill {
-    fill: #BCE6AD;
-}
 
 @media only screen and (max-width: 600px) {
     .lander{
@@ -70,8 +46,8 @@
         max-width: 500px;
     }
 
-    .lander img{
-        width: 500px;
+    .lander img.logo{
+        width: 90vw;
         height: auto;
     }
 
@@ -80,7 +56,12 @@
         width: 300px;
     }
 
-    .section img{
+    .section img.items{
+        height: auto;
+        width: 90vw;
+    }
+
+    .section img.l{
         height: auto;
         width: 200px;
     }
