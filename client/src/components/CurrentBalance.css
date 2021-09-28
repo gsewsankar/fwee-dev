@@ -1,6 +1,7 @@
 .myBalance {
     display: block;
     position: fixed;
+    max-width: 110px;
     bottom: 20px;
     right: 30px;
     z-index: 99;

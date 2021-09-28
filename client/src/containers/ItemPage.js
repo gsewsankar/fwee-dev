@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import './ItemPage.css';
 import Loading from '../components/Loading';
 import LockedItem from '../components/LockedItem';
 
@@ -43,11 +44,13 @@ function ItemPage(){
 
   //signed in and item is owned
   return(locked ?<LockedItem itemID={itemid}/> :
-    <div>
+    <div className="item-page">
         <h1>{itemData&&itemData.title}</h1>
         {(itemData.category === 'art' || itemData.category === 'image') &&<img src={itemData.location} alt={"broken"}></img>}
-        {(itemData.category === 'video') && <video src={itemData&&itemData.location} width="600px" height="auto" controls></video>}
+        {(itemData.category === 'video') && <video src={itemData&&itemData.location} controls></video>}
         <h1>{ownerData.displayName}</h1>
+        <h2>Comments</h2>
+        <h2>Item Recommendations</h2>
     </div>
   )
 }

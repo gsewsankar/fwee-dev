@@ -22,6 +22,7 @@ function Dashboard(){
     const [userData, userloading] = useDocumentData(userRef);
     const[storeid, setStoreid] = useState("default");
     const[storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     useEffect(() => {
         async function fetchData(){
@@ -54,8 +55,8 @@ function Dashboard(){
           <div>Notifications</div>
           <br/>
           <div>Your Coin and Achievements</div>
-          <canvas id="bg" width='500px' height='500px'></canvas>
-          <p>Established {userData && userData.createdAt.toDate().toString()}</p>
+          {/* <canvas id="bg" width='500px' height='500px'></canvas> */}
+          <p>Established {months[userData.createdAt.toDate().getMonth()] + " " + userData.createdAt.toDate().getDate().toString() + ", " + userData.createdAt.toDate().getFullYear().toString()}</p>
           <div>Central Clock</div>
           <div>Economy Size</div>  
         </div>
