@@ -11,22 +11,26 @@ import 'firebase/storage';
 
 import { Link } from "react-router-dom";
 
-import { useDocumentData } from 'react-firebase-hooks/firestore';
+import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
 
+
 function ItemCard(props){
     const db = firebase.firestore();
+    const[user] = useAuthState(firebase.auth());
     const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData && itemData.owner));
+    const[commentData, commentsLoading] = useCollectionData(db.collection('items').doc(props.itemID).collection("comments").orderBy("createdAt", "asc"));
     const[showComments, setShowComments]= useState(false);
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     let category = faEye;
     let cat_name = "";
 
-    if(ownerLoading || itemLoading){
+    if(ownerLoading || itemLoading || commentsLoading){
       return(<Loading/>);
     }
 
@@ -70,14 +74,25 @@ function ItemCard(props){
       cat_name = 'link';
     }
 
+    let comment_body;
+
+    const sendComment = () =>{
+      db.collection('items').doc(props.itemID).collection("comments").add({
+        uid:user&&user.uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        body: comment_body
+      });
+    };
+
     if(showComments){
       return((ownerData&&itemData) ?
       <div className="card">
         <button onClick={()=>setShowComments(false)}>close</button>
         <div className="comments-container">
-          
+        {commentData && commentData.map(comment=>{
+          return(<p>{comment.body}</p>)})}
         </div>
-        <input type="text"></input><button>send</button>
+        <input type="text" onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
       </div>:<Loading/>);
     }
 
@@ -96,7 +111,7 @@ function ItemCard(props){
         </Link>
           <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="comment" icon={faComments}/> {itemData.comments.length}</button>
+          <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="comment" icon={faComments}/> {commentData.length}</button>
           <LikeButton itemID={props.itemID}/>
       </div>:<Loading/>
     );
