@@ -24,7 +24,6 @@ function NewItem(){
         description: "",
         location:"",
         category:"",
-        likes: [],
         buyers: [],
         owner:"",
       });

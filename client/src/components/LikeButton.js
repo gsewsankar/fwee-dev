@@ -15,49 +15,41 @@ function LikeButton(props){
     const db = firebase.firestore();
     const[liked,setLiked] = useState(false);
     const[likeNum,setLikeNum] = useState(0);
-    
 
     useEffect(()=>{
         async function fetchData(){
-          (await db.collection('likes').where('itemid', '==', props.itemID).get()).docs.forEach(doc=>{
+          (await db.collection('items').doc(props.itemID).collection("likes").get()).docs.forEach(doc=>{
             if(doc.data().uid === user.uid){
               setLiked(true);
             }
           });
-          setLikeNum((await db.collection('items').doc(props.itemID).get()).data().likes.length);
+          setLikeNum((await db.collection('items').doc(props.itemID).collection("likes").get()).docs.length);
         }
         user && fetchData();
-        
     },[db, props.itemID, user]);
 
     async function likeButton(){
         if(liked){
           //delete like
           let idToDelete;
-          const q1 = (await db.collection('likes').where('itemid', '==', props.itemID).get()).docs
+          const q1 = (await db.collection('items').doc(props.itemID).collection("likes").get()).docs
           q1.forEach(doc=>{
             if(doc.data().uid === user.uid){
               idToDelete = doc.id;
             }
           });
-          db.collection('likes').doc(idToDelete).delete();
-          db.collection('items').doc(props.itemID).update({
-            likes: firebase.firestore.FieldValue.arrayRemove(idToDelete)
-          }); 
+          await db.collection('items').doc(props.itemID).collection("likes").doc(idToDelete).delete();
         }
         else{
           //add like
-          const ref = db.collection('likes').add({
+          await db.collection('items').doc(props.itemID).collection("likes").add({
             uid:user.uid,
             createdAt:firebase.firestore.FieldValue.serverTimestamp(),
             itemid:props.itemID
           });
-          db.collection('items').doc(props.itemID).update({
-            likes: firebase.firestore.FieldValue.arrayUnion((await ref).id)
-          }); 
         }
         setLiked(!liked);
-        setLikeNum((await db.collection('items').doc(props.itemID).get()).data().likes.length);
+        setLikeNum((await db.collection('items').doc(props.itemID).collection("likes").get()).docs.length);
       }
 
     return(
