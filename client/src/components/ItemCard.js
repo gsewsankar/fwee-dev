@@ -3,6 +3,7 @@ import './ItemCard.css';
 import Loading from '../components/Loading';
 import LikeButton from './LikeButton';
 import VideoCard from './all_cards/VideoCard';
+import Comment from './Comment.js';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -77,12 +78,21 @@ function ItemCard(props){
     let comment_body;
 
     const sendComment = () =>{
-      db.collection('items').doc(props.itemID).collection("comments").add({
-        uid:user&&user.uid,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        body: comment_body
-      });
+      if(comment_body !== ""){
+        db.collection('items').doc(props.itemID).collection("comments").add({
+          uid:user&&user.uid,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          body: comment_body
+        });
+      }
+      document.getElementById('comment-text').value="";
     };
+
+    const handleKeyDown = (e) =>{
+      if(e.key === 'Enter'){
+        sendComment();
+      }
+    }
 
     if(showComments){
       return((ownerData&&itemData) ?
@@ -90,9 +100,9 @@ function ItemCard(props){
         <button onClick={()=>setShowComments(false)}>close</button>
         <div className="comments-container">
         {commentData && commentData.map(comment=>{
-          return(<p>{comment.body}</p>)})}
+          return(<Comment info={comment}/>)})}
         </div>
-        <input type="text" onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
+        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
       </div>:<Loading/>);
     }
 
@@ -111,7 +121,7 @@ function ItemCard(props){
         </Link>
           <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="comment" icon={faComments}/> {commentData.length}</button>
+          <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="commentbtn" icon={faComments}/> {commentData.length}</button>
           <LikeButton itemID={props.itemID}/>
       </div>:<Loading/>
     );

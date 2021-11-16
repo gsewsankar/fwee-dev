@@ -1,0 +1,16 @@
+.comment{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.comment img{
+    border-radius: 50%;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.comment p{
+    color: black;
+}
