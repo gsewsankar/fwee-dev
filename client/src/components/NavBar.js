@@ -1,3 +1,5 @@
+//UPDATED to V9 on 12/2/2021
+
 import React, { useState, useEffect } from 'react';
 import './NavBar.css';
 import Loading from './Loading';
