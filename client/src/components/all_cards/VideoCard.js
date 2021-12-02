@@ -1,8 +1,8 @@
 import React from 'react';
 import Loading from '../../components/Loading';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 function DirectMessages(props){

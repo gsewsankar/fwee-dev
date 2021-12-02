@@ -4,8 +4,8 @@ import Loading from '../components/Loading';
 
 import { Link } from "react-router-dom";
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 

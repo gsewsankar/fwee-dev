@@ -5,10 +5,10 @@ import LikeButton from './LikeButton';
 import VideoCard from './all_cards/VideoCard';
 import Comment from './Comment.js';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+import 'firebase/compat/storage';
 
 import { Link } from "react-router-dom";
 
