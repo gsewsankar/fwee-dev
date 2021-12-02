@@ -19,15 +19,18 @@ import {
   Redirect,
 } from "react-router-dom";
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-
 import { useAuthState } from 'react-firebase-hooks/auth';
 import SignUpPage from './containers/SignUpPage';
 
+//v8
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/auth';
+
+//v9
+import { auth } from './firebaseInitialize';
+
 function App() {
-  const [user] = useAuthState(firebase.auth());
+  const [user] = useAuthState(auth);
 
   return (
     <Router basename={process.env.PUBLIC_URL}>

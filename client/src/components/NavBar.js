@@ -3,9 +3,9 @@ import './NavBar.css';
 import Loading from './Loading';
 import logo from '../assets/fweetxt.png';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import {auth, db} from '../firebaseInitialize';
+
+import { doc, getDoc } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -15,9 +15,7 @@ import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog } from
 import { Link } from "react-router-dom";
 
 function NavBar(){
-
-    const[user, loading] = useAuthState(firebase.auth());
-    const db = firebase.firestore();
+    const[user, loading] = useAuthState(auth);
 
     const[sidebar, setSidebar] = useState(false);
     const toggleSideBar = () => {setSidebar(!sidebar)}
@@ -27,18 +25,24 @@ function NavBar(){
 
     useEffect(() => {
         async function fetchData(){
-            const ref1 = (await db.collection("users").doc(user.uid).get()).data();
+            
+            //gets current user's username
+            const ref1 = (await getDoc(doc(db, "users", user.uid))).data();
             setUsername(ref1.username);
+            
+            //SIDEBAR get usernames of users that the current user supports
             let names = [];
             for(let i = 0; i < ref1.supporting.length; i++){
-                const person = (await db.collection('users').doc(ref1.supporting[i]).get()).data().username;
+                const person = (await getDoc(doc(db, "users", ref1.supporting[i]))).data().username;
                 names.push(person);
             }
             setSupporting(names);
+            
+            //SIDEBAR gets the most recently bought items
             let items = [];
             for(let j = ref1.purchases.length - 1; j > 0; j--){
                 const id = ref1.purchases[j];
-                const title = (await db.collection('items').doc(ref1.purchases[j]).get()).data().title;
+                const title = (await getDoc(doc(db, "items", ref1.purchases[j]))).data().title;
                 items.push({id,title});
             }
             setRecentlyBought(items);
@@ -46,7 +50,7 @@ function NavBar(){
         
         user && fetchData();
 
-      },[db,username,user])
+      },[username,user])
 
     
     if(loading){
