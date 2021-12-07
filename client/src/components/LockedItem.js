@@ -1,11 +1,12 @@
+//updated to v9 12-7-21
+
 import React,{useState} from 'react';
 import './LockedItem.css';
 import Loading from './Loading';
 import BuyButton from './BuyButton';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
+import {auth, db} from '../firebaseInitialize';
+import { doc, getDoc } from "firebase/firestore";
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -19,14 +20,13 @@ import ItemCard from './ItemCard';
 
 function LockedItem(props){
 
-  const db = firebase.firestore();
-  const[user, authLoading] = useAuthState(firebase.auth());
-  const [itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
-  const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
+  const[user, authLoading] = useAuthState(auth);
+  const[locked, setLocked] = useState(true);
+  const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
+  const[ownerData, ownerLoading] = useDocumentData(itemData && doc(db,'users',itemData.owner));
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   let category;
   let cat_name = "";
-  const[locked, setLocked] = useState(true);
 
   if(itemLoading || ownerLoading || authLoading){
     return(<Loading/>);
@@ -74,9 +74,9 @@ function LockedItem(props){
 
   //check if item exists in purchases
   if(user){
-    const query = db.collection('users').doc(user.uid);
+    const query = getDoc(doc(db,'users',user.uid));
 
-    query.get().then((docSnapshot) => {
+    query.then((docSnapshot) => {
           docSnapshot.data().purchases.forEach((id)=>{
             if(id === props.itemID){
               setLocked(false);
@@ -85,7 +85,7 @@ function LockedItem(props){
     });
   }
 
-  return(locked ?
+  return(ownerData && locked ?
     <div className="locked-card">
         <FontAwesomeIcon className={cat_name} icon={category}/>
         <Link to={'/'+ownerData.username}>
@@ -98,7 +98,8 @@ function LockedItem(props){
         <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
         <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
         {user ? <BuyButton itemID={props.itemID}/> : <button>Sign in to Buy</button>}
-    </div>: <ItemCard itemID={props.itemID}/>);
+    </div>
+    : <ItemCard itemID={props.itemID}/>);
 }
   
 

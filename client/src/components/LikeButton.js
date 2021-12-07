@@ -1,8 +1,9 @@
+//updated to v9 on 12/7/2021
+
 import React,{useState,useEffect} from 'react';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
+import {auth, db} from '../firebaseInitialize';
+import { doc, collection, getDocs, addDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -11,45 +12,44 @@ import { faHeart as openHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function LikeButton(props){
-    const[user] = useAuthState(firebase.auth());
-    const db = firebase.firestore();
+    const[user] = useAuthState(auth);
     const[liked,setLiked] = useState(false);
     const[likeNum,setLikeNum] = useState(0);
 
     useEffect(()=>{
         async function fetchData(){
-          (await db.collection('items').doc(props.itemID).collection("likes").get()).docs.forEach(doc=>{
+          (await getDocs(collection(db,'items',props.itemID,'likes'))).forEach(doc=>{
             if(doc.data().uid === user.uid){
               setLiked(true);
             }
           });
-          setLikeNum((await db.collection('items').doc(props.itemID).collection("likes").get()).docs.length);
+          setLikeNum((await getDocs(collection(db,'items',props.itemID,'likes'))).size);
         }
         user && fetchData();
-    },[db, props.itemID, user]);
+    },[props.itemID, user]);
 
     async function likeButton(){
         if(liked){
           //delete like
           let idToDelete;
-          const q1 = (await db.collection('items').doc(props.itemID).collection("likes").get()).docs
+          const q1 = (await getDocs(collection(db,'items',props.itemID,'likes')));
           q1.forEach(doc=>{
             if(doc.data().uid === user.uid){
               idToDelete = doc.id;
             }
           });
-          await db.collection('items').doc(props.itemID).collection("likes").doc(idToDelete).delete();
+          await deleteDoc(doc(db,'items',props.itemID,'likes',idToDelete));
         }
         else{
           //add like
-          await db.collection('items').doc(props.itemID).collection("likes").add({
+          await addDoc(collection(db,'items',props.itemID,'likes'), {
             uid:user.uid,
-            createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+            createdAt:serverTimestamp(),
             itemid:props.itemID
           });
         }
         setLiked(!liked);
-        setLikeNum((await db.collection('items').doc(props.itemID).collection("likes").get()).docs.length);
+        setLikeNum((await getDocs(collection(db,'items',props.itemID,'likes'))).size);
       }
 
     return(

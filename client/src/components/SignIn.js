@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {auth, db} from '../firebaseInitialize';
-import { collection, doc, getDoc, setDoc, addDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc, addDoc, serverTimestamp } from "firebase/firestore";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +23,7 @@ function SignIn(){
               balance:0,
               amount_bought:0,
               username: "@" + cred.user.uid,
-              createdAt: db.FieldValue.serverTimestamp(),
+              createdAt: serverTimestamp(),
               purchases:[],
               supporting:[]
             });
