@@ -68,9 +68,11 @@ function NavBar(){
                     <Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
-                    <p>Stores You Support</p>
+                    <div className="line"></div>
+                    <p><b>Stores You Support</b></p>
                     {supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
-                    <p><u>Recently Bought Items</u></p>
+                    <div className="line"></div>
+                    <p><b>Recently Bought Items</b></p>
                     {recentlyBought.map((item)=>{return<Link key={item.id} to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
                 </div>}
                 

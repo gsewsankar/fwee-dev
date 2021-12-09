@@ -29,6 +29,7 @@ function Settings(){
 
       if(input[0] !== '@'){
         alert("Username must start with @");
+        document.getElementById('userinput').value="";
       }
 
       if(input){
@@ -63,7 +64,7 @@ function Settings(){
       <div>
           <h1>Settings</h1>
           <div>
-          <input className="setting" placeholder={userData.username} onChange={checkUsername}></input> 
+          <input id="userinput" className="setting" placeholder={userData.username} onChange={checkUsername}></input> 
           <button onClick={updateUsername}>{valid}</button>
           </div>
           <div><br/><SignOut/></div>

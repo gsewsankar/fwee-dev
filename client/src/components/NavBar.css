@@ -3,7 +3,7 @@
     top: 0;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: rgba(183, 219, 163, 0.8);
+    background-color: rgba(180, 220, 160, 0.90);
     display: flex;                 
     justify-content: space-between; 
     align-items: center;
@@ -76,11 +76,11 @@ a{
 svg.bars{
     padding: 5px;
     color: white;
-    transition: 300ms;
+    transition: 150ms;
 }
 
 svg.bars:hover{
-    color: green;
+    color: whitesmoke;
     cursor: pointer;
 }
 
@@ -101,7 +101,7 @@ svg.bars:hover{
 }
 
 .side-menu-on{
-    background-color: whitesmoke;
+    background-color: white;
     width: 250px;
     height: 100vh;
     display: flex;
@@ -113,7 +113,7 @@ svg.bars:hover{
     top: 0;
     left: 0;
     transition: 250ms;
-    border-right: 1pt solid rgb(160, 192, 150);
+    box-shadow: 3px 0 5px rgb(173, 201, 158);
     overflow-y: auto;
 }
 
@@ -121,6 +121,9 @@ svg.bars:hover{
     padding: 5px;
 }
 
+.side-menu-on a:hover{
+    background-color: lightgray;
+}
 
 .side-menu-off{
     background-color: rgb(236, 236, 236);
