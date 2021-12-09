@@ -11,6 +11,7 @@ import Settings from './containers/Settings';
 import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
+import SignUpPage from './containers/SignUpPage';
 
 import {
   BrowserRouter as Router,
@@ -19,15 +20,8 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { useAuthState } from 'react-firebase-hooks/auth';
-import SignUpPage from './containers/SignUpPage';
-
-//v8
-// import firebase from 'firebase/compat/app';
-// import 'firebase/compat/auth';
-
-//v9
 import { auth } from './firebaseInitialize';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function App() {
   const [user] = useAuthState(auth);
