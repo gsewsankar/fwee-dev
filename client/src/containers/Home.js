@@ -1,3 +1,5 @@
+//UPDATED to v9 on 12-8-2021
+
 import React, { useEffect, useState } from 'react';
 import './Home.css';
 import Loading from '../components/Loading';
@@ -9,26 +11,25 @@ import jar from '../assets/coins.gif';
 
 import { Link } from "react-router-dom";
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import {db, auth} from '../firebaseInitialize';
+import { getDocs, query, orderBy, limit, collection } from "firebase/firestore";
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import LockedItem from '../components/LockedItem';
 
 function Home(){
-    const[user, isLoading] = useAuthState(firebase.auth());
-    const[feed,setFeed] = useState([])
-    const db = firebase.firestore();
+    const[user, isLoading] = useAuthState(auth);
+    const[feed,setFeed] = useState([]);
 
     useEffect(()=>{
       async function fetchData(){
-        let query = (await db.collection('items').orderBy('createdAt', 'desc').limit(10).get()).docs;
-        setFeed(query);
+        let getFeed = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),limit(10)))).docs;
+        setFeed(getFeed);
       }
 
       user && fetchData();
 
-    },[db,user]);
+    },[user]);
 
     if(isLoading){
       return(<Loading/>)

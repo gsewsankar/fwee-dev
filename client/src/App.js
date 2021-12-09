@@ -11,41 +11,38 @@ import Settings from './containers/Settings';
 import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
+import SignUpPage from './containers/SignUpPage';
 
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from "react-router-dom";
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
+import { auth } from './firebaseInitialize';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import SignUpPage from './containers/SignUpPage';
 
 function App() {
-  const [user] = useAuthState(firebase.auth());
+  const [user] = useAuthState(auth);
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
     <div className="App">
       <NavBar ></NavBar>
       <div className="App-header">
-        <Switch>
-          <Route exact path="/"><Home/></Route>
-          <Route exact path="/join">{user ? <Redirect to="/"/> : <SignUpPage/>}</Route>
-          <Route exact path={"/dashboard"}>{user ? <Dashboard/> : <Redirect to="/"/>}</Route>
-          <Route exact path={"/leaders"}><Leaderboards/></Route>
-          <Route exact path={"/dms"}>{user ? <DirectMessages/> : <Redirect to="/"/>}</Route>
-          <Route exact path={"/settings"}>{user ? <Settings/> : <Redirect to="/"/>}</Route>
-          <Route exact path={"/newItem"}>{user ? <NewItem/> : <Redirect to="/"/>}</Route>
-          <Route exact path={"/item/:itemid"}>{user ? <ItemPage/> : <Redirect to="/"/>}</Route>
-          <Route exact path={"/:username"}><Store/></Route>
-          <Route><NotFound/></Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home/>}></Route>
+          <Route path="/join" element={user ? <Navigate to="/"/> : <SignUpPage/>}></Route>
+          <Route path={"/dashboard"} element={user ? <Dashboard/> : <Navigate to="/"/>}></Route>
+          <Route path={"/leaders"} element={<Leaderboards/>}></Route>
+          <Route path={"/dms"} element={user ? <DirectMessages/> : <Navigate to="/"/>}></Route>
+          <Route path={"/settings"} element={user ? <Settings/> : <Navigate to="/"/>}></Route>
+          <Route path={"/newItem"} element={user ? <NewItem/> : <Navigate to="/"/>}></Route>
+          <Route path={"/item/:itemid"} element={user ? <ItemPage/> : <Navigate to="/"/>}></Route>
+          <Route path={"/:username"} element={<Store/>}></Route>
+          <Route element={<NotFound/>}></Route>
+        </Routes>
         {user && <CurrentBalance/>}
       </div>
       {!user&&<div className="footer">

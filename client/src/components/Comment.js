@@ -1,12 +1,14 @@
+//updated to v9 on 12-8-2021
+
 import React from 'react';
 import './Comment.css';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+
+import {db} from '../firebaseInitialize';
+import { doc } from "firebase/firestore";
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 
 function Comment(props){
-    const db = firebase.firestore();
-    const[writer, writerLoading] = useDocumentData(db.collection('users').doc(props.info.uid));
+    const[writer, writerLoading] = useDocumentData(doc(db,'users',props.info.uid));
 
     // function timeSince(date) {
     //     var seconds = Math.floor((new Date() - date) / 1000);

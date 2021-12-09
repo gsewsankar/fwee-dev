@@ -1,18 +1,19 @@
+//updated to v9 on 12-8-2021
+
 import React, { useState } from 'react';
 import './NewItem.css';
 import Loading from '../components/Loading';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-import 'firebase/storage';
+
+import {db, auth, bucket} from '../firebaseInitialize';
+import { doc, getDocs, collection, where, query, addDoc, updateDoc,arrayUnion, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from "react-router-dom";
 
 function NewItem(){
 
-    const bucket = firebase.storage();
-    const db = firebase.firestore();
-    const[user, isLoading] = useAuthState(firebase.auth());
+    const[user, isLoading] = useAuthState(auth);
     const[value, setValue] = useState(0);
     const[path,setPath]=useState("");
     const[success, setSuccess] = useState(false);
@@ -44,8 +45,8 @@ function NewItem(){
 
     const uploadFile = (e) => {
         const file = e.target.files[0];
-        const storageRef = bucket.ref(user.uid + '/' + file.name);
-        const upload = storageRef.put(file);
+        const storageRef = ref(bucket, user.uid + '/' + file.name);
+        const upload = uploadBytesResumable(storageRef, file);
         upload.on('state_changed',
         function progress(snapshot){
             let percent = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
@@ -57,10 +58,10 @@ function NewItem(){
             updateFormData({
                 ...formData,
       
-                location: await storageRef.getDownloadURL(),
+                location: await getDownloadURL(storageRef),
                 filename:file.name.trim(),
                 owner:user.uid,
-                createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt:serverTimestamp(),
               });
         }
       );  
@@ -72,20 +73,26 @@ function NewItem(){
     async function handleSubmit(e){
         e.preventDefault();
 
-        itemID = (await db.collection('items').add(formData)).id;
+        if(formData.title === "" || formData.category === ""){
+          alert('Title or Category cannot be blank');
+          return;
+        }
+        else{
+          itemID = (await addDoc(collection(db,'items'),formData)).id;
         
-        db.collection('items').doc(itemID).update({id:itemID});
-
-        (await db.collection('stores').where("owner","==",user.uid).get()).docs.forEach((doc)=>{
-          storeDoc = doc.id
-        });
-
-        db.collection('stores').doc(storeDoc).update({
-          items:firebase.firestore.FieldValue.arrayUnion(itemID)
-        });
-
-        setPath(itemID);
-        setSuccess(true);
+          updateDoc(doc(db,'items',itemID),{id:itemID});
+  
+          (await getDocs(query(collection(db,'stores'),where("owner","==",user.uid)))).docs.forEach((doc)=>{
+            storeDoc = doc.id
+          });
+  
+          updateDoc(doc(db,'stores',storeDoc),{
+            items:arrayUnion(itemID)
+          });
+  
+          setPath(itemID);
+          setSuccess(true);
+        }
     }
 
     return(

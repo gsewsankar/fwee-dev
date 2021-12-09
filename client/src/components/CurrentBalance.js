@@ -1,18 +1,18 @@
+//updated to v9 on 12-8-2021
+
 import React from 'react';
 import Loading from '../components/Loading';
 import "./CurrentBalance.css";
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
+import {auth, db} from '../firebaseInitialize';
+import { doc } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 function CurrentBalance(){
-    const[user, loading] = useAuthState(firebase.auth());
-    const db = firebase.firestore();
-    let userRef = db.collection('users').doc(user.uid);
+    const[user, loading] = useAuthState(auth);
+    let userRef = doc(db,'users',user.uid);
     const [userData, userloading] = useDocumentData(userRef);
 
     if(loading || userloading){

@@ -1,20 +1,19 @@
+//UPDATED to v9 on 12-8-21
+
 import React, { useState } from 'react';
 import Loading from '../components/Loading';
 import SignOut from '../components/SignOut';
 import './Settings.css';
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
+import {db, auth} from '../firebaseInitialize';
+import { doc, getDoc, setDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 function Settings(){
 
-    const[user,loading] = useAuthState(firebase.auth());
-    const db = firebase.firestore();
-    const userRef = db.collection('users').doc(user.uid);
+    const[user,loading] = useAuthState(auth);
+    const userRef = doc(db,'users',user.uid);
     const[userData, dataloading] = useDocumentData(userRef); 
     const[valid, setValid] = useState("Update Username");
 
@@ -33,8 +32,8 @@ function Settings(){
       }
 
       if(input){
-        db.collection('usernames').doc(input).get().then(doc=>{
-          if(!doc.exists){
+        getDoc(doc(db,'usernames',input)).then(doc=>{
+          if(!doc.exists()){
             available = true;
             setValid("Update Username");
           }
@@ -49,12 +48,14 @@ function Settings(){
     const updateUsername = () => {
         if(input){
         if(available){
-          db.collection('usernames').doc(input).set({uid:user.uid});
-          db.collection('usernames').doc(userData.username).delete();
-          userRef.update({username: input});
+          setDoc(doc(db,'usernames',input), {uid:user.uid});
+          deleteDoc(doc(db,'usernames',userData.username));
+          updateDoc(userRef,{username: input});
           setValid("Name Updated!");
         }
-        else{alert("Username taken")}
+        else{
+          alert("Username taken")
+        }
       }
     }
 

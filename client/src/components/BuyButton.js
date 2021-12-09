@@ -1,11 +1,11 @@
+//updated to v9 on 12-8-2021
+
 import React,{useState,useEffect} from 'react';
 import Loading from '../components/Loading';
 import './BuyButton.css';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import {db,auth} from '../firebaseInitialize';
+import { doc, getDoc, getDocs, collection, where, query, updateDoc, increment, arrayUnion } from "firebase/firestore";
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -16,25 +16,29 @@ import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 
 function BuyButton(props){
 
-    const db = firebase.firestore();
-    const[user, authLoading] = useAuthState(firebase.auth());
-    const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
-    const itemRef = db.collection('items').doc(props.itemID);
-    const[buyerData,buyerLoading] = useDocumentData(db.collection('users').doc(user && user.uid));
-    const buyerRef = db.collection('users').doc(user && user.uid);
-    const sellerRef = db.collection('users').doc(itemData&&itemData.owner);
+    const[user, authLoading] = useAuthState(auth);
+    
+    const itemRef = doc(db,'items',props.itemID);
+    const[itemData, itemLoading] = useDocumentData(itemRef);
+    
+    const buyerRef = user && doc(db,'users', user.uid);
+    const[buyerData,buyerLoading] = useDocumentData(buyerRef);
+    
+    const sellerRef = itemData && doc(db,'users',itemData.owner);
     const[storeid, setStoreid] = useState("default");
-    const[storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
-    const storeRef = db.collection('stores').doc(storeid);
+    
+    const storeRef = doc(db,'stores',storeid);
+    const[storeData, storeLoading] = useDocumentData(storeRef);
+    
 
     useEffect(() => {
         async function fetchData(){
-          const ref1 = await db.collection("items").doc(props.itemID).get();
-          const ref2 = await db.collection("stores").where("owner", "==", ref1.data().owner).get();
+          const ref1 = await getDoc(itemRef);
+          const ref2 = await getDocs(query(collection(db,'stores'),where("owner", "==", ref1.data().owner)));
           setStoreid(ref2.docs[0].id);
         }
         fetchData();
-    },[db, props.itemID]);
+    },[itemRef]);
 
     if(itemLoading || buyerLoading || authLoading || storeLoading){
         return(<Loading/>);
@@ -46,28 +50,28 @@ function BuyButton(props){
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
         score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(buyerData.amount_bought))).toFixed(2);
-        buyerRef.update({balance: score});
+        updateDoc(buyerRef,{balance: score});
     }
     
     function transaction(){
         calculateBalance();
         if(buyerData.balance > itemData.price){
-            buyerRef.update({
+            updateDoc(buyerRef,{
                 balance: parseFloat(buyerData.balance)-parseFloat(itemData.price),
-                amount_bought: firebase.firestore.FieldValue.increment(parseFloat(itemData.price)),
-                purchases: firebase.firestore.FieldValue.arrayUnion(itemData.id),
+                amount_bought: increment(parseFloat(itemData.price)),
+                purchases: arrayUnion(itemData.id),
             });
 
-            sellerRef.update({
-                balance: firebase.firestore.FieldValue.increment(parseFloat(itemData.price))
+            updateDoc(sellerRef,{
+                balance: increment(parseFloat(itemData.price))
             });
 
-            storeRef.update({
-                amount_sold: firebase.firestore.FieldValue.increment(parseFloat(itemData.price))
+            updateDoc(storeRef,{
+                amount_sold: increment(parseFloat(itemData.price))
             })
 
-            itemRef.update({
-                buyers: firebase.firestore.FieldValue.arrayUnion(user.uid)
+            updateDoc(itemRef,{
+                buyers: arrayUnion(user.uid)
             })
         }
         else{

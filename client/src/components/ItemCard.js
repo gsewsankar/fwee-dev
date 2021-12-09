@@ -1,3 +1,5 @@
+//Updated to v9 on 12-8-2021
+
 import React, { useState } from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
@@ -5,26 +7,20 @@ import LikeButton from './LikeButton';
 import VideoCard from './all_cards/VideoCard';
 import Comment from './Comment.js';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import {auth, db} from '../firebaseInitialize';
+import { doc, collection, orderBy, query, addDoc, serverTimestamp } from "firebase/firestore";
 
 import { Link } from "react-router-dom";
-
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
 
-
 function ItemCard(props){
-    const db = firebase.firestore();
-    const[user] = useAuthState(firebase.auth());
-    const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
-    const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData && itemData.owner));
-    const[commentData, commentsLoading] = useCollectionData(db.collection('items').doc(props.itemID).collection("comments").orderBy("createdAt", "asc"));
+    const[user] = useAuthState(auth);
+    const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
+    const[ownerData, ownerLoading] = useDocumentData(itemData && doc(db,'users',itemData.owner));
+    const[commentData, commentsLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments'),orderBy("createdAt", "asc")));
     const[showComments, setShowComments]= useState(false);
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -75,15 +71,16 @@ function ItemCard(props){
       cat_name = 'link';
     }
 
+    //temporary?
     let comment_body;
 
     const sendComment = () =>{
       if(comment_body !== ""){
-        db.collection('items').doc(props.itemID).collection("comments").add({
+        addDoc(collection(db,'items',props.itemID,'comments'),{
           uid:user&&user.uid,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          createdAt: serverTimestamp(),
           body: comment_body
-        });
+        })
       }
       document.getElementById('comment-text').value="";
     };
