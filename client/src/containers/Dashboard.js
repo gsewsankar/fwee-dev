@@ -1,10 +1,11 @@
+//updated to v9 on 12-8-2021
+
 import React,{useState,useEffect}  from 'react';
 import './Dashboard.css';
 import Loading from '../components/Loading';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import {auth, db} from '../firebaseInitialize';
+import { doc, getDocs, query, where, updateDoc, collection } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
@@ -15,22 +16,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Dashboard(){
-
-    const[user, loading] = useAuthState(firebase.auth());
-    const db = firebase.firestore();
-    let userRef = db.collection('users').doc(user.uid);
+    const[user, loading] = useAuthState(auth);
+    let userRef = doc(db,'users',user.uid);
     const [userData, userloading] = useDocumentData(userRef);
     const[storeid, setStoreid] = useState("default");
-    const[storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
+    const[storeData, storeLoading] = useDocumentData(doc(db,'stores',storeid));
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     useEffect(() => {
         async function fetchData(){
-          const ref2 = await db.collection("stores").where("owner", "==", user.uid).get();
+          const ref2 = await getDocs(query(collection(db,'stores'),where("owner", "==", user.uid)));
           setStoreid(ref2.docs[0].id);
         }
         fetchData();
-    },[db, user.uid]);
+    },[user.uid]);
 
     if(loading || userloading || storeLoading)
     {
@@ -43,7 +42,7 @@ function Dashboard(){
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
         score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(userData.amount_bought))).toFixed(2);
-        userRef.update({balance: parseFloat(score)});
+        updateDoc(userRef, {balance: parseFloat(score)});
     }
 
     if(user){

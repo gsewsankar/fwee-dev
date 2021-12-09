@@ -1,13 +1,13 @@
+//updated to v9 on 12-8-2021
+
 import React from 'react';
 import Loading from '../../components/Loading';
-
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
+import {db} from '../../firebaseInitialize.js';
+import {doc} from 'firebase/firestore';
 
-function DirectMessages(props){
-    const db = firebase.firestore();
-    const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(props.itemID));
+function VideoCard(props){
+    const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
     if(itemLoading){
         return(<Loading/>);
     }
@@ -16,4 +16,4 @@ function DirectMessages(props){
     )
   }
 
-export default DirectMessages;
+export default VideoCard;

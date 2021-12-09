@@ -1,18 +1,19 @@
+//updated to v9 on 12-08-2021
+
 import React from 'react';
 import './Leaderboards.css';
 import Loading from '../components/Loading';
 
 import { Link } from "react-router-dom";
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+import {db} from '../firebaseInitialize';
+import { query, collection, orderBy, limit } from "firebase/firestore";
 
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 function Leaderboards(){
 
-  const db = firebase.firestore();
-  const[data,dataLoading] = useCollectionDataOnce(db.collection('users').orderBy('balance','desc').limit(10));
+  const[data,dataLoading] = useCollectionDataOnce(query(collection(db,'users'),orderBy('balance','desc'),limit(10)));
   let count = 1;
 
   if(dataLoading){

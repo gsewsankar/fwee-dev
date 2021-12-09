@@ -1,11 +1,12 @@
+//UPDATED to v9 on 12-8-2021
+
 import React,{useState} from 'react';
 import './ItemPage.css';
 import Loading from '../components/Loading';
 import LockedItem from '../components/LockedItem';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
+import {db, auth} from '../firebaseInitialize';
+import { doc, getDoc } from "firebase/firestore";
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -15,10 +16,9 @@ import { useParams } from 'react-router-dom';
 function ItemPage(){
 
   const { itemid } = useParams();  
-  const db = firebase.firestore();
-  const[user, authLoading] = useAuthState(firebase.auth());
-  const[itemData, itemLoading] = useDocumentData(db.collection('items').doc(itemid));
-  const[ownerData, ownerLoading] = useDocumentData(db.collection('users').doc(itemData&&itemData.owner));
+  const[user, authLoading] = useAuthState(auth);
+  const[itemData, itemLoading] = useDocumentData(doc(db,'items',itemid));
+  const[ownerData, ownerLoading] = useDocumentData(itemData&&doc(db,'users',itemData.owner));
   const[locked, setLocked] = useState(true);
 
   //const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -32,9 +32,9 @@ function ItemPage(){
   }
 
   //check if item exists in purchases
-  const query = db.collection('users').doc(user.uid);
+  const query = getDoc(doc(db,'users',user.uid));
 
-  query.get().then((docSnapshot) => {
+  query.then((docSnapshot) => {
         docSnapshot.data().purchases.forEach((id)=>{
           if(id === itemid){
             setLocked(false);

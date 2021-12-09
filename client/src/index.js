@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import fbconfig from './config';
-
-
-//v8
-import firebase from 'firebase/compat/app';
-
 //v9
 import './firebaseInitialize';
 
@@ -22,8 +16,6 @@ import './firebaseInitialize';
 //   uri: 'http://localhost:4000/',
 //   cache: new InMemoryCache()
 // });
-
-firebase.initializeApp(fbconfig);
 
 ReactDOM.render(
     <App />,document.getElementById('root'),

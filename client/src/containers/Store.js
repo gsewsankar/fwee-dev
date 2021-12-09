@@ -1,3 +1,5 @@
+//updated to v9 on 12-8-21
+
 import React, { useEffect, useState } from 'react';
 import './Store.css';
 import SignOut from '../components/SignOut';
@@ -6,10 +8,8 @@ import SupportButton from '../components/SupportButton';
 import NotFound from '../containers/NotFound';
 import LockedItem from '../components/LockedItem';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-import 'firebase/compat/storage';
+import {db, auth} from '../firebaseInitialize';
+import { doc, getDoc, getDocs, arrayUnion, updateDoc, query, collection, where } from 'firebase/firestore';
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -24,24 +24,23 @@ import {Link} from 'react-router-dom';
 
 function Store(){
 
-    const db = firebase.firestore();
     const { username } = useParams();    
 
-    const[user, isLoading] = useAuthState(firebase.auth());
+    const[user, isLoading] = useAuthState(auth);
     const [storeid, setStoreid] = useState("default");
-    const [storeData, storeLoading] = useDocumentData(db.collection('stores').doc(storeid));
+    const [storeData, storeLoading] = useDocumentData(doc(db,'stores',storeid));
     const[notFound, setNotFound] = useState(false);
     
 
     useEffect(() => {
       async function fetchData(){
-        const ref1 = (await db.collection("usernames").doc(username).get()).data().uid;
-        const ref2 = await db.collection("stores").where("owner", "==", ref1).get();
+        const ref1 = (await getDoc(doc(db,'usernames',username))).data().uid;
+        const ref2 = await getDocs(query(collection(db,'stores'),where("owner", "==", ref1)));
         setStoreid(ref2.docs[0].id);
       }
 
-      db.collection('usernames').doc(username).get().then((docSnapshot) => {
-        if(docSnapshot.exists){
+      getDoc(doc(db,'usernames',username)).then((docSnapshot) => {
+        if(docSnapshot.exists()){
           fetchData();
         }
         else{
@@ -51,13 +50,13 @@ function Store(){
 
       if(user){
         if(storeData && storeData.visitors.find(person=>person === user.uid) === undefined){
-          db.collection('stores').doc(storeid).update({
-            visitors:firebase.firestore.FieldValue.arrayUnion(user.uid)
+          updateDoc(doc(db,'stores',storeid), {
+            visitors:arrayUnion(user.uid)
           });
         }
       }
       
-    },[db,user,username,storeData,storeid]);
+    },[user,username,storeData,storeid]);
 
     if(notFound){
       return(<NotFound/>);
