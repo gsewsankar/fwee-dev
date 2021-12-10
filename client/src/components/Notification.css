@@ -1,0 +1,35 @@
+.notification-frame-green{
+    margin: 1rem;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-evenly;
+    box-shadow: 0 3px 6px 0 rgb(119, 221, 118);
+    border-radius: 10px;
+    color: rgb(119, 221, 118);
+}
+
+.notification-frame-pink{
+    margin: 1rem;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-evenly;
+    box-shadow: 0 3px 6px 0 rgb(244, 154, 194);
+    border-radius: 10px;
+    color: rgb(244, 154, 194);
+}
+
+.icon-area{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-area{
+    color: rgb(151, 151, 151);
+}

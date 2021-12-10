@@ -1,6 +1,6 @@
 .card{
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
+    box-shadow: 0 3px 6px 0 rgb(173, 201, 158);
     border-radius: 30px;
     padding: 10px 0;
     font-size: 30px;
@@ -33,7 +33,6 @@ p{
 }
 
 img.pp{
-    border: 1px solid rgba(5, 54, 0, 0.8);
     border-radius: 50%;
     width: 40px;
     height: 40px;

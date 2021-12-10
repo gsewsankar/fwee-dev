@@ -82,6 +82,9 @@ function ItemCard(props){
           body: comment_body
         })
       }
+      else{
+        alert('Comment is empty');
+      }
       document.getElementById('comment-text').value="";
     };
 

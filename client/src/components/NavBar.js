@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import './NavBar.css';
-import Loading from './Loading';
 import logo from '../assets/fweetxt.png';
 
 import {auth, db} from '../firebaseInitialize';
@@ -56,7 +55,7 @@ function NavBar(){
 
     
     if(loading){
-        return(<Loading/>);
+        return(<div className='nav-frame'/>);
     }
 
     return(

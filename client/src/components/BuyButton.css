@@ -1,6 +1,7 @@
 button.buy{
     color:rgb(119, 153, 101);
     box-shadow: 0 0 2pt 1pt rgb(133, 158, 119);
+    border: none;
     border-radius: 30px;
     padding: 5px;
 }
