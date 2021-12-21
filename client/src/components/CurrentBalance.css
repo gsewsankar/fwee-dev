@@ -2,12 +2,12 @@
     display: block;
     position: fixed;
     max-width: 110px;
-    bottom: 20px;
-    right: 30px;
+    bottom: 10px;
+    right: 10px;
     z-index: 99;
     color:rgb(119, 153, 101);
     box-shadow: 0 0 6px 0 rgb(133, 158, 119);
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.85);
     padding: 15px;
     border-radius: 10px;
     font-size: 18px;

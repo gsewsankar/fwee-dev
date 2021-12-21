@@ -37,6 +37,13 @@
     max-width: 500px;
 }
 
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items:flex-start;
+}
+
 
 
 @media only screen and (max-width: 600px) {
@@ -64,5 +71,11 @@
     .section img.l{
         height: auto;
         width: 200px;
+    }
+
+    .cards{
+        justify-content: center;
+        align-items: center;
+        margin: auto;
     }
 }

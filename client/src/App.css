@@ -1,3 +1,5 @@
+/* default styles for buttons, links, and main app container */
+
 .App {
   text-align: center;
 }
@@ -31,6 +33,19 @@ button{
 button:hover{
   background-color: rgb(119, 153, 101);
   color: white;
+}
+
+a{
+  color: rgb(5,54,0);
+  text-decoration: none;
+  transition: 300ms;
+  border-radius: 50px;
+}
+
+a:hover{
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
 }
 
 .footer{
