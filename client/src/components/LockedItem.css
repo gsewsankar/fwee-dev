@@ -1,4 +1,6 @@
 .locked-card{
+    min-width: 300px;
+    max-width: 400px;
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 3px 6px 0 rgb(173, 201, 158);
     border-radius: 30px;

@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
 
 function ItemCard(props){
-    const[user] = useAuthState(auth);
+    const[user, authLoading] = useAuthState(auth);
     const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(itemData && doc(db,'users',itemData.owner));
     const[commentData, commentsLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments'),orderBy("createdAt", "asc")));
@@ -27,7 +27,7 @@ function ItemCard(props){
     let category = faEye;
     let cat_name = "";
 
-    if(ownerLoading || itemLoading || commentsLoading){
+    if(authLoading || ownerLoading || itemLoading || commentsLoading){
       return(<Loading/>);
     }
 

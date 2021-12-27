@@ -28,7 +28,7 @@ function LockedItem(props){
   let category;
   let cat_name = "";
 
-  if(itemLoading || ownerLoading || authLoading){
+  if(authLoading || ownerLoading || itemLoading){
     return(<Loading/>);
   }
 
