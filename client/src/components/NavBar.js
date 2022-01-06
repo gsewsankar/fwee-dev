@@ -26,7 +26,6 @@ function NavBar(){
 
     useEffect(() => {
         async function fetchData(){
-            
             //gets current user's username
             const ref1 = (await getDoc(doc(db, "users", user.uid))).data();
             setUsername(ref1.username);

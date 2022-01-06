@@ -9,38 +9,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 function SignIn(){
-
-    const signInWithGoogle = () => {
+    async function signInWithGoogle () {
       const provider = new GoogleAuthProvider();
-      signInWithPopup(auth, provider).then(cred => {
-         getDoc(doc(db,'users',cred.user.uid))
-        .then((docSnapshot) => {
-          if(!docSnapshot.exists){
-             setDoc(doc(db,'users',cred.user.uid),{
-              uid:cred.user.uid,
-              displayName: cred.user.displayName,
-              photoURL:cred.user.photoURL,
-              balance:0,
-              amount_bought:0,
-              username: "@" + cred.user.uid,
-              createdAt: serverTimestamp(),
-              purchases:[],
-              supporting:[]
-            });
+      const cred = await signInWithPopup(auth, provider);
+      const docRef = doc(db,'users',cred.user.uid);
+      const docSnap = await getDoc(docRef);
 
-            addDoc(collection(db,"stores"),{
-              name: cred.user.displayName +"'s Store",
-              owner: cred.user.uid,
-              items: [],
-              visitors: [],
-              amount_sold:0,
-              supporters: [],
-            });
+      if(!docSnap.exists()){
+        await setDoc(doc(db,'users',cred.user.uid),{
+          uid:cred.user.uid,
+          displayName: cred.user.displayName,
+          photoURL:cred.user.photoURL,
+          balance:0,
+          amount_bought:0,
+          username: "@" + cred.user.uid,
+          createdAt: serverTimestamp(),
+          purchases:[],
+          supporting:[]
+        });
 
-            setDoc(doc(db,"usernames",'@' + cred.user.uid), {uid:cred.user.uid});
-          }
-        })
-      });
+        await addDoc(collection(db,"stores"),{
+          name: cred.user.displayName +"'s Store",
+          owner: cred.user.uid,
+          items: [],
+          visitors: [],
+          amount_sold:0,
+          supporters: [],
+        });
+
+        await setDoc(doc(db,"usernames",'@' + cred.user.uid), {uid:cred.user.uid});
+      }
     }
   
     return(
