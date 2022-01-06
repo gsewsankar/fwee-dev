@@ -19,6 +19,14 @@ function CurrentBalance(){
         return(<Loading/>);
     }
 
+    if(!user){
+      return(
+        <div className="myBalance">
+          Your balance: 0.00
+        </div>
+      )
+    }
+
     return(
       <div className="myBalance">
           Your balance: {parseFloat(userData.balance).toFixed(2)}
