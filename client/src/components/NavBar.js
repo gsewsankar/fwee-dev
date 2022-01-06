@@ -28,21 +28,21 @@ function NavBar(){
         async function fetchData(){
             //gets current user's username
             const ref1 = (await getDoc(doc(db, "users", user.uid))).data();
-            setUsername(ref1.username);
+            setUsername(ref1&&ref1.username);
             
             //SIDEBAR get usernames of users that the current user supports
             let names = [];
-            for(let i = 0; i < ref1.supporting.length; i++){
-                const person = (await getDoc(doc(db, "users", ref1.supporting[i]))).data().username;
+            for(let i = 0; i < ref1&&ref1.supporting.length; i++){
+                const person = (await getDoc(doc(db, "users", ref1&&ref1.supporting[i]))).data().username;
                 names.push(person);
             }
             setSupporting(names);
             
             //SIDEBAR gets the most recently bought items
             let items = [];
-            for(let j = ref1.purchases.length - 1; j > 0; j--){
-                const id = ref1.purchases[j];
-                const title = (await getDoc(doc(db, "items", ref1.purchases[j]))).data().title;
+            for(let j = ref1&&ref1.purchases.length - 1; j > 0; j--){
+                const id = ref1&&ref1.purchases[j];
+                const title = (await getDoc(doc(db, "items", ref1&&ref1.purchases[j]))).data().title;
                 items.push({id,title});
             }
             setRecentlyBought(items);

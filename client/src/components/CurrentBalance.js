@@ -29,7 +29,7 @@ function CurrentBalance(){
 
     return(
       <div className="myBalance">
-          Your balance: {parseFloat(userData.balance).toFixed(2)}
+          Your balance: {parseFloat(userData&&userData.balance).toFixed(2)}
       </div>
     )
   }
