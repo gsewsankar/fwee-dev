@@ -32,7 +32,7 @@ function NavBar(){
             
             //SIDEBAR get usernames of users that the current user supports
             let names = [];
-            for(let i = 0; i < ref1&&ref1.supporting.length; i++){
+            for(let i = 0; i < (ref1&&ref1.supporting.length); i++){
                 const person = (await getDoc(doc(db, "users", ref1&&ref1.supporting[i]))).data().username;
                 names.push(person);
             }
