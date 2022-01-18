@@ -3,6 +3,10 @@ import {typeDefs} from "./typeDefs";
 import {resolvers} from "./resolvers";
 import { ApolloServer, ApolloError, ValidationError, gql } from 'apollo-server';
 import serviceAccount from "./service_account.json";
+const express = require('express')
+const GunServer = require('gun')
+const expressApp= express()
+expressApp.use(GunServer.serve)
 
 const startServer = async() => {
   admin.initializeApp({
@@ -17,4 +21,8 @@ const startServer = async() => {
 }
 
 startServer();
-  
+
+const server = expressApp.listen(1900, () => {
+})
+
+GunServer({web: server});
