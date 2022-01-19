@@ -1,8 +1,7 @@
 import {useEffect,useReducer} from 'react'
-import {gunJs} from 'gun'
+import Gun from 'gun'
 
-
-var gunPeer = gunJs({
+var gunPeer = Gun({
     peers: [
     'http://localhost:1900/gun'
     ]
@@ -13,7 +12,7 @@ var gunPeer = gunJs({
  function reducer(curr, receivedMessage)
  {
     return{
-            messageArray: [messageArray, ...curr.messageArray]
+            messageArray: [receivedMessage, ...curr.messageArray]
     }
  }
 

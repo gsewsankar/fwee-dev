@@ -1,7 +1,7 @@
 // upload messages to gun.js database
 import {useEffect,useReducer} from 'react'
-import {gunJs} from 'gun'
-var gunPeer = gunJs({
+import Gun from 'gun'
+var gunPeer = Gun({
     peers: [
     'http://localhost:1900/gun'
     ]
