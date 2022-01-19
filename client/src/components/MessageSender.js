@@ -10,7 +10,11 @@ var gunPeer = gunJs({
 function MessageSender(props)
 {
  const currMessages  = gunPeer.get(props.name)
- currMessages.set({})
- 
+ currMessages.set({
+            to: props.to,
+            from: props.from,
+            amount: props.amount,
+            time: props.date
+        })
 
 }

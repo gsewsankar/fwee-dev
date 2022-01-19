@@ -24,7 +24,14 @@ var gunPeer = gunJs({
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
-
+        currData.map().on(m => {
+            setMessageState({
+                to: currData.to,
+                from: currData.from,
+                amount: currData.amount,
+                time: currData.date
+            })
+        })
 
     }, [])
 
