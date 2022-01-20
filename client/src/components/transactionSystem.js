@@ -50,7 +50,7 @@ function transactionSystem(){
         return user.balance;
     }
 
-   const sendComment = (from,to,amount) =>{
+   const sendCredits = (from,to,amount) =>{
         const sender = accounts.find(account => account.username == from);
         const recipient = accounts.find(account => account.username == to);
 
