@@ -5,34 +5,46 @@
 
 import MessageSender from './MessageSender'
 import MessageHandler from './MessageHandler'
+import {useState, useReducer} from 'react'
+
 const { SHA256 } = require('crypto-js');
 const {DateTime, Interval} = require('luxon');
 
-function transactionSystem(){
+function TransactionSystem(){
+    const accountObj = {
+        accounts:
+        [
+                {
+                    username: "@john",
+                    password: SHA256("someHashedstring").toString(),
+                    createdAt: new Date(Date.UTC(2021,5,31,12,23,21,11)),
+                    history: [],
+                    total_in:0.00,
+                    total_out:0.00,
+                    balance: 30.00
+                },
+                {
+                    username: "@preet",
+                    password: SHA256("somePassword").toString(),
+                    createdAt: new Date(Date.UTC(2021,6,23,8,40,31,16)),
+                    history: [],
+                    total_in:0.00,
+                    total_out:0.00,
+                    balance: 10.40
+                }
+         ]
+    }
+    function reducer(curr, receivedAccount)
+    {
+        return {
+                accounts: receivedAccount
+        }
+    }
 
 // TODO: change currentUser and accounts into states
-    let currentUser = "@john";
+    const [currentUser, setCurrentUser] = useState("@john");
 
-    let accounts = [
-        {
-            username: "@john",
-            password: SHA256("someHashedstring").toString(),
-            createdAt: new Date(Date.UTC(2021,5,31,12,23,21,11)),
-            history: [],
-            total_in:0.00,
-            total_out:0.00,
-            balance: 30.00
-        },
-        {
-            username: "@preet",
-            password: SHA256("somePassword").toString(),
-            createdAt: new Date(Date.UTC(2021,6,23,8,40,31,16)),
-            history: [],
-            total_in:0.00,
-            total_out:0.00,
-            balance: 10.40
-        }
-    ]
+    const [accounts, setAccounts] = useReducer(reducer, accountObj)
 
    const updateBalance = (username) =>{
    
@@ -76,7 +88,7 @@ function transactionSystem(){
     }
 }
 
-export default transactionSystem;
+export default TransactionSystem;
 /*updateBalance("@john");
 console.log(getBalance("@john"));
 sendCredits("@john","@preet",1000);

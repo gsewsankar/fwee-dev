@@ -11,7 +11,7 @@ var gunPeer = Gun({
 
  function reducer(curr, receivedMessage)
  {
-    return{
+    return {
             messageArray: [receivedMessage, ...curr.messageArray]
     }
  }
