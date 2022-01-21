@@ -1,4 +1,4 @@
-import React from 'react';
+import {useEffect,useReducer} from 'react'
 import './App.css';
 import Dashboard from './containers/Dashboard';
 import Store from './containers/Store';
@@ -13,6 +13,8 @@ import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
 import SignUpPage from './containers/SignUpPage';
 import TransactionSystem from './components/transactionSystem'
+import ReactDOM from 'react-dom';
+import {MessageHandler} from './components/MessageHandler'
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,8 +29,10 @@ function App() {
   const [user] = useAuthState(auth);
 
   return (
+
     <Router basename={process.env.PUBLIC_URL}>
     <div className="App">
+      <MessageHandler />
       <NavBar ></NavBar>
       <div className="App-header">
         <Routes>

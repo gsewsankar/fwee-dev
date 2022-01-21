@@ -7,7 +7,7 @@ var gunPeer = Gun({
     ]
 
  })
-function MessageSender(props)
+export const MessageSender = (props) =>
 {
  const currMessages  = gunPeer.get(props.name)
  currMessages.set({
@@ -18,3 +18,4 @@ function MessageSender(props)
         })
 
 }
+

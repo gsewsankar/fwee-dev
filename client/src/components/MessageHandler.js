@@ -16,8 +16,10 @@ var gunPeer = Gun({
     }
  }
 
- function MessageHandler(){
+ export const MessageHandler = () =>{
     const [messageState, setMessageState] = useReducer(reducer, messages)
+        console.log("hiuqedjqw");
+
     useEffect(() =>{
         const currData = gunPeer.get('data')
         // update messages array with whatever is in the database using reducer
@@ -33,7 +35,7 @@ var gunPeer = Gun({
         })
 
     }, [])
+    return(null)
 
  }
 
- export default MessageHandler;

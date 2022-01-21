@@ -14,6 +14,8 @@ import { DateTime, Interval } from "luxon";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 
+import {MessageSender} from './MessageSender'
+
 function BuyButton(props){
 
     const[user, authLoading] = useAuthState(auth);
@@ -44,6 +46,11 @@ function BuyButton(props){
         return(<Loading/>);
     }
 
+    /*const getBalance = (username)=>{
+        const user = accounts.find(account => account.username == username);
+        return user.balance;
+    }*/
+
     const calculateBalance = () => {
         let created = buyerData.createdAt.toDate();
         let now = DateTime.now();
@@ -52,10 +59,19 @@ function BuyButton(props){
         score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(buyerData.amount_bought))).toFixed(2);
         updateDoc(buyerRef,{balance: score});
     }
-    
+
+
     function transaction(){
         calculateBalance();
+        // TODO: add check for current user?
         if(buyerData.balance > itemData.price){
+            const messageToSend = {
+                from: buyerData.username,
+                to: sellerData.username,
+                amount: parseFloat(itemData.price),
+                time:Date.now()
+            }
+            MessageSender(messageToSend)
             updateDoc(buyerRef,{
                 balance: parseFloat(buyerData.balance)-parseFloat(itemData.price),
                 amount_bought: increment(parseFloat(itemData.price)),
