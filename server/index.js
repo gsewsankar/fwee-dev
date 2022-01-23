@@ -4,9 +4,9 @@ import {resolvers} from "./resolvers";
 import { ApolloServer, ApolloError, ValidationError, gql } from 'apollo-server';
 //import serviceAccount from "./service_account.json";
 const express = require('express')
-const GunServer = require('gun')
+const Gun = require('gun')
 const expressApp= express()
-expressApp.use(GunServer.serve) 
+expressApp.use(Gun.serve) 
 
 /*const startServer = async() => {
   admin.initializeApp({
@@ -23,10 +23,10 @@ expressApp.use(GunServer.serve)
 startServer();*/
 
 //TODO: replace this port later with a hosted server
-const server = expressApp.listen(1900, () => {
+const server = expressApp.listen(3030, () => {
 console.log("Gun server connection established")
 })
 
 
 
-GunServer({web: server});
+Gun({web: server});

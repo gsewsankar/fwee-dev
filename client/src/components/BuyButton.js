@@ -70,7 +70,7 @@ function BuyButton(props){
                 from: buyerData.username,
                 to: sellerData.username,
                 amount: parseFloat(itemData.price),
-                time:Date.now()
+                time: Date.now()
             }
             MessageSender(messageToSend)
             updateDoc(buyerRef,{
