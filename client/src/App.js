@@ -12,7 +12,6 @@ import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
 import SignUpPage from './containers/SignUpPage';
-import TransactionSystem from './components/transactionSystem'
 import ReactDOM from 'react-dom';
 import {MessageHandler} from './components/MessageHandler'
 import {
