@@ -16,6 +16,8 @@ export const MessageSender = (props) =>
             amount: props.amount,
             time: props.time
         })
+  
+    
 
 }
 

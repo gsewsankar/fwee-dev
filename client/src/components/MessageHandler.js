@@ -16,7 +16,7 @@ var gunPeer = Gun({
     }
  }
 
- export const MessageHandler = () =>{
+ export const MessageHandler = (props) =>{
     const [messageState, setMessageState] = useReducer(reducer, messages)
 
     useEffect(() =>{
@@ -24,7 +24,7 @@ var gunPeer = Gun({
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
-        currData.map().on(m => {
+        currData.map().once(m => {
             setMessageState({
                 to: m.to,
                 from: m.from,
@@ -35,8 +35,24 @@ var gunPeer = Gun({
 
     }, [])
     console.log(messageState);
+    return(
+        <div>
+        {props.display ?
+            messageState.messageArray.map(message => (
+                <div key={message.time}>
+                <h1>From: {message.from}</h1>
 
-    return(null)
+
+                <h3>Amount: {message.amount}</h3>
+                <h3>To: {message.to}</h3>
+                <h3>Date: {message.time}</h3>
+                <hr></hr>
+                </div>
+            ))
+            : null
+    
+    
+    }</div>)
 
  }
 

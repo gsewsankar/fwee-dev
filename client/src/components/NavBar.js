@@ -64,6 +64,7 @@ function NavBar(){
                     <button onClick={toggleSideBar}><FontAwesomeIcon icon={faTimes}/></button>
                     <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Direct Messages</Link>
                     <Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>
+                    <Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Message Chain</Link>
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
                     <p><b>Stores You Support</b></p>

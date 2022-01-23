@@ -66,13 +66,7 @@ function BuyButton(props){
         calculateBalance();
         // TODO: add check for current user?
         if(buyerData.balance > itemData.price){
-            const messageToSend = {
-                from: buyerData.username,
-                to: sellerData.username,
-                amount: parseFloat(itemData.price),
-                time: Date.now()
-            }
-            MessageSender(messageToSend)
+          
             updateDoc(buyerRef,{
                 balance: parseFloat(buyerData.balance)-parseFloat(itemData.price),
                 amount_bought: increment(parseFloat(itemData.price)),
@@ -95,9 +89,21 @@ function BuyButton(props){
             alert("not enough credits in your account");
         }
     }
+    function sendMessage()
+    {
+        if(buyerData.balance > itemData.price){
+            const messageToSend = {
+                from: buyerData.username,
+                to: sellerData.username,
+                amount: parseFloat(itemData.price),
+                time:Date.now()
+            }
+            MessageSender(messageToSend)
+        }
+    }
 
     return(
-        <button className="buy" onClick={transaction}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
+        <button className="buy" onClick={(e) => {e.preventDefault(); transaction(); sendMessage()}}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
     )
   }
 
