@@ -67,16 +67,16 @@ function Dashboard(){
       return(
         <div className="dash-container">
           <h1>Dashboard</h1>
-          <h3>Account Balance: {userData && userData.balance} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
+          <h3>Account Balance: {userData && userData.balance.toFixed(2)} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
           <br/>
           <div>Notifications (Sample Data)</div>
           {notificationsSample.map(notif=>{return <Notification info={notif}/>})}
           <br/>
-          <div>Your Coin and Achievements</div>
+          {/* <div>Your Coin and Achievements</div> */}
           {/* <canvas id="bg" width='500px' height='500px'></canvas> */}
-          <p>Established {months[userData.createdAt.toDate().getMonth()] + " " + userData.createdAt.toDate().getDate().toString() + ", " + userData.createdAt.toDate().getFullYear().toString()}</p>
-          <div>Central Clock</div>
-          <div>Economy Size</div>  
+          <p>Account Established {months[userData.createdAt.toDate().getMonth()] + " " + userData.createdAt.toDate().getDate().toString() + ", " + userData.createdAt.toDate().getFullYear().toString()}</p>
+          {/* <div>Central Clock</div>
+          <div>Economy Size</div>   */}
         </div>
         
       )

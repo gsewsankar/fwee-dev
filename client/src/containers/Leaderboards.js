@@ -30,7 +30,7 @@ function Leaderboards(){
               <th>Name</th>
               <th>Score</th>
             </tr>
-            {data.map(person=>{return<tr key={count}><td>{count++}</td><td><Link to={"/"+person.username}>{person.displayName}</Link></td><td>{person.balance}</td></tr>})}
+            {data.map(person=>{return<tr key={count}><td>{count++}</td><td><Link to={"/"+person.username}>{person.displayName}</Link></td><td>{Number(person.balance).toFixed(2)}</td></tr>})}
             </tbody>
           </table>
       </div>

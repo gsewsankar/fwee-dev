@@ -58,9 +58,9 @@ function Home(){
           
           <div className="section">
             <div className="left">
-              <h3>You get 0.01 time credits every minute for the rest of your life.</h3>
-                  <p>How will you spend your time?</p>
+              <h3>You get 0.01 time credits every minute for the rest of your life.</h3>  
             </div>
+            <p>How will you spend your time?</p>
             <div className="section-right">
               <img className="l" src={jar} alt="jar" height="350px" width="auto"/>
             </div>
@@ -103,7 +103,7 @@ function Home(){
 
           <div className="section">
               <h3>Unlock and Discover New Content</h3>
-              <LockedItem key={"Fmgry5btsv6tt8r9G0Ak"} itemID={"Fmgry5btsv6tt8r9G0Ak"}/>
+              <LockedItem key={"JuPfujTTL98hMzBmLm2h"} itemID={"JuPfujTTL98hMzBmLm2h"}/>
           </div>
 
           <div className="divider"></div>
