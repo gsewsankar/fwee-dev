@@ -53,13 +53,15 @@ function DirectMessages() {
   // set a new message in gun, update the local state to reset the form field
   function sendCredits() {
     const accounts = gun.get('accounts');
-
-    accounts.set({
+    const transaction = {
       from: formState.from,
       to: formState.to,
       amount: formState.amount,
       time: Date.now()
-    })
+    }
+
+    MessageSender(transaction)
+    accounts.set(transaction)
     setForm({
       from: '',
       to: '',
