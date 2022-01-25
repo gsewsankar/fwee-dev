@@ -35,20 +35,21 @@ function DirectMessages() {
 
   // when the app loads, fetch the current messages and load them into the state
   // this also subscribes to new data as it changes and updates the local state
-  useEffect(() => {
-    const accounts = gun.get('accounts')
-    accounts.map().once(u => {
-      dispatch({
-        username: u.username,
-        password: u.password,
-        createdAt: u.createdAt,
-        history: u.history,
-        total_in: u.total_in,
-        total_out: u.total_out,
-        balance: u.balance
-      })
-    })
-  }, [])
+  // TODO: Fix with actual gun document (It's not 'accounts') and uncomment.
+  // useEffect(() => {
+  //   const accounts = gun.get('accounts')
+  //   accounts.map().once(u => {
+  //     dispatch({
+  //       username: u.username,
+  //       password: u.password,
+  //       createdAt: u.createdAt,
+  //       history: u.history,
+  //       total_in: u.total_in,
+  //       total_out: u.total_out,
+  //       balance: u.balance
+  //     })
+  //   })
+  // }, [])
 
   // set a new message in gun, update the local state to reset the form field
   function sendCredits() {
