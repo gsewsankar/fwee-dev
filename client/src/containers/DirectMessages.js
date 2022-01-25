@@ -77,7 +77,7 @@ function DirectMessages() {
   }
 
   return (
-    <div style={{ padding: 30 }}>
+    <div className='form-section' style={{ padding: 30 }}>
       <input
         onChange={onChange}
         placeholder="From"
