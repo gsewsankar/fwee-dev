@@ -32,7 +32,6 @@ function App() {
 
     <Router basename={process.env.PUBLIC_URL}>
     <div className="App">
-    <MessageHandler display={false}/>
 
       <NavBar ></NavBar>
       <div className="App-header">
@@ -55,6 +54,7 @@ function App() {
       {!user&&<div className="footer">
         <p>all rights reserved. about. privacy policy. tos.</p>
       </div>}
+    <MessageHandler display={false}/>
     </div>
     </Router>
   );
