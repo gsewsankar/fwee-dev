@@ -1,4 +1,3 @@
-import {useEffect,useReducer} from 'react'
 import './App.css';
 import Dashboard from './containers/Dashboard';
 import MessageChain  from './containers/MessageChain'
@@ -13,7 +12,6 @@ import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
 import SignUpPage from './containers/SignUpPage';
-import ReactDOM from 'react-dom';
 import {MessageHandler} from './components/MessageHandler'
 import {
   BrowserRouter as Router,

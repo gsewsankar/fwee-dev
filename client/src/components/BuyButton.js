@@ -28,7 +28,7 @@ function BuyButton(props){
 
     const sellerRef = itemData && doc(db,'users',itemData.owner);
     const[storeid, setStoreid] = useState("default");
-    const[sellerData,sellerLoading] = useDocumentData(sellerRef);
+    const[sellerData] = useDocumentData(sellerRef);
 
     const storeRef = doc(db,'stores',storeid);
     const[storeData, storeLoading] = useDocumentData(storeRef);

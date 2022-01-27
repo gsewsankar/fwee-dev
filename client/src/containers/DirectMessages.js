@@ -1,5 +1,5 @@
 import Gun from 'gun';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { MessageSender } from '../components/MessageSender';
 
 // initialize gun locally
@@ -31,7 +31,7 @@ function DirectMessages() {
   })
 
   // initialize the reducer & state for holding the messages array
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state/*, dispatch*/] = useReducer(reducer, initialState)
 
   // when the app loads, fetch the current messages and load them into the state
   // this also subscribes to new data as it changes and updates the local state
