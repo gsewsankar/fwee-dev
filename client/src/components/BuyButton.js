@@ -14,6 +14,8 @@ import { DateTime, Interval } from "luxon";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 
+import {MessageSender} from './MessageSender'
+
 function BuyButton(props){
 
     const[user, authLoading] = useAuthState(auth);
@@ -23,10 +25,11 @@ function BuyButton(props){
     
     const buyerRef = user && doc(db,'users', user.uid);
     const[buyerData,buyerLoading] = useDocumentData(buyerRef);
-    
+
     const sellerRef = itemData && doc(db,'users',itemData.owner);
     const[storeid, setStoreid] = useState("default");
-    
+    const[sellerData] = useDocumentData(sellerRef);
+
     const storeRef = doc(db,'stores',storeid);
     const[storeData, storeLoading] = useDocumentData(storeRef);
     
@@ -44,6 +47,11 @@ function BuyButton(props){
         return(<Loading/>);
     }
 
+    /*const getBalance = (username)=>{
+        const user = accounts.find(account => account.username == username);
+        return user.balance;
+    }*/
+
     const calculateBalance = () => {
         let created = buyerData.createdAt.toDate();
         let now = DateTime.now();
@@ -52,10 +60,13 @@ function BuyButton(props){
         score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(buyerData.amount_bought))).toFixed(2);
         updateDoc(buyerRef,{balance: score});
     }
-    
+
+
     function transaction(){
         calculateBalance();
+        // TODO: add check for current user?
         if(buyerData.balance > itemData.price){
+          
             updateDoc(buyerRef,{
                 balance: parseFloat(buyerData.balance)-parseFloat(itemData.price),
                 amount_bought: increment(parseFloat(itemData.price)),
@@ -78,9 +89,21 @@ function BuyButton(props){
             alert("not enough credits in your account");
         }
     }
+    function sendMessage()
+    {
+        if(buyerData.balance > itemData.price){
+            const messageToSend = {
+                from: buyerData.username,
+                to: sellerData.username,
+                amount: parseFloat(itemData.price),
+                time:Date.now()
+            }
+            MessageSender(messageToSend)
+        }
+    }
 
     return(
-        <button className="buy" onClick={transaction}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
+        <button className="buy" onClick={(e) => {e.preventDefault(); transaction(); sendMessage()}}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
     )
   }
 

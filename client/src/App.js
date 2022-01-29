@@ -1,6 +1,6 @@
-import React from 'react';
 import './App.css';
 import Dashboard from './containers/Dashboard';
+import MessageChain  from './containers/MessageChain'
 import Store from './containers/Store';
 import Home from './containers/Home';
 import NavBar from './components/NavBar';
@@ -12,7 +12,7 @@ import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
 import SignUpPage from './containers/SignUpPage';
-
+import {MessageHandler} from './components/MessageHandler'
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,14 +27,18 @@ function App() {
   const [user] = useAuthState(auth);
 
   return (
+
     <Router basename={process.env.PUBLIC_URL}>
     <div className="App">
+
       <NavBar ></NavBar>
       <div className="App-header">
+
         <Routes>
           <Route path="/" element={<Home/>}></Route>
           <Route path="/join" element={user ? <Navigate to="/"/> : <SignUpPage/>}></Route>
           <Route path={"/dashboard"} element={user ? <Dashboard/> : <Navigate to="/"/>}></Route>
+          <Route path={"/messageChain"} element={user ? <MessageChain/> : <Navigate to="/"/>}></Route>
           <Route path={"/leaders"} element={<Leaderboards/>}></Route>
           <Route path={"/dms"} element={user ? <DirectMessages/> : <Navigate to="/"/>}></Route>
           <Route path={"/settings"} element={user ? <Settings/> : <Navigate to="/"/>}></Route>
@@ -48,6 +52,7 @@ function App() {
       {!user&&<div className="footer">
         <p>all rights reserved. about. privacy policy. tos.</p>
       </div>}
+    <MessageHandler display={false}/>
     </div>
     </Router>
   );
