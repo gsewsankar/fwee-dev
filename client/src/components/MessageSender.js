@@ -1,11 +1,7 @@
 // upload messages to gun.js database
 import Gun from 'gun'
-var gunPeer = Gun({
-    peers: [
-    'http://localhost:3030/gun'
-    ]
+var gunPeer = Gun();
 
- })
 export const MessageSender = (props) =>
 {
  const currMessages  = gunPeer.get('transactions')

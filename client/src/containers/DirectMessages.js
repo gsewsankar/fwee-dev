@@ -3,11 +3,7 @@ import React, { useReducer, useState } from 'react';
 import { MessageSender } from '../components/MessageSender';
 
 // initialize gun locally
-const gun = Gun({
-  peers: [
-    'http://localhost:3030/gun'
-  ]
-})
+const gun = Gun();
 
 // create the initial state to hold the messages
 const initialState = {

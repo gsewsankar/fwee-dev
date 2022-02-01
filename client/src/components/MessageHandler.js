@@ -1,12 +1,8 @@
 import {useEffect,useReducer} from 'react'
 import Gun from 'gun'
 
-var gunPeer = Gun({
-    peers: [
-    'http://localhost:3030/gun'
-    ]
+ var gunPeer = Gun();
 
- })
  const messages = {messageArray: []}
 
  function reducer(curr, receivedMessage)
@@ -34,7 +30,7 @@ var gunPeer = Gun({
         })
 
     }, [])
-    console.log(messageState);
+    //console.log(messageState);
     return(
         <div>
         {props.display ?
