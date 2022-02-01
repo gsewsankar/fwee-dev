@@ -11,7 +11,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog, faDiceD20, faExchangeAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
 
@@ -40,7 +40,7 @@ function NavBar(){
             
             //SIDEBAR gets the most recently bought items
             let items = [];
-            for(let j = ref1&&ref1.purchases.length - 1; j > 0; j--){
+            for(let j = ref1&&ref1.purchases.length - 1; j >= 0; j--){
                 const id = ref1&&ref1.purchases[j];
                 const title = (await getDoc(doc(db, "items", ref1&&ref1.purchases[j]))).data().title;
                 items.push({id,title});
@@ -62,11 +62,11 @@ function NavBar(){
                 {user && 
                 <div className={sidebar ? "side-menu-on" : "side-menu-off"} >
                     <button onClick={toggleSideBar}><FontAwesomeIcon icon={faTimes}/></button>
-                    <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Direct Messages</Link>
+                    <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Messages + <FontAwesomeIcon icon={faExchangeAlt}/> Transfers</Link>
                     <Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>
-                    <Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Message Chain</Link>
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
+                    <Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faDiceD20}/> Fwee Main Chain</Link>
                     <p><b>Stores You Support</b></p>
                     {supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
                     <p><b>Recently Bought Items</b></p>
@@ -82,6 +82,8 @@ function NavBar(){
                     <input className="search" placeholder="Search"></input>
                     <button><FontAwesomeIcon icon={faSearch}/></button>
                 </div>
+
+                {user&&<Link to="/newItem"><button>New <FontAwesomeIcon icon={faUpload}/></button></Link>}
 
                 {user ? 
                 (<Link to={`/${username}`}>

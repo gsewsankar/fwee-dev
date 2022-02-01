@@ -52,36 +52,34 @@ function BuyButton(props){
         return user.balance;
     }*/
 
-    const calculateBalance = () => {
+    async function calculateBalance(){
         let created = buyerData.createdAt.toDate();
         let now = DateTime.now();
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
         score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(buyerData.amount_bought))).toFixed(2);
-        updateDoc(buyerRef,{balance: score});
+        await updateDoc(buyerRef,{balance: score});
     }
 
-
-    function transaction(){
-        calculateBalance();
+    async function transaction(){
+        await calculateBalance();
         // TODO: add check for current user?
         if(buyerData.balance > itemData.price){
-          
-            updateDoc(buyerRef,{
+            await updateDoc(buyerRef,{
                 balance: parseFloat(buyerData.balance)-parseFloat(itemData.price),
                 amount_bought: increment(parseFloat(itemData.price)),
                 purchases: arrayUnion(itemData.id),
             });
 
-            updateDoc(sellerRef,{
+            await updateDoc(sellerRef,{
                 balance: increment(parseFloat(itemData.price))
             });
 
-            updateDoc(storeRef,{
+            await updateDoc(storeRef,{
                 amount_sold: increment(parseFloat(itemData.price))
             })
 
-            updateDoc(itemRef,{
+            await updateDoc(itemRef,{
                 buyers: arrayUnion(user.uid)
             })
         }
@@ -89,6 +87,7 @@ function BuyButton(props){
             alert("not enough credits in your account");
         }
     }
+    
     function sendMessage()
     {
         if(buyerData.balance > itemData.price){

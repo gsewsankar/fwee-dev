@@ -23,7 +23,7 @@ function Home(){
 
     useEffect(()=>{
       async function fetchData(){
-        let getFeed = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),limit(10)))).docs;
+        let getFeed = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),limit(30)))).docs;
         setFeed(getFeed);
       }
 
