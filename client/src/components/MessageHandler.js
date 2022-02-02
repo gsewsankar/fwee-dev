@@ -25,12 +25,12 @@ import 'gun/axe'
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
-        
+        console.log("hi")
+        console.log(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+
                 let user = gunPeer.user()
                 user.auth('fweeMessageChain',process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY, function(ack)
                 {
-                    console.log("hi")
-                    console.log(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
                     console.log(ack);
                 })
                 
