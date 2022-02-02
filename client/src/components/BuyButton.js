@@ -1,6 +1,6 @@
 //updated to v9 on 12-8-2021
 
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import Loading from '../components/Loading';
 import './BuyButton.css';
 
@@ -32,15 +32,22 @@ function BuyButton(props){
 
     const storeRef = doc(db,'stores',storeid);
     const[storeData, storeLoading] = useDocumentData(storeRef);
-    
+    const isMounted = useRef(true);
 
+    useEffect(() => {
+       
+        return () => { isMounted.current = false}
+
+    },[]);
     useEffect(() => {
         async function fetchData(){
           const ref1 = await getDoc(itemRef);
           const ref2 = await getDocs(query(collection(db,'stores'),where("owner", "==", ref1.data().owner)));
-          setStoreid(ref2.docs[0].id);
+          if(isMounted.current)
+            setStoreid(ref2.docs[0].id);
         }
         fetchData();
+
     },[itemRef]);
 
     if(itemLoading || buyerLoading || authLoading || storeLoading){
