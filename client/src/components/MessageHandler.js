@@ -31,7 +31,6 @@ import 'gun/axe'
                 {
                     console.log(ack);
                 })
-                console.log(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
                 
                 gunPeer.on('auth', event => {
                    user.get('transactions').map().once((m, index) => {
