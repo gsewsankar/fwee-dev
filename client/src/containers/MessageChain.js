@@ -9,7 +9,6 @@ import {MessageHandler} from '../components/MessageHandler'
 function MessageChain(){
     return(
         <MessageHandler display={true}/>
-
     )
   }
 

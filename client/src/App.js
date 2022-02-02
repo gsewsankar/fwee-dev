@@ -52,7 +52,6 @@ function App() {
       {!user&&<div className="footer">
         <p>all rights reserved. about. privacy policy. tos.</p>
       </div>}
-    <MessageHandler display={false}/>
     </div>
     </Router>
   );

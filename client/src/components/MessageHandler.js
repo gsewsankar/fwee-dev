@@ -1,7 +1,15 @@
-import {useEffect,useReducer} from 'react'
-import Gun from 'gun'
+import {useEffect,useReducer, useRef} from 'react'
+import Gun from 'gun/gun'
+import 'gun/sea'
+import 'gun/axe'
 
- var gunPeer = Gun();
+ var gunPeer = Gun(
+
+        ['https://fwee-gun-relay-node.herokuapp.com/gun']
+    
+    
+ );
+
 
  const messages = {messageArray: []}
 
@@ -12,36 +20,59 @@ import Gun from 'gun'
     }
  }
 
- export const MessageHandler = (props) =>{
+ export  const MessageHandler = (props) =>{
     const [messageState, setMessageState] = useReducer(reducer, messages)
+    const isMounted = useRef(true);
 
-    useEffect(() =>{
-        const currData = gunPeer.get('transactions')
+
+     useEffect(() =>{
+
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
-        currData.map().once(m => {
-            setMessageState({
-                to: m.to,
-                from: m.from,
-                amount: m.amount,
-                time: m.time
-            })
-        })
+
+                let user = gunPeer.user()
+                user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY, function(ack)
+                {
+                    console.log(ack);
+                })
+                
+                gunPeer.on('auth', event => {
+                   user.get('transactions').map().once((m, index) => {
+                        if(isMounted.current){
+                            setMessageState({
+                                to: m.to,
+                                from: m.from,
+                                amount: m.amount,
+                                time: m.time,
+                                key: index
+
+                            })
+                        }
+
+                        })
+                    })
+            
+                
+        
+        return () => { isMounted.current = false}
+    
+        
 
     }, [])
-    //console.log(messageState);
+    console.log(messageState);
     return(
         <div>
         {props.display ?
             messageState.messageArray.map(message => (
-                <div key={message.time}>
+                <div key={message.key}>
                 <h1>From: {message.from}</h1>
 
 
                 <h3>Amount: {message.amount}</h3>
                 <h3>To: {message.to}</h3>
                 <h3>Date: {message.time}</h3>
+
                 <hr></hr>
                 </div>
             ))
