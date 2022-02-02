@@ -29,8 +29,8 @@ import 'gun/axe'
                 let user = gunPeer.user()
                 user.auth('fweeMessageChain',process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY, function(ack)
                 {
-                    print("hi")
-                    print(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+                    console.log("hi")
+                    console.log(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
                     console.log(ack);
                 })
                 
