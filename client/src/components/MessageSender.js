@@ -11,7 +11,7 @@ export const MessageSender = (props) =>
 {
     let user = gunPeer.user()
 
-    user.auth('fweeMessageChain',process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+    user.auth('fweeMessageChain',String(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY))
   
     gunPeer.on('auth', event => {
          user.get('transactions').set({

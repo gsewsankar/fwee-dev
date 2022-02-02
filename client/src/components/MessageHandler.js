@@ -26,10 +26,10 @@ import 'gun/axe'
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
         console.log("hi")
-        console.log(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+        console.log(typeof(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY))
 
                 let user = gunPeer.user()
-                user.auth('fweeMessageChain',process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY, function(ack)
+                user.auth('fweeMessageChain', String(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY), function(ack)
                 {
                     console.log(ack);
                 })
