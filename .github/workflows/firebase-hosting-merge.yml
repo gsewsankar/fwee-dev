@@ -8,7 +8,6 @@ name: Deploy to Firebase Hosting on merge
       - main
 env:
   CI: false
-  TRANSACTION_SYSTEM_API_KEY: '${{secrets.TRANSACTION_SYSTEM_API_KEY}}'
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -22,3 +21,6 @@ jobs:
           channelId: live
           projectId: time-73ed0
           entryPoint: "./client"
+        env:
+          REACT_APP_TRANSACTION_SYSTEM_API_KEY: ${{ secrets.TRANSACTION_SYSTEM_API_KEY }}
+
