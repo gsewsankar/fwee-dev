@@ -4,14 +4,17 @@ import Gun from 'gun/gun'
 import 'gun/sea'
 import 'gun/axe'
 
-var gunPeer = Gun()
+var gunPeer = Gun(
+    ['https://fwee-gun-relay-node.herokuapp.com/gun']
+
+)
 
 
 export const MessageSender = (props) =>
 {
     let user = gunPeer.user()
-    user.create('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
-   /* user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+
+    user.auth('fweeMessageChain',process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
   
     gunPeer.on('auth', event => {
          user.get('transactions').set({
@@ -20,7 +23,7 @@ export const MessageSender = (props) =>
             amount: props.amount,
             time: props.time
         })
-    })*/
+    })
         
 
 }

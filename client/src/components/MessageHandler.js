@@ -3,7 +3,12 @@ import Gun from 'gun/gun'
 import 'gun/sea'
 import 'gun/axe'
 
- var gunPeer = Gun();
+ var gunPeer = Gun(
+
+        ['https://fwee-gun-relay-node.herokuapp.com/gun']
+    
+    
+ );
 
 
  const messages = {messageArray: []}
