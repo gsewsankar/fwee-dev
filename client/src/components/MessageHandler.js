@@ -25,18 +25,15 @@ import 'gun/axe'
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
-        console.log("hi")
-        console.log(typeof(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY))
 
                 let user = gunPeer.user()
-                user.auth('fweeMessageChain', String(process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY), function(ack)
+                user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY, function(ack)
                 {
                     console.log(ack);
                 })
                 
-                
-                    gunPeer.on('auth', async(event) => {
-                    const alias =  await user.get('transactions').map().once((m, index) => {
+                gunPeer.on('auth', event => {
+                   user.get('transactions').map().once((m, index) => {
                         if(isMounted.current){
                             setMessageState({
                                 to: m.to,
@@ -58,7 +55,7 @@ import 'gun/axe'
         
 
     }, [])
-    //console.log(messageState);
+    console.log(messageState);
     return(
         <div>
         {props.display ?
