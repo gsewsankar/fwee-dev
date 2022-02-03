@@ -26,41 +26,57 @@ import 'gun/axe'
 
 
      useEffect(() =>{
-
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
 
                 let user = gunPeer.user()
-                user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY, function(ack)
-                {
-                    console.log(ack);
-                })
-                
-                gunPeer.on('auth', event => {
-                   user.get('transactions').map().once((m, index) => {
-                        if(isMounted.current){
-                            setMessageState({
-                                to: m.to,
-                                from: m.from,
-                                amount: m.amount,
-                                time: m.time,
-                                key: index
+                if(!user.is){
 
-                            })
-                        }
+                user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+                gunPeer.on('auth',event  => {
+                    user.get('transactions').map().once((m, index) => {
+                           setMessageState({
+                               to: m.to,
+                               from: m.from,
+                               amount: m.amount,
+                               time: m.time,
+                               key: index
 
-                        })
+                           })
+                           
+
+                       })
+                       
+
+                   })
+            }
+            else
+            {
+                user.get('transactions').map().once((m, index) => {
+                    setMessageState({
+                        to: m.to,
+                        from: m.from,
+                        amount: m.amount,
+                        time: m.time,
+                        key: index
+
                     })
+                    
+
+                })
+            }
+                
+                
+               
             
                 
-        
-        return () => { isMounted.current = false}
+            return () => {gunPeer.off(); isMounted.current = false}
+
     
         
 
     }, [])
-    console.log(messageState);
     return(
         <div>
         {props.display ?
