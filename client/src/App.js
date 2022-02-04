@@ -12,7 +12,6 @@ import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
 import SignUpPage from './containers/SignUpPage';
-import {MessageHandler} from './components/MessageHandler'
 import {
   BrowserRouter as Router,
   Routes,
