@@ -131,6 +131,10 @@ svg.bars:hover{
         display: none;
     }
 
+    .newUploadButton{
+        display: none;
+    }
+
     /* moves navbar to bottom */
     /* .nav-frame{
         position: fixed;
