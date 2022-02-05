@@ -22,6 +22,18 @@
     color: rgb(244, 154, 194);
 }
 
+.notification-frame-grey{
+    margin: 1rem;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-evenly;
+    box-shadow: 0 3px 6px 0 rgb(119, 119, 119);
+    border-radius: 10px;
+    color: rgb(119, 119, 119);
+}
+
 .icon-area{
     padding: 10px;
     display: flex;

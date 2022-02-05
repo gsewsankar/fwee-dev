@@ -5,7 +5,7 @@ import Loading from '../components/Loading';
 import './BuyButton.css';
 
 import {db,auth} from '../firebaseInitialize';
-import { doc, getDoc, getDocs, collection, where, query, updateDoc, increment, arrayUnion } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection, where, query, updateDoc, increment, arrayUnion, addDoc, serverTimestamp } from "firebase/firestore";
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -95,7 +95,7 @@ function BuyButton(props){
         }
     }
     
-    function sendMessage()
+    async function sendMessage()
     {
         if(buyerData.balance > itemData.price){
             const messageToSend = {
@@ -104,7 +104,14 @@ function BuyButton(props){
                 amount: parseFloat(itemData.price),
                 time:Date.now()
             }
-            MessageSender(messageToSend)
+            MessageSender(messageToSend);
+            await addDoc(collection(db,'users',itemData.owner,'notifications'),{
+                type:"buy",
+                who:user.uid,
+                price:itemData.price,
+                itemID:props.itemID,
+                time:serverTimestamp(),
+            });
         }
     }
 

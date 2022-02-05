@@ -3,7 +3,7 @@
 import React,{useState,useEffect} from 'react';
 
 import {auth, db} from '../firebaseInitialize';
-import { doc, collection, getDocs, addDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, deleteDoc, serverTimestamp, getDoc } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -39,6 +39,14 @@ function LikeButton(props){
             }
           });
           await deleteDoc(doc(db,'items',props.itemID,'likes',idToDelete));
+
+          //send unlike notification
+          await addDoc(collection(db,'users',(await getDoc(doc(db,'items',props.itemID))).data().owner,'notifications'), {
+            type:'unlike',
+            who:user.uid,
+            itemID:props.itemID,
+            time:serverTimestamp(),
+          });
         }
         else{
           //add like
@@ -46,6 +54,14 @@ function LikeButton(props){
             uid:user.uid,
             createdAt:serverTimestamp(),
             itemid:props.itemID
+          });
+
+          //send notification
+          await addDoc(collection(db,'users',(await getDoc(doc(db,'items',props.itemID))).data().owner,'notifications'), {
+            type:'like',
+            who:user.uid,
+            itemID:props.itemID,
+            time:serverTimestamp(),
           });
         }
         setLiked(!liked);
