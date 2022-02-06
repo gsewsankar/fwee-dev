@@ -45,6 +45,7 @@ function NavBar(){
                 const title = (await getDoc(doc(db, "items", ref1&&ref1.purchases[j]))).data().title;
                 items.push({id,title});
             }
+            items = items.slice(0,10);
             setRecentlyBought(items);
         }
         
@@ -65,11 +66,13 @@ function NavBar(){
                     <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Messages + <FontAwesomeIcon icon={faExchangeAlt}/> Transfers</Link>
                     <Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
-                    <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
                     <Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faDiceD20}/> Fwee Main Chain</Link>
+                    <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
+                    
                     <p><b>Stores You Support</b></p>
                     {supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
                     <p><b>Recently Bought Items</b></p>
+                    {/* <Link to='purchases' onClick={toggleSideBar}>See All Purchases</Link> */}
                     {recentlyBought.map((item)=>{return<Link key={item.id} to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
                 </div>}
                 
@@ -83,7 +86,7 @@ function NavBar(){
                     <button><FontAwesomeIcon icon={faSearch}/></button>
                 </div>
 
-                {user&&<Link to="/newItem"><button>New <FontAwesomeIcon icon={faUpload}/></button></Link>}
+                {user&&<Link className='newUploadButton' to="/newItem"><button>New <FontAwesomeIcon icon={faUpload}/></button></Link>}
 
                 {user ? 
                 (<Link to={`/${username}`}>
@@ -92,7 +95,7 @@ function NavBar(){
                     {<img src={user && user.photoURL} alt={user && user.photoURL}></img>}
                 </div>
                 </Link>)  
-                : <Link to="/join"><button>Login / SignUp</button></Link>}    
+                : <Link className='loginButton' to="/join"><button>Login / SignUp</button></Link>}    
         </div>
     );
 }

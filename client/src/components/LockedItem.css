@@ -21,8 +21,13 @@
     transition-duration: 300ms;
     cursor: pointer;
     background-color: white;
-    color: black;
-    border: 1px solid rgb(142, 197, 211,0.8);
+    color:rgb(119, 153, 101);
+    border: 1px solid rgba(148, 211, 142, 0.8);
+}
+
+.locked-card button:hover{
+    background-color: rgb(119, 153, 101);
+    color: white;
 }
 
 p{

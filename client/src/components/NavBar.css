@@ -125,9 +125,21 @@ svg.bars:hover{
     padding-left: 5px;
 }
 
+.newUploadButton:hover{
+    background-color: rgba(180, 220, 160, 0.90);
+}
+
+.loginButton:hover{
+    background-color: rgba(180, 220, 160, 0.90);
+}
+
 /* when screen width is less than 600px (mobile)*/
 @media only screen and (max-width: 600px) {
     .search{
+        display: none;
+    }
+
+    .newUploadButton{
         display: none;
     }
 

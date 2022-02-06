@@ -51,7 +51,7 @@ function Home(){
         <div className="lander">
           <img className="logo" src={logo} alt="My logo" width="1000" height="auto"/>
           <h3>A Gamified Social Media Marketplace with its own Digital Currency</h3>
-          <p>It's a Free World (BETA)</p>
+          <p>It's a Free World where Time is Money (BETA)</p>
           <Link to="/join"><button>Join Now</button></Link>
 
           <div className="divider"></div>
