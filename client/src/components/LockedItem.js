@@ -97,7 +97,7 @@ function LockedItem(props){
         <h3>{itemData && itemData.title}</h3>
         <p><FontAwesomeIcon icon={faTags}/> {itemData&&itemData.buyers.length}</p>
         <p>{itemData && itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-        {user ? <BuyButton itemID={props.itemID}/> : <button>Sign in to Buy</button>}
+        {user ? <BuyButton itemID={props.itemID}/> : <Link to="/join"><button>Sign in to Buy</button></Link>}
     </div>
     : <ItemCard itemID={props.itemID}/>);
 }

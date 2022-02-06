@@ -95,7 +95,7 @@ function NavBar(){
                     {<img src={user && user.photoURL} alt={user && user.photoURL}></img>}
                 </div>
                 </Link>)  
-                : <Link to="/join"><button>Login / SignUp</button></Link>}    
+                : <Link className='loginButton' to="/join"><button>Login / SignUp</button></Link>}    
         </div>
     );
 }
