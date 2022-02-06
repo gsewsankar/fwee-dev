@@ -1,6 +1,6 @@
 {
   "short_name": "fwee",
-  "name": "Free World Exchange Experience",
+  "name": "Fwee",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +8,30 @@
       "type": "image/x-icon"
     },
     {
-      "src": "android-chrome-72x72.png",
-      "type": "image/png",
-      "sizes": "72x72"
+      "sizes":"192x192",
+      "src":"fweeR192.png",
+      "type":"image/png"
     },
     {
-      "src": "fweemobile.png",
-      "type": "image/png",
-      "sizes":"any"
+      "sizes":"512x512",
+      "src":"fweeR512.png",
+      "type":"image/png"
+    },
+    {
+      "purpose":"maskable",
+      "sizes":"192x192",
+      "src":"fwee192m.png",
+      "type":"image/png"
+    },
+    {
+      "purpose":"maskable",
+      "sizes":"512x512",
+      "src":"fwee512m.png",
+      "type":"image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff"
 }
