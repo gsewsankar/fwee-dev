@@ -89,13 +89,13 @@ function Dashboard(){
       return(<Loading/>);
     }
 
-    const calculateBalance = () => {
+    async function calculateBalance(){
         let created = userData.createdAt.toDate();
         let now = DateTime.now();
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
-        score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(userData.amount_bought))).toFixed(2);
-        updateDoc(userRef, {balance: parseFloat(score)});
+        score = ((score*0.01)+(Number(storeData.amount_sold))-(Number(userData.amount_bought))).toFixed(2);
+        await updateDoc(userRef, {balance: Number(score)});
     }
 
     if(user){
