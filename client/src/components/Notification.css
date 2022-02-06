@@ -34,6 +34,18 @@
     color: rgb(119, 119, 119);
 }
 
+.notification-frame-purple{
+    margin: 1rem;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-evenly;
+    box-shadow: 0 3px 6px 0 rgb(195, 177, 225);
+    border-radius: 10px;
+    color: rgb(195, 177, 225);
+}
+
 .icon-area{
     padding: 10px;
     display: flex;

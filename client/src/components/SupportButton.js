@@ -3,7 +3,7 @@
 import React,{useState,useEffect} from 'react';
 
 import {auth, db} from '../firebaseInitialize';
-import { doc, collection, getDocs, getDoc, query, updateDoc, arrayUnion, arrayRemove, where } from "firebase/firestore";
+import { addDoc, doc, collection, getDocs, getDoc, query, updateDoc, arrayUnion, arrayRemove, where, serverTimestamp } from "firebase/firestore";
 
 import { useParams } from 'react-router-dom';
 
@@ -32,22 +32,38 @@ function SupportButton(){
     async function supportButton(){
         if(user){
           if((await getDoc(doc(db,'stores',storeid))).data().supporters.find(person=>person === user.uid) === undefined){
-            updateDoc(doc(db,'stores',storeid),{
+            await updateDoc(doc(db,'stores',storeid),{
               supporters:arrayUnion(user.uid)
             });
-            updateDoc(doc(db,'users',user.uid),{
+            await updateDoc(doc(db,'users',user.uid),{
               supporting:arrayUnion((await getDoc(doc(db,'stores',storeid))).data().owner)
             });
             setSupporting(true);
+            
+            //send support notification
+            await addDoc(collection(db,'users',(await getDoc(doc(db,'stores',storeid))).data().owner,'notifications'), {
+              type:"support",
+              who:user.uid,
+              storeID:storeid,
+              time:serverTimestamp(),
+            });
           }
           else{
-            updateDoc(doc(db,'stores',storeid),{
+            await updateDoc(doc(db,'stores',storeid),{
               supporters:arrayRemove(user.uid)
             });
-            updateDoc(doc(db,'users',user.uid),{
+            await updateDoc(doc(db,'users',user.uid),{
               supporting:arrayRemove((await getDoc(doc(db,'stores',storeid))).data().owner)
             });
             setSupporting(false);
+
+            //send unsupport notification
+            await addDoc(collection(db,'users',(await getDoc(doc(db,'stores',storeid))).data().owner,'notifications'), {
+              type:"unsupport",
+              who:user.uid,
+              storeID:storeid,
+              time:serverTimestamp(),
+            });
           }
         }
       }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Notification.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart,faHeart,faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart,faHeart,faHeartBroken,faStore,faStoreSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {auth, db} from '../firebaseInitialize';
 import { doc, getDoc } from "firebase/firestore";
@@ -18,6 +18,8 @@ function Notification(props){
     const [who, setWho] = useState("");
     const [itemTitle, setItemTitle] = useState("");
     const [when, setWhen] = useState("");
+    const [storeName, setStoreName] = useState("");
+
 
     useEffect(()=>{
         async function fetchData(){
@@ -25,8 +27,15 @@ function Notification(props){
                 let whoRef = (await getDoc(doc(db,'users',notifData.who))).data().username;
                 setWho(whoRef);
             
-                let itemRef = (await getDoc(doc(db,'items',notifData.itemID))).data().title;
-                setItemTitle(itemRef);
+                if(notifData.itemID){
+                    let itemRef = (await getDoc(doc(db,'items',notifData.itemID))).data().title;
+                    setItemTitle(itemRef);
+                }
+
+                if(notifData.storeID){
+                    let storeRef = (await getDoc(doc(db,'stores',notifData.storeID))).data().name;
+                    setStoreName(storeRef);
+                }
                 
                 let whenRef = notifData&&notifData.time.toDate();
                 let now = DateTime.now();
@@ -90,6 +99,28 @@ function Notification(props){
         </div>
         )
     }
+
+    if(notifData&&notifData.type==='support'){
+        return(
+        <div className="notification-frame-purple">
+            <p><b>{who}</b> is now supporting <b>{storeName}</b></p>
+            <div className='icon-area'> <FontAwesomeIcon icon={faStore}/></div>
+            <div className='time-area'> {when} </div>
+        </div>
+        )
+    }
+
+    if(notifData&&notifData.type==='unsupport'){
+        return(
+        <div className="notification-frame-grey">
+            <p><b>{who}</b> stopped supporting <b>{storeName}</b></p>
+            <div className='icon-area'> <FontAwesomeIcon icon={faStoreSlash}/></div>
+            <div className='time-area'> {when} </div>
+        </div>
+        )
+    }
+
+    return(<div className='notification-frame-grey'></div>)
   }
 
 export default Notification;
