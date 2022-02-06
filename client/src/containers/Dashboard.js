@@ -24,7 +24,7 @@ function Dashboard(){
     const[storeData, storeLoading] = useDocumentData(doc(db,'stores',storeid));
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const [notifications, notificationsLoading] = useCollection(query(collection(db,'users',user.uid,'notifications'),orderBy('time', 'desc')));
-    const [filterType, setFilterType] = useState('all');
+    //const [filterType, setFilterType] = useState('all');
 
   //   const notificationsSample = [
   //   {

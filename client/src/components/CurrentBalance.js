@@ -34,11 +34,11 @@ function CurrentBalance(){
         setStoreid(ref2.docs[0].id);
       }
       fetchData();
-      let interval = setInterval(function(){
+      let interval = setInterval(async function(){
         updateBalance();
       }, 60000);
       return () => clearInterval(interval);
-    },[user.uid]);
+    },[user.uid,updateBalance]);
 
     if(loading || userloading || storeLoading){
         return(<Loading/>);
