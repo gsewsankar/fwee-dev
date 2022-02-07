@@ -6,7 +6,6 @@ export default function ChatLog(props)  {
 
     return (
         <div>
-            ChatLog
             {props.conversation.messages.map(e =>
                 <ChatBubble key={chatId++} text={e}/>
             )}

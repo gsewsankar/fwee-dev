@@ -4,7 +4,7 @@ import ChatAttachment from './ChatAttachment';
 export default function ChatInput()  {
     return (
         <div>
-            ChatInputSection
+            <input/>
             <ChatAttachment/>
         </div>
     )

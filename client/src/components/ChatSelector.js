@@ -7,6 +7,6 @@ export default function ChatSelector(props)  {
     }
 
     return (
-        <div onClick={changeConversation}>conversation: "{props.conversation.id}"</div>
+        <h2 onClick={changeConversation}>{props.conversation.id}</h2>
     )
 }
