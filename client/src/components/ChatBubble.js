@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function ChatBubble()  {
+export default function ChatBubble(props)  {
     return (
-        <div>ChatBubble</div>
+        <p>{props.text}</p>
     )
 }
