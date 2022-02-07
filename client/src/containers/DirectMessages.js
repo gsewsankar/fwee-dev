@@ -1,5 +1,8 @@
 import Gun from 'gun';
 import React, { useReducer, useState } from 'react';
+import ChatInput from '../components/ChatInput';
+import ChatLog from '../components/ChatLog';
+import ChatSelector from '../components/ChatSelector';
 import { MessageSender } from '../components/MessageSender';
 
 // initialize gun locally
@@ -73,40 +76,48 @@ function DirectMessages() {
   }
 
   return (
-    <div className='form-section' style={{ padding: 30 }}>
-      <input
-        onChange={onChange}
-        placeholder="From"
-        name="from"
-        value={formState.from}
-      />
-      <input
-        onChange={onChange}
-        placeholder="To"
-        name="to"
-        value={formState.to}
-      />
-      <input
-        onChange={onChange}
-        placeholder="Amount"
-        name="amount"
-        value={formState.amount}
-      />
-      <button onClick={sendCredits}>Send</button>
-      {
-        state.accounts.map(u => (
-          <div key={u.username}>
-            <p>username: {u.username}</p>
-            <p>createdAt: {u.createdAt}</p>
-            <p>history: {u.history}</p>
-            <p>total_in: {u.total_in}</p>
-            <p>total_out: {u.total_out}</p>
-            <p>balance: {u.balance}</p>
-          </div>
-        ))
-      }
+    <div>
+      <ChatSelector/>
+      <ChatLog/>
+      <ChatInput/>
     </div>
   )
+  
+  // return (
+  //   <div className='form-section' style={{ padding: 30 }}>
+  //     <input
+  //       onChange={onChange}
+  //       placeholder="From"
+  //       name="from"
+  //       value={formState.from}
+  //     />
+  //     <input
+  //       onChange={onChange}
+  //       placeholder="To"
+  //       name="to"
+  //       value={formState.to}
+  //     />
+  //     <input
+  //       onChange={onChange}
+  //       placeholder="Amount"
+  //       name="amount"
+  //       value={formState.amount}
+  //     />
+  //     <button onClick={sendCredits}>Send</button>
+  //     {
+  //       state.accounts.map(u => (
+  //         <div key={u.username}>
+  //           <p>username: {u.username}</p>
+  //           <p>createdAt: {u.createdAt}</p>
+  //           <p>history: {u.history}</p>
+  //           <p>total_in: {u.total_in}</p>
+  //           <p>total_out: {u.total_out}</p>
+  //           <p>balance: {u.balance}</p>
+  //         </div>
+  //       ))
+  //     }
+  //   </div>
+  // )
 }
 
 export default DirectMessages;
