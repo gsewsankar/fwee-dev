@@ -5,6 +5,25 @@ import ChatLog from '../components/ChatLog';
 import ChatSelector from '../components/ChatSelector';
 import { MessageSender } from '../components/MessageSender';
 
+// MOCK DATA
+var conversations = [
+  {
+    id: "a",
+    messages: [
+      "Hello!",
+      "Goodbye!"
+    ]
+  },
+  {
+    id: "b",
+    messages: [
+      "Hola!",
+      "Adios!"
+    ]
+  }
+]
+// END MOCK DATA
+
 // initialize gun locally
 const gun = Gun();
 
@@ -29,6 +48,8 @@ function DirectMessages() {
     time: Date.now()
   })
 
+  const [currentConversation, setConversation] = useState(conversations[0]);
+
   // initialize the reducer & state for holding the messages array
   const [state/*, dispatch*/] = useReducer(reducer, initialState)
 
@@ -49,6 +70,10 @@ function DirectMessages() {
   //     })
   //   })
   // }, [])
+
+  function conversationChangeHandler(newConversationId) {
+    setConversation(conversations.find(e => e.id == newConversationId))
+  }
 
   // set a new message in gun, update the local state to reset the form field
   function sendCredits() {
@@ -77,8 +102,8 @@ function DirectMessages() {
 
   return (
     <div>
-      <ChatSelector/>
-      <ChatLog/>
+      <ChatSelector onSelect={conversationChangeHandler} conversation={currentConversation}/>
+      <ChatLog conversation={currentConversation}/>
       <ChatInput/>
     </div>
   )
