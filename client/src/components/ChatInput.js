@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import ChatAttachment from './ChatAttachment';
-import { db } from '../firebaseInitialize';
-import { collection, doc, serverTimestamp, setDoc } from '@firebase/firestore';
+import { auth, db } from '../firebaseInitialize';
+import { collection, doc, setDoc } from '@firebase/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function ChatInput(props)  {
     const [textState, setText] = useState("");
-    let id = 0;
+    const[user] = useAuthState(auth); // TODO: Probably move up and use as prop.
 
     function sendMessage(e) {
         if (e.key === 'Enter') {
-            let newComment = {
-                timestamp: serverTimestamp(),
-                text:textState,
+            let message = {
+                timestamp: Date.now(),
+                from: user.uid,
+                text: textState,
+                transaction: "", // TODO: Replace with transaction id
             }
 
-            // Send to DB
+            // Send message to DB
             let subCollectionRef = collection(db, 'conversations', props.conversation.id, 'messages')
-            let docRef = doc(subCollectionRef, newComment.timestamp.toString()); // TODO: Replace with a proper id in the second arg
-            setDoc(docRef, newComment);
+            let docRef = doc(subCollectionRef, message.timestamp + message.from); // TODO: Replace with a proper id in the second arg
+            setDoc(docRef, message);
 
             setText("");
         }
