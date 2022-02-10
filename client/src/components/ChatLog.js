@@ -2,12 +2,11 @@ import React from 'react';
 import ChatBubble from './ChatBubble';
 
 export default function ChatLog(props)  {
-    let chatId = 0;
 
     return (
         <div>
-            {props.conversation.messages.map(e =>
-                <ChatBubble key={chatId++} text={e}/>
+            {props.conversation.messages.map((message, index) =>
+                <ChatBubble key={index} text={message}/>
             )}
         </div>
     )
