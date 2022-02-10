@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ChatAttachment from './ChatAttachment';
-import * as fs from 'firebase/firestore';
 import { db } from '../firebaseInitialize';
+import { collection, doc, serverTimestamp, setDoc } from '@firebase/firestore';
 
 export default function ChatInput(props)  {
     const [textState, setText] = useState("");
@@ -10,14 +10,14 @@ export default function ChatInput(props)  {
     function sendMessage(e) {
         if (e.key === 'Enter') {
             let newComment = {
-                timestamp: fs.serverTimestamp(),
+                timestamp: serverTimestamp(),
                 text:textState,
             }
 
             // Send to DB
-            let subCollectionRef = fs.collection(db, 'conversations', props.conversation.id, 'messages')
-            let docRef = fs.doc(subCollectionRef, newComment.timestamp.toString()); // TODO: Replace with a proper id in the second arg
-            fs.setDoc(docRef, newComment);
+            let subCollectionRef = collection(db, 'conversations', props.conversation.id, 'messages')
+            let docRef = doc(subCollectionRef, newComment.timestamp.toString()); // TODO: Replace with a proper id in the second arg
+            setDoc(docRef, newComment);
 
             setText("");
         }
