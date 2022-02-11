@@ -3,7 +3,7 @@
     top: 0;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: rgba(180, 220, 160, 0.90);
+    background-color: rgba(119, 221, 118, 0.90);
     display: flex;                 
     justify-content: space-between; 
     align-items: center;
@@ -25,7 +25,7 @@
     top: 0;
     left: 0;
     transition: 250ms;
-    box-shadow: 3px 0 5px rgb(173, 201, 158);
+    box-shadow: 3px 0 5px rgb(119, 221, 118);
     overflow-y: auto;
 }
 
@@ -89,20 +89,19 @@ svg.bars:hover{
 .search input.search{
     padding:9px;
     border: none;
-    border-radius: 50px;
-    background-color: rgb(164, 196, 147);
-    color: white;
+    border-radius: 30px;
+    background-color: white;
+    color: rgb(5, 54, 0);
 }
 
 .search input.search::placeholder{
-    color: white;
+    color: gray;
 }
 
 .search input.search:focus{
-    border-radius: 50px;
+    border-radius: 30px;
     outline:none;
-    box-shadow: 0 0 2pt 1pt rgb(133, 158, 119);
-    background-color: rgb(159, 185, 145);
+    background-color: white;
 }
 
 .right{
@@ -126,11 +125,11 @@ svg.bars:hover{
 }
 
 .newUploadButton:hover{
-    background-color: rgba(180, 220, 160, 0.90);
+    background-color: rgba(119, 221, 118, 0.90);
 }
 
 .loginButton:hover{
-    background-color: rgba(180, 220, 160, 0.90);
+    background-color: rgba(119, 221, 118, 0.90);
 }
 
 /* when screen width is less than 600px (mobile)*/

@@ -1,12 +1,11 @@
 //UPDATED to v9 on 12-2-2021
 
 import React from 'react';
+import './SignIn.css';
 import {auth, db} from '../firebaseInitialize';
 import { collection, doc, getDoc, setDoc, addDoc, serverTimestamp } from "firebase/firestore";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import G from '../assets/G.svg';
 
 function SignIn(){
     async function signInWithGoogle () {
@@ -42,7 +41,7 @@ function SignIn(){
     }
   
     return(
-      <button onClick={signInWithGoogle}> <FontAwesomeIcon icon={faSignInAlt}/> Sign In with Google</button>
+      <button className='sign-in-btn' onClick={signInWithGoogle}> <img src={G} alt='G'></img> Sign in with Google</button>
     )
 }
 
