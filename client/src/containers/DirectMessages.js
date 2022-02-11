@@ -104,7 +104,7 @@ function DirectMessages() {
     <div>
       <ChatSelector onSelect={conversationChangeHandler} conversation={currentConversation}/>
       <ChatLog conversation={currentConversation}/>
-      <ChatInput/>
+      <ChatInput conversation={currentConversation}/>
     </div>
   )
   
