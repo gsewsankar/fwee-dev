@@ -1,14 +1,21 @@
-//updated to v9 on 12-8-2021
-
-import React from 'react';
+import {useEffect,useReducer, useRef, useState} from 'react';
 import './Dashboard.css';
 import {MessageHandler} from '../components/MessageHandler'
 
 
 
 function MessageChain(){
+  const [id, setId] = useState("123");
+const handler = () => {        
+    setId(Math.random().toString())
+
+  }
+
     return(
-        <MessageHandler display={true}/>
+      <>
+
+        <MessageHandler key ={id} handler = {handler}  display={true}/>
+        </>
     )
   }
 
