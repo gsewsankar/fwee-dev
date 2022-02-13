@@ -13,49 +13,46 @@ const SHA256 = require('crypto-js/sha256');
 
 
  const messages = {messageArray: []}
+ const messages2 = {messageArray: []}
 
- function reducer(curr, receivedMessage, /*action*/)
+ function reducer(curr, receivedMessage)
  {
-    /* switch (action.type)
-     {*/
-         /*case "addHash":
-            return curr.map(f => f.index === action.obj.index ? ({ 
-                ...f,
-                hash: action.obj.hash,
-              }) : f)     
-        case "addPrev":
-            return curr.map(f => f.index === action.obj.index ? ({ 
-                ...f,
-                prevHash: action.obj.prevHash,
-              }) : f)                
-          default:*/
+    switch (receivedMessage.type)
+     {
+         case 'replace':
+            return{
+                messageArray: receivedMessage.replacer
+            }     
+          default:
             return {
                 messageArray: [receivedMessage, ...curr.messageArray]
              }
-       // }
+       }
    
  }
 
  export  const MessageHandler = (props) =>{
     const [messageState, setMessageState] = useReducer(reducer, messages)
-    const [tempState, setTempState] = useState([])
+    const [tempState, setTempState] = useReducer(reducer, messages2)
 
     const isMounted = useRef(true);
     const calculateHash = (currentBlock) =>{
         return SHA256(currentBlock.key + currentBlock.previousHash + currentBlock.time).toString();
     }
+
     const createHashChain = () =>{
-        if(messageState.messageArray.length > 10){
-            for(let i = messageState.messageArray.length-1; i >= 0; i--){
-                var prevBlock = messageState.messageArray[i];
+        if(tempState.messageArray.length > 10){
+            var temp = JSON.parse(JSON.stringify(tempState.messageArray))
+            for(let i = temp.length-1; i > 0; i--){
+                var prevBlock = temp[i];
 
                 var currentBlock=null;
                 if(i != 0)
-                    currentBlock = messageState.messageArray[i-1];
+                    currentBlock = temp[i-1];
                 else
                     currentBlock = null
 
-                if(i == messages.messageArray.length-1)
+                if(i == temp.length-1)
                 {
                     
                     prevBlock.previousHash = null
@@ -67,7 +64,7 @@ const SHA256 = require('crypto-js/sha256');
                 }
                 else if(i==0)
                 {
-                            prevBlock.previousHash = messageState.messageArray[1].hash
+                            prevBlock.previousHash = temp[1].hash
                             prevBlock.hash = calculateHash(prevBlock)
                 }
                 else 
@@ -78,19 +75,23 @@ const SHA256 = require('crypto-js/sha256');
 
                 }
             }
-                for(let i = messageState.messageArray.length-1; i >= 0; i--){
-                        var prevBlock = messageState.messageArray[i];
-                        
+            temp.sort((b, a) => a.time.valueOf() - b.time.valueOf())
+
+            setMessageState({replacer: temp, type: 'replace'})
+
+                for(let i = temp.length-1; i > 0; i--){
+                        var prevBlock = temp[i];
                         var currentBlock=null;
                         if(i != 0)
-                            currentBlock = messageState.messageArray[i-1];
+                            currentBlock = temp[i-1];
                         else
                             currentBlock = null
         
                         if(i==0)
                         {
-                                if(prevBlock.hash != calculateHash(messageState.messageArray[1]))
-                                {
+
+                                if(prevBlock.previousHash !== temp[1].hash)
+                                {   
                                             return false;
                                 }
                         }
@@ -99,7 +100,7 @@ const SHA256 = require('crypto-js/sha256');
                         }
         
                         if(currentBlock.previousHash != calculateHash(prevBlock)){
-        
+
                                 return false;
                         }
         
@@ -107,7 +108,6 @@ const SHA256 = require('crypto-js/sha256');
                     return true;
         
                 
-
         }
     }
  
@@ -120,9 +120,9 @@ const SHA256 = require('crypto-js/sha256');
                 if(!user.is){
 
                 user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
-                gunPeer.on('auth',event  => {
-                    user.get('transactions').map().once((m, index) => {
-                           setMessageState({
+                gunPeer.on('auth', event  => {
+                     user.get('transactions').map().once((m, index) => {
+                           setTempState({
                                to: m.to,
                                from: m.from,
                                amount: m.amount,
@@ -135,12 +135,13 @@ const SHA256 = require('crypto-js/sha256');
                        })
                        
 
+
                    })
             }
             else
             {
-                user.get('transactions').map().once((m, index) => {
-                    setMessageState({
+                user.get('transactions').map().once( (m, index) => {
+                    setTempState({
                         to: m.to,
                         from: m.from,
                         amount: m.amount,
@@ -149,18 +150,20 @@ const SHA256 = require('crypto-js/sha256');
 
                     })
                     
+                    
 
                 })
+
+
             }
                 
             
 
                
-         
+
 
                 
             return () => {
-                
                     gunPeer.off(); 
                     isMounted.current = false
                 }
@@ -169,12 +172,19 @@ const SHA256 = require('crypto-js/sha256');
         
 
     }, [])
+    useEffect(() =>{
+      console.log(createHashChain())
+    
+        
+
+    }, [tempState.messageArray])
+    
+    
     
     return(
         <div>
-            {console.log(createHashChain())}
-
         {props.display ?
+
             messageState.messageArray.map(message => (
                 <div key={message.key}>
                 <h1>From: {message.from}</h1>
