@@ -189,7 +189,6 @@ const SHA256 = require('crypto-js/sha256');
     
     return(
         <div>
-            {console.log(createHashChain())}
 
         {props.display ?
 
