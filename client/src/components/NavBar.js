@@ -63,7 +63,7 @@ function NavBar(){
                 {user && 
                 <div className={sidebar ? "side-menu-on" : "side-menu-off"} >
                     <button onClick={toggleSideBar}><FontAwesomeIcon icon={faTimes}/></button>
-                    <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Messages + <FontAwesomeIcon icon={faExchangeAlt}/> Transfers</Link>
+                    <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Direct Messages</Link>
                     <Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>
                     <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
                     <Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faDiceD20}/> Fwee Main Chain</Link>
