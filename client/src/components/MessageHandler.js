@@ -228,6 +228,7 @@ const SHA256 = require('crypto-js/sha256');
                 <h3>Amount: {message.amount}</h3>
                 <h3>To: {message.to}</h3>
                 <h3>Date: {message.time}</h3>
+                <h3>Hash: {message.hash}</h3>
 
                 <hr></hr>
                 </div>
