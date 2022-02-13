@@ -198,7 +198,7 @@ const SHA256 = require('crypto-js/sha256');
             if(firstTime)
             props.handler()
 
-          }, 500)
+          }, 1000)
       
           return () => clearTimeout(delayDebounceFn)
       
