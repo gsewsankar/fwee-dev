@@ -12,6 +12,7 @@ import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
 import CurrentBalance from './components/CurrentBalance';
 import SignUpPage from './containers/SignUpPage';
+import About from './containers/About';
 import {
   BrowserRouter as Router,
   Routes,
@@ -35,6 +36,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home/>}></Route>
+          <Route path="/about" element={<About/>}></Route>
           <Route path="/join" element={user ? <Navigate to="/"/> : <SignUpPage/>}></Route>
           <Route path={"/dashboard"} element={user ? <Dashboard/> : <Navigate to="/"/>}></Route>
           <Route path={"/messageChain"} element={user ? <MessageChain/> : <Navigate to="/"/>}></Route>
