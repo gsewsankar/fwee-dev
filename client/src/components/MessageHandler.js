@@ -15,7 +15,7 @@ const SHA256 = require('crypto-js/sha256');
  const messages = {messageArray: []}
  const messages2 = {messageArray: []}
 
- function reducer(curr, receivedMessage)
+ function reducer(curr, receivedMessage, /*action*/)
  {
     switch (receivedMessage.type)
      {
@@ -28,12 +28,13 @@ const SHA256 = require('crypto-js/sha256');
                 messageArray: [receivedMessage, ...curr.messageArray]
              }
        }
-   
+
  }
 
  export  const MessageHandler = (props) =>{
     const [messageState, setMessageState] = useReducer(reducer, messages)
     const [tempState, setTempState] = useReducer(reducer, messages2)
+
 
     const isMounted = useRef(true);
     const calculateHash = (currentBlock) =>{
@@ -53,6 +54,7 @@ const SHA256 = require('crypto-js/sha256');
                     currentBlock = null
 
                 if(i == temp.length-1)
+
                 {
                     
                     prevBlock.previousHash = null
@@ -65,6 +67,7 @@ const SHA256 = require('crypto-js/sha256');
                 else if(i==0)
                 {
                             prevBlock.previousHash = temp[1].hash
+
                             prevBlock.hash = calculateHash(prevBlock)
                 }
                 else 
@@ -84,6 +87,7 @@ const SHA256 = require('crypto-js/sha256');
                         var currentBlock=null;
                         if(i != 0)
                             currentBlock = temp[i-1];
+
                         else
                             currentBlock = null
         
@@ -92,6 +96,7 @@ const SHA256 = require('crypto-js/sha256');
 
                                 if(prevBlock.previousHash !== temp[1].hash)
                                 {   
+
                                             return false;
                                 }
                         }
@@ -100,6 +105,7 @@ const SHA256 = require('crypto-js/sha256');
                         }
         
                         if(currentBlock.previousHash != calculateHash(prevBlock)){
+
 
                                 return false;
                         }
@@ -183,6 +189,8 @@ const SHA256 = require('crypto-js/sha256');
     
     return(
         <div>
+            {console.log(createHashChain())}
+
         {props.display ?
 
             messageState.messageArray.map(message => (
