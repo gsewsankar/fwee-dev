@@ -61,7 +61,7 @@ const SHA256 = require('crypto-js/sha256');
                     prevBlock.hash = calculateHash(prevBlock)
 
                     
-                    currentBlock.previousHash = calculateHash(prevBlock)
+                    currentBlock.previousHash = prevBlock.hash
                     currentBlock.hash = calculateHash(currentBlock)
                 }
                 else if(i==0)
