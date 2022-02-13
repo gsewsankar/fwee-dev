@@ -28,7 +28,7 @@ function ItemCard(props){
     let cat_name = "";
 
     if(authLoading || ownerLoading || itemLoading || commentsLoading){
-      return(<Loading/>);
+      return(<div className='card'><Loading/></div>);
     }
 
     if(itemData.category === 'image'){

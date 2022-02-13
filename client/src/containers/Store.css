@@ -8,19 +8,18 @@
 
 .grid-item1 {
     background-color: white;
-    box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
+    box-shadow: 0 0 3pt 2pt lightgray;
     border-radius: 30px;
     padding: 20px;
     font-size: 30px;
     text-align: center;
-    color:rgb(119, 153, 101);
+    color:gray;
     margin: 20px;
 }
 
 .grid-item1:hover {
-    background-color:rgb(119, 153, 101);
+    background-color:green;
     color: white;
-
 }
 
 .store-header{
@@ -30,7 +29,7 @@
     justify-content: center;
     margin-bottom: 10px;
     min-height: 300px;
-    box-shadow: 0 0 3pt 2pt rgb(173, 201, 158);
+    box-shadow: 0 0 3pt 2pt lightgray;
     border-radius: 30px;
 }
 

@@ -102,7 +102,7 @@ function Dashboard(){
       return(
         <div className="dash-container">
           <h1>Dashboard</h1>
-          <h3>Account Balance: {userData && userData.balance.toFixed(2)} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
+          <h3>Account Balance: {userData && userData.balance} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
           <br/>
           <div>Notifications</div>
           {notifications.docs.map(notif=>{return <Notification key={notif.data().time} notifDocID={notif.id}/>})}

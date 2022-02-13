@@ -1,6 +1,6 @@
 .card{
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 3px 6px 0 rgb(173, 201, 158);
+    box-shadow: 0 2px 4px 0 lightgray;
     border-radius: 30px;
     padding: 10px 0;
     font-size: 30px;
@@ -14,13 +14,17 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 24px;
     margin: 4px 2px;
     transition-duration: 300ms;
     cursor: pointer;
     background-color: white;
-    color: black;
-    border: 1px solid rgb(118, 179, 112);
+    color: gray;
+    border: none;
+}
+.card button:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
 }
 
 .comments-container{

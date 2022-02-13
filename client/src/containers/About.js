@@ -3,7 +3,7 @@ import './About.css';
 import store from '../assets/store.svg';
 import crown from '../assets/crown.svg';
 import items from '../assets/items.png';
-import jar from '../assets/coins.gif';
+import jar from '../assets/jar.mp4';
 
 import { Link } from "react-router-dom";
 import LockedItem from '../components/LockedItem';
@@ -18,7 +18,7 @@ function About(){
             </div>
             <p>How will you spend your time?</p>
             <div className="section-right">
-              <img className="l" src={jar} alt="jar" height="350px" width="auto"/>
+              <video src={jar} alt="jar" height="350px" width="auto" autoPlay loop/>
             </div>
           </div>
 

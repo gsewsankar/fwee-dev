@@ -34,7 +34,6 @@ function Home(){
     function renderFeed(){ 
       return(
         <div>
-          <h1>Feed</h1>
           <div className='cards'>
           {feed.map(item=>{return<LockedItem key={item.id} itemID={item.id}/>})}
           </div>
