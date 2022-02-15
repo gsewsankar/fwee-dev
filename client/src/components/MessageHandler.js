@@ -47,7 +47,7 @@ const SHA256 = require('crypto-js/sha256');
     }
 
     const createHashChain = () =>{
-        if(tempState.messageArray.length > 80){
+        if(tempState.messageArray.length > 2){
         
 
             var temp = JSON.parse(JSON.stringify(tempState.messageArray))
@@ -137,7 +137,7 @@ const SHA256 = require('crypto-js/sha256');
 
                 if(!user.is){
                     setFirstTime(true)
-                    user.auth('fweeMessageChain', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
+                    user.auth('fweeMessageChainSecond', process.env.REACT_APP_TRANSACTION_SYSTEM_API_KEY)
 
                     gunPeer.on('auth', async(event)  => {
                       user.get('transactions').map().once( (m, index) => {
@@ -228,6 +228,7 @@ const SHA256 = require('crypto-js/sha256');
                 <h3>Amount: {message.amount}</h3>
                 <h3>To: {message.to}</h3>
                 <h3>Date: {message.time}</h3>
+                <h3>Hash: {message.hash}</h3>
 
                 <hr></hr>
                 </div>
