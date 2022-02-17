@@ -3,6 +3,7 @@ import ChatAttachment from './ChatAttachment';
 import { auth, db } from '../firebaseInitialize';
 import { collection, doc, setDoc } from '@firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { Message } from '../firestoreData';
 
 export default function ChatInput(props)  {
     const [textState, setText] = useState("");
@@ -10,16 +11,14 @@ export default function ChatInput(props)  {
 
     function sendMessage(e) {
         if (e.key === 'Enter') {
-            let message = {
-                timestamp: Date.now(),
-                from: user.uid,
-                text: textState,
-                transaction: "", // TODO: Replace with transaction id
-            }
+            let message = new Message();
+            message.from = user.uid;
+            message.text = textState;
+            message.transactionId = ""; // TODO: Replace with transaction id, if any
 
             // Send message to DB
             let subCollectionRef = collection(db, 'conversations', props.conversation.id, 'messages')
-            let docRef = doc(subCollectionRef, message.timestamp + message.from); // TODO: Replace with a proper id in the second arg
+            let docRef = doc(subCollectionRef, message.timestamp + message.from).withConverter(Message.Converter);
             setDoc(docRef, message);
 
             setText("");
