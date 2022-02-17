@@ -28,7 +28,7 @@ export default function ChatInput(props)  {
 
     return (
         <div>
-            <input onKeyDown={sendMessage} onChange={(e) => setText(e.target.value)} text={textState}/>
+            <input onKeyDown={sendMessage} onChange={(e) => setText(e.target.value)} value={textState}/>
             <ChatAttachment/>
         </div>
     )
