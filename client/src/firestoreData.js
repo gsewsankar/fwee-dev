@@ -12,7 +12,7 @@ class FirestoreData {
                 }
                 return firestoreData;
             },
-            fromFirestore: (snapshot, options) => {
+            fromFirestore: (snapshot, options) => { // TODO: Finish generalizing for all possible data structures.
                 const data = snapshot.data(options);
                 return new Message({
                     timestamp: data.timestamp,
