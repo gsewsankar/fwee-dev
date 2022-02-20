@@ -67,7 +67,7 @@ function About(){
             As a platform fwee intends to <b className='gradient-text'>empower</b> and <b className='gradient-text'>inspire</b> creators with <b className='gradient-text'>limitless possiblilites </b>
             to spark their <b className='gradient-text'>creative productivity</b>.
           </p></Zoom>
-          <Fade><video className='items-video' src={items} alt="store" height="auto" width="500px" autoPlay loop/></Fade>
+          <video src={items} alt="items-video" height="auto" width="375px" autoPlay loop/>
           </div>
         </div>
 
