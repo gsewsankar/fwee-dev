@@ -6,12 +6,12 @@ function SignUpPage(){
     const [checked, setChecked] = useState(false);
 
     return(
-      <div>
+      <div className='sign-up-container'>
           <h1>Welcome to fwee!</h1>
           <h2>Rules</h2>
           <ol>
-              <li>Only post items that you create and own</li>
-              <li>Do not sell credits for US Dollars</li>
+              <li>Only post items that you create and own.</li>
+              <li>Do not exchange credits for other currencies.</li>
               <li>Enjoy Life!</li>
           </ol>
           <div>

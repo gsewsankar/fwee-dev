@@ -2,7 +2,6 @@
 
 import React,{useState} from 'react';
 import './LockedItem.css';
-import Loading from './Loading';
 import BuyButton from './BuyButton';
 
 import {auth, db} from '../firebaseInitialize';
