@@ -22,18 +22,16 @@ import {
 
 import { auth } from './firebaseInitialize';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import Footer from './components/Footer';
 
 function App() {
   const [user] = useAuthState(auth);
 
   return (
-
     <Router basename={process.env.PUBLIC_URL}>
     <div className="App">
-
       <NavBar ></NavBar>
       <div className="App-header">
-
         <Routes>
           <Route path="/" element={<Home/>}></Route>
           <Route path="/about" element={<About/>}></Route>
@@ -50,9 +48,7 @@ function App() {
         </Routes>
         {user && <CurrentBalance/>}
       </div>
-      {!user&&<div className="footer">
-        <p>all rights reserved. about. privacy policy. tos.</p>
-      </div>}
+      {!user&&<Footer/>}
     </div>
     </Router>
   );

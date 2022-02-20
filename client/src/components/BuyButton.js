@@ -1,7 +1,6 @@
 //updated to v9 on 12-8-2021
 
 import React,{useState,useEffect,useRef} from 'react';
-import Loading from '../components/Loading';
 import './BuyButton.css';
 
 import {db,auth} from '../firebaseInitialize';

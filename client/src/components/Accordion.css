@@ -1,0 +1,28 @@
+.accordion-item{
+    background-color: whitesmoke;
+}
+
+.accordion-title:hover{
+    background-color: rgb(218, 218, 218);
+    cursor: pointer;
+}
+
+.accordion-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    color: grey;
+    transition-duration: 300ms;
+}
+
+.accordion-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: white;
+    color: gray;
+    padding: 20px;
+}

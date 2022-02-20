@@ -13,6 +13,8 @@ import { getDocs, query, orderBy, limit, collection } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import LockedItem from '../components/LockedItem';
 
+import { JackInTheBox } from "react-awesome-reveal";
+
 function Home(){
     const[user, isLoading] = useAuthState(auth);
     const[feed,setFeed] = useState([]);
@@ -45,7 +47,7 @@ function Home(){
       return(
         <div className="lander">
           <div className="top-section">
-            <img className="logo" src={logo} alt="My logo" width="800" height="auto"/>
+            <JackInTheBox><img className="logo" src={logo} alt="My logo" width="800" height="auto"/></JackInTheBox>
             <div className='learnjoin'>
             <Link to="/about"><button>Learn More</button></Link>
             <Link to="/join"><button>Join Now</button></Link>
