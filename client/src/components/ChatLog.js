@@ -7,6 +7,8 @@ export default function ChatLog(props)  {
     const conversationId = props.conversation.id;
 
     const [messages, setMessages] = useState([]);
+
+    // Subscribe to this conversation's messages.
     useEffect(() => {
         const q = query(collection(db, 'conversations', conversationId, 'messages'))
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -16,7 +18,7 @@ export default function ChatLog(props)  {
             });
         })
         return unsubscribe;
-    }, []);
+    }, [conversationId]);
 
     return (
         <div>
