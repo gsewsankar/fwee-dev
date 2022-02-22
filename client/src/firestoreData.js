@@ -1,8 +1,19 @@
+import { Timestamp } from "@firebase/firestore"
+
 export function newMessage() {
     return {
-        timestamp: Date.now(),
+        timestamp: Timestamp.now(),
         from: undefined,
         text: undefined,
         transactionId: undefined,
+    }
+}
+
+export function asMessage(data) {
+    return {
+        timestamp: data.timestamp,
+        from: data.from,
+        text: data.text,
+        transactionId: data.transactionId,
     }
 }
