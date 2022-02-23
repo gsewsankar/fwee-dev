@@ -245,7 +245,7 @@ const SHA256 = require('crypto-js/sha256');
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Transactions</TableCell>
+              <TableCell>Transaction</TableCell>
               <TableCell align="right">From</TableCell>
               <TableCell align="right">To</TableCell>
               <TableCell align="right">Amount</TableCell>
