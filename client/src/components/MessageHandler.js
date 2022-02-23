@@ -3,6 +3,13 @@ import Gun from 'gun/gun'
 import 'gun/sea'
 import 'gun/axe'
 import ReactLoading from 'react-loading';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const SHA256 = require('crypto-js/sha256');
 
@@ -41,6 +48,7 @@ const SHA256 = require('crypto-js/sha256');
     const [messageState, setMessageState] = useReducer(reducer, messages)
     const [tempState, setTempState] = useReducer(reducer, messages2)
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
 
     const calculateHash = (blk) =>{
         return SHA256(blk.previousHash + blk.data).toString();
@@ -193,10 +201,19 @@ const SHA256 = require('crypto-js/sha256');
 
     }, [])
     useEffect(() =>{
-        createHashChain()
+        var valid = createHashChain()
+
         const delayDebounceFn = setTimeout(() => {
-            if(firstTime)
-            props.handler()
+            if(!valid)
+            {
+                setError(true)
+            }
+            else
+            {
+                if(firstTime)
+                    props.handler()
+            }
+            
 
           }, 1000)
       
@@ -217,26 +234,54 @@ const SHA256 = require('crypto-js/sha256');
          <ReactLoading type={'spin'} color={'black'} height={667} width={375} />
          : null
      }
+     {
+         error ?
 
+     
+        <h1>Error occurred in validating blockchain, contact administrator</h1>
 
-        {props.display ?
-            messageState.messageArray.map(message => (
-                <div key={message.key}>
-                <h1>From: {message.from}</h1>
+        : (props.display && !loading) ?
 
+        <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Transactions</TableCell>
+              <TableCell align="right">From</TableCell>
+              <TableCell align="right">To</TableCell>
+              <TableCell align="right">Amount</TableCell>
+              <TableCell align="right">Time</TableCell>
+              <TableCell align="right">Hash</TableCell>
 
-                <h3>Amount: {message.amount}</h3>
-                <h3>To: {message.to}</h3>
-                <h3>Date: {message.time}</h3>
-                <h3>Hash: {message.hash}</h3>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {messageState.messageArray.map((message, i) => (
+              <TableRow
+                key={message.key}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {i}
+                </TableCell>
+                <TableCell align="right">{message.from}</TableCell>
+                <TableCell align="right">{message.to}</TableCell>
+                <TableCell align="right">{message.amount}</TableCell>
+                <TableCell align="right">{message.time}</TableCell>
+                <TableCell align="right">{message.hash}</TableCell>
 
-                <hr></hr>
-                </div>
-            ))
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+     
             : null
+        }
     
     
-    }</div>)
+    </div>)
 
  }
 
