@@ -5,13 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import './firebaseInitialize';
-import { StyledEngineProvider } from '@mui/material/styles';
-
 
 ReactDOM.render(
-    <StyledEngineProvider injectFirst>
-    <App />
-    </StyledEngineProvider>,
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
     document.getElementById('root')
 );
 

@@ -10,6 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { StyledEngineProvider } from "@mui/material/styles";
 
 const SHA256 = require('crypto-js/sha256');
 
@@ -240,6 +241,7 @@ const SHA256 = require('crypto-js/sha256');
         <h1>Error occurred in validating blockchain, contact administrator</h1>
 
         : (props.display && !loading) ?
+        <StyledEngineProvider injectFirst>
 
         <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -274,6 +276,7 @@ const SHA256 = require('crypto-js/sha256');
           </TableBody>
         </Table>
       </TableContainer>
+      </StyledEngineProvider>
 
      
             : null
