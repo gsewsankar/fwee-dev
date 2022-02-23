@@ -1,7 +1,6 @@
 //updated to v9 on 12-8-2021
 
 import React,{useState,useEffect,useRef} from 'react';
-import Loading from '../components/Loading';
 import './BuyButton.css';
 
 import {db,auth} from '../firebaseInitialize';
@@ -51,7 +50,7 @@ function BuyButton(props){
     },[itemRef]);
 
     if(itemLoading || buyerLoading || authLoading || storeLoading){
-        return(<Loading/>);
+        return(<button/>);
     }
 
     /*const getBalance = (username)=>{
@@ -64,8 +63,8 @@ function BuyButton(props){
         let now = DateTime.now();
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
-        score = ((score*0.01)+(parseFloat(storeData.amount_sold))-(parseFloat(buyerData.amount_bought))).toFixed(2);
-        await updateDoc(buyerRef,{balance: score});
+        score = ((score*0.01)+(Number(storeData.amount_sold))-(Number(buyerData.amount_bought))).toFixed(2);
+        await updateDoc(buyerRef,{balance: Number(score)});
     }
 
     async function transaction(){
@@ -73,17 +72,17 @@ function BuyButton(props){
         // TODO: add check for current user?
         if(buyerData.balance > itemData.price){
             await updateDoc(buyerRef,{
-                balance: parseFloat(buyerData.balance)-parseFloat(itemData.price),
-                amount_bought: increment(parseFloat(itemData.price)),
+                balance: Number(buyerData.balance)-Number(itemData.price),
+                amount_bought: increment(Number(itemData.price)),
                 purchases: arrayUnion(itemData.id),
             });
 
             await updateDoc(sellerRef,{
-                balance: increment(parseFloat(itemData.price))
+                balance: increment(Number(itemData.price))
             });
 
             await updateDoc(storeRef,{
-                amount_sold: increment(parseFloat(itemData.price))
+                amount_sold: increment(Number(itemData.price))
             })
 
             await updateDoc(itemRef,{
@@ -101,7 +100,7 @@ function BuyButton(props){
             const messageToSend = {
                 from: buyerData.username,
                 to: sellerData.username,
-                amount: parseFloat(itemData.price),
+                amount: Number(itemData.price),
                 time:Date.now()
             }
             MessageSender(messageToSend);
@@ -116,7 +115,7 @@ function BuyButton(props){
     }
 
     return(
-        <button className="buy" onClick={(e) => {e.preventDefault(); transaction(); sendMessage()}}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
+        <button className="buy" onClick={() => {transaction(); sendMessage();}}><FontAwesomeIcon icon={faUnlockAlt}/> {itemData && itemData.price} credits </button>
     )
   }
 

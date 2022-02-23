@@ -2,7 +2,6 @@
 
 import React,{useState} from 'react';
 import './LockedItem.css';
-import Loading from './Loading';
 import BuyButton from './BuyButton';
 
 import {auth, db} from '../firebaseInitialize';
@@ -29,7 +28,7 @@ function LockedItem(props){
   let cat_name = "";
 
   if(authLoading || ownerLoading || itemLoading){
-    return(<Loading/>);
+    return(<div className='locked-card'></div>);
   }
 
   if(itemData.category === 'image'){

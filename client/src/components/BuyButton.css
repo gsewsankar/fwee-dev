@@ -1,6 +1,6 @@
 button.buy{
-    color:rgb(119, 153, 101);
-    box-shadow: 0 0 2pt 1pt rgb(133, 158, 119);
+    color:green;
+    box-shadow: 0 0 2pt 1pt lightgray;
     border: none;
     border-radius: 30px;
     padding: 5px;
@@ -8,7 +8,7 @@ button.buy{
 
 button.buy:hover{
     color:white;
-    background-color:rgb(119, 153, 101);
+    background-color:green;
     border-radius: 30px;
     padding: 5px;
 }

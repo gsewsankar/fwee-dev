@@ -11,9 +11,10 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog, faDiceD20, faExchangeAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog, faDiceD20, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 
 function NavBar(){
     const[user, loading] = useAuthState(auth);
@@ -45,7 +46,6 @@ function NavBar(){
                 const title = (await getDoc(doc(db, "items", ref1&&ref1.purchases[j]))).data().title;
                 items.push({id,title});
             }
-            items = items.slice(0,10);
             setRecentlyBought(items);
         }
         
@@ -60,24 +60,32 @@ function NavBar(){
 
     return(
         <div className="nav-frame">
-                {user && 
                 <div className={sidebar ? "side-menu-on" : "side-menu-off"} >
                     <button onClick={toggleSideBar}><FontAwesomeIcon icon={faTimes}/></button>
-                    <Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Messages + <FontAwesomeIcon icon={faExchangeAlt}/> Transfers</Link>
-                    <Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>
-                    <Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>
-                    <Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faDiceD20}/> Fwee Main Chain</Link>
-                    <Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>
-                    
-                    <p><b>Stores You Support</b></p>
+                    {!user&&<HashLink to="/about#top" onClick={toggleSideBar}> What is Fwee?</HashLink>}
+                    {!user&&<HashLink to="/about#store-design" onClick={toggleSideBar}> Design Your Store</HashLink>}
+                    {!user&&<HashLink to="/about#upload-content" onClick={toggleSideBar}> Types of Content</HashLink>}
+                    {!user&&<HashLink to="/about#set-prices" onClick={toggleSideBar}> Setting Prices</HashLink>}
+                    {!user&&<HashLink to="/about#discover-content" onClick={toggleSideBar}> Unlocking Content</HashLink>}
+                    {!user&&<HashLink to="/about#leaderboards" onClick={toggleSideBar}> Leaderboards</HashLink>}
+                    {!user&&<HashLink to="/about#why" onClick={toggleSideBar}> Why Fwee Exists</HashLink>}
+                    {!user&&<HashLink to="/about#faqs" onClick={toggleSideBar}> FAQs</HashLink>}
+
+
+                    {user&&<Link to="/dms" onClick={toggleSideBar}><FontAwesomeIcon icon={faEnvelope}/> Direct Messages</Link>}
+                    {user&&<Link to="/dashboard" onClick={toggleSideBar}><FontAwesomeIcon icon={faIdCard}/> Dashboard</Link>}
+                    {user&&<Link to="/leaders" onClick={toggleSideBar}><FontAwesomeIcon icon={faTrophy}/> Leaderboards</Link>}
+                    {user&&<Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faDiceD20}/> Fwee Main Chain</Link>}
+                    {user&&<Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>}
+                    {user && <p><b>Stores You Support</b></p>}
                     {supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
-                    <p><b>Recently Bought Items</b></p>
+                    {user && <p><b>Recently Bought Items</b></p>}
                     {/* <Link to='purchases' onClick={toggleSideBar}>See All Purchases</Link> */}
                     {recentlyBought.map((item)=>{return<Link key={item.id} to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
-                </div>}
+                </div>
                 
                 <div className="left">
-                    {user && <FontAwesomeIcon className="bars" icon={faBars} size="lg" onClick={toggleSideBar}/>}
+                    <FontAwesomeIcon className="bars" icon={faBars} size="lg" onClick={toggleSideBar}/>
                     <Link to="/"><img width="80" height="45" src={logo} alt={"logo"}></img></Link>
                 </div>
                 

@@ -140,7 +140,6 @@ const SHA256 = require('crypto-js/sha256');
         // update messages array with whatever is in the database using reducer
         // reducer is different from useState as it optimizes performance for deep updates
         // and is more predictable and easier for our use case
-            console.log("mount")
                 let user = gunPeer.user()
 
                 if(!user.is){
