@@ -243,8 +243,8 @@ const SHA256 = require('crypto-js/sha256');
         : (props.display && !loading) ?
         <StyledEngineProvider injectFirst>
 
-        <TableContainer component={Paper}>
-        <Table sx={{m: 2, minWidth: 650 }} size="small" aria-label="a dense table">
+        <TableContainer sx={{m: 2}} component={Paper}>
+        <Table sx={{minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
               <TableCell>Transaction</TableCell>
