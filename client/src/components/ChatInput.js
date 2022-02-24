@@ -5,7 +5,7 @@ import { collection, doc, setDoc } from '@firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { newMessage } from '../firestoreData';
 
-export default function ChatInput(props)  {
+export default function ChatInput({conversationRef})  {
     const [textState, setText] = useState("");
     const[user] = useAuthState(auth); // TODO: Probably move up and use as prop.
 
@@ -17,7 +17,7 @@ export default function ChatInput(props)  {
             message.transactionId = ""; // TODO: Replace with transaction id, if any
 
             // Send message to DB
-            let subCollectionRef = collection(db, 'conversations', props.conversation.id, 'messages')
+            let subCollectionRef = collection(db, 'conversations', conversationRef.id, 'messages')
             let docRef = doc(subCollectionRef, message.timestamp + message.from);
             setDoc(docRef, message);
 

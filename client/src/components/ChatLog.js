@@ -3,14 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseInitialize';
 import ChatBubble from './ChatBubble';
 
-export default function ChatLog(props)  {
-    const conversationId = props.conversation.id;
-
+export default function ChatLog({conversationRef})  {
     const [messages, setMessages] = useState([]);
 
     // Subscribe to this conversation's messages.
     useEffect(() => {
-        const q = query(collection(db, 'conversations', conversationId, 'messages'))
+        console.log(conversationRef.id);
+        const q = query(collection(db, 'conversations', conversationRef.id, 'messages'))
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setMessages([]);
             snapshot.forEach((message) => {
@@ -18,7 +17,7 @@ export default function ChatLog(props)  {
             });
         })
         return unsubscribe;
-    }, [conversationId]);
+    }, [conversationRef]);
 
     return (
         <div>

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-export default function ChatSelector(props)  {
+export default function ChatSelector({conversationRef, ...props})  {
     const [newConversationId, setNewConversationId] = useState("");
+    const currentConversationLabel = conversationRef.data().name || conversationRef.id;
 
     function handleChange(e) {
         const newText = e.target.value;
@@ -16,7 +17,7 @@ export default function ChatSelector(props)  {
     }
 
     return (
-        <input placeholder={props.conversation.name || props.conversation.id} 
+        <input placeholder={currentConversationLabel} 
             value={newConversationId} 
             onChange={handleChange} 
             onKeyDown={handleKeyDown}/>
