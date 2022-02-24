@@ -5,7 +5,7 @@ export function newMessage() {
         timestamp: Timestamp.now(),
         from: undefined,
         text: undefined,
-        transactionId: undefined,
+        transactionId: "",
     }
 }
 
@@ -22,6 +22,6 @@ export function newConversation() {
     return {
         created: Timestamp.now(),
         members: [],
-        name: undefined,
+        name: "",
     }
 }
