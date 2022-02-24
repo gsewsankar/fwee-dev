@@ -16,7 +16,7 @@ export default function ChatSelector(props)  {
     }
 
     return (
-        <input placeholder={props.conversation.id} 
+        <input placeholder={props.conversation.name || props.conversation.id} 
             value={newConversationId} 
             onChange={handleChange} 
             onKeyDown={handleKeyDown}/>
