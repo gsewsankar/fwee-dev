@@ -26,12 +26,12 @@ export function ChatSystem() {
   const [currentConversation, setConversation] = useState(conversations[0]); 
 
   function conversationChangeHandler(newConversationId) {
-      setConversation(conversations.find(e => e.id == newConversationId))
+      setConversation(conversations.find(convo => convo.id === newConversationId))
     }
 
   return (
     <div>
-      <ChatSelector onSelect={conversationChangeHandler} conversation={currentConversation}/>
+      <ChatSelector onChange={conversationChangeHandler} conversation={currentConversation}/>
       <ChatLog conversation={currentConversation}/>
       <ChatInput conversation={currentConversation}/>
     </div>

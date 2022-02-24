@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function ChatSelector(props)  {
-    function changeConversation() {
-        let nextConvo = props.conversation.id == "a" ? "b" : "a";
-        props.onSelect(nextConvo);
+    const [newConversationId, setNewConversationId] = useState("");
+
+    function handleChange(e) {
+        const newText = e.target.value;
+        setNewConversationId(newText);
+    }
+
+    function handleKeyDown(e) {
+        if (e.key === 'Enter') { // Change the active conversation
+            props.onChange(newConversationId);
+            setNewConversationId("");
+        }
     }
 
     return (
-        <h2 onClick={changeConversation}>{props.conversation.id}</h2>
+        <input placeholder={props.conversation.id} 
+            value={newConversationId} 
+            onChange={handleChange} 
+            onKeyDown={handleKeyDown}/>
     )
 }

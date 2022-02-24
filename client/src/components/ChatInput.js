@@ -9,8 +9,8 @@ export default function ChatInput(props)  {
     const [textState, setText] = useState("");
     const[user] = useAuthState(auth); // TODO: Probably move up and use as prop.
 
-    function sendMessage(e) {
-        if (e.key === 'Enter') {
+    function handleKeyDown(e) {
+        if (e.key === 'Enter') { // Send the message to the DB
             let message = newMessage();
             message.from = user.uid;
             message.text = textState;
@@ -25,9 +25,14 @@ export default function ChatInput(props)  {
         }
     }
 
+    function handleChange(e) {
+        const newText = e.target.value;
+        setText(newText);
+    }
+
     return (
         <div>
-            <input onKeyDown={sendMessage} onChange={(e) => setText(e.target.value)} value={textState}/>
+            <input value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
             <ChatAttachment/>
         </div>
     )
