@@ -1,6 +1,7 @@
-import { collection, doc, getDoc, getDocs, limit, query } from "@firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, query, setDoc } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import { db } from "../firebaseInitialize";
+import { newConversation } from "../firestoreData";
 import ChatInput from "./ChatInput";
 import ChatLog from "./ChatLog";
 import ChatSelector from "./ChatSelector";
@@ -20,8 +21,11 @@ export function ChatSystem() {
     getDoc(doc(db, "conversations", newConversationId)).then(docSnap => {
       if (docSnap.exists()) {
         setConversation(docSnap); // TODO: Consolodate data and Id
-      } else {
-        console.log("No such doc found: ", newConversationId); // TODO: Replace with conversation creation.
+      } else { // Add the conversation to the DB
+        const newConversationData = newConversation();
+        const newDocRef = doc(db, "conversations", newConversationId);
+        setDoc(newDocRef, newConversationData);
+        setConversation(newDocRef);
       }
     })
   }
