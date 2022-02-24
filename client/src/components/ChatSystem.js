@@ -1,46 +1,30 @@
+import { collection, doc, getDoc, getDocs, limit, query } from "@firebase/firestore";
 import { useEffect, useState } from "react";
+import { db } from "../firebaseInitialize";
 import ChatInput from "./ChatInput";
 import ChatLog from "./ChatLog";
 import ChatSelector from "./ChatSelector";
 
-// MOCK DATA
-var conversations = [
-  {
-    id: "a",
-    messages: [
-      "Hello!",
-      "Goodbye!"
-    ]
-  },
-  {
-    id: "b",
-    messages: [
-      "Hola!",
-      "Adios!"
-    ]
-  },
-  {
-    id: "c",
-    created: Date.now(),
-    name: "Dongers",
-    users: [],
-    messages: [
-      "Aloha!",
-      "Ciao!"
-    ]
-  },
-]
-// END MOCK DATA
-
 export function ChatSystem() {
   const [currentConversation, setConversation] = useState(null);
+  // Fetch the initial conversation.
   useEffect(() => {
-    setConversation(conversations[0]); // TODO: Fetch from DB
+    const q = query(collection(db, "conversations"), limit(1));
+    getDocs(q).then(querySnapshot => {
+      // Since query should be limited to 1 result, forEach is just used to access the single result.
+      querySnapshot.forEach(doc => setConversation(doc)); // TODO: Consolodate data and Id
+    })
   }, [])
 
-  function conversationChangeHandler(newConversationId) {
-      setConversation(conversations.find(convo => convo.id === newConversationId)) // TODO: Fetch from DB
-    }
+  function handleConversationChange(newConversationId) {
+    getDoc(doc(db, "conversations", newConversationId)).then(docSnap => {
+      if (docSnap.exists()) {
+        setConversation(docSnap); // TODO: Consolodate data and Id
+      } else {
+        console.log("No such doc found: ", newConversationId); // TODO: Replace with conversation creation.
+      }
+    })
+  }
 
   if (!currentConversation) return(
     <p>Loading</p>
@@ -48,7 +32,7 @@ export function ChatSystem() {
 
   return (
     <div>
-      <ChatSelector onChange={conversationChangeHandler} conversation={currentConversation}/>
+      <ChatSelector onChange={handleConversationChange} conversation={currentConversation}/>
       <ChatLog conversation={currentConversation}/>
       <ChatInput conversation={currentConversation}/>
     </div>
