@@ -17,3 +17,11 @@ export function asMessage(data) {
         transactionId: data.transactionId,
     }
 }
+
+export function newConversation() {
+    return {
+        created: Timestamp.now(),
+        members: [],
+        name: undefined,
+    }
+}
