@@ -17,7 +17,7 @@ export default function ChatBubble(props)  {
         fetchDisplayName(message.from).then(displayName => {
             setDisplayName(displayName)
         });
-    }, []);
+    }, [message.from]);
 
     return (
         <div style={{border: "black thin dashed"}}>
