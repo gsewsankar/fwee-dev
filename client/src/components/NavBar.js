@@ -78,10 +78,10 @@ function NavBar(){
                     {user&&<Link to="/messageChain" onClick={toggleSideBar}><FontAwesomeIcon icon={faDiceD20}/> Fwee Main Chain</Link>}
                     {user&&<Link to="/settings" onClick={toggleSideBar}><FontAwesomeIcon icon={faCog}/> Account Settings</Link>}
                     {user && <p><b>Stores You Support</b></p>}
-                    {supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
+                    {user && supporting.map(name=>{return<Link key={name} to={'/'+ name} onClick={toggleSideBar}>{name}</Link>})}
                     {user && <p><b>Recently Bought Items</b></p>}
                     {/* <Link to='purchases' onClick={toggleSideBar}>See All Purchases</Link> */}
-                    {recentlyBought.map((item)=>{return<Link key={item.id} to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
+                    {user && recentlyBought.map((item)=>{return<Link key={item.id} to={'/item/'+ item.id} onClick={toggleSideBar}>{item.title}</Link>})}
                 </div>
                 
                 <div className="left">
