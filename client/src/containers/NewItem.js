@@ -39,7 +39,7 @@ function NewItem(){
         updateFormData({
           ...formData,
 
-          [e.target.name]: e.target.value.trim()
+          [e.target.name]: e.target.value.trim(),
         });
       };
 
@@ -78,6 +78,8 @@ function NewItem(){
           return;
         }
         else{
+          formData.price = Number(formData.price);
+
           itemID = (await addDoc(collection(db,'items'),formData)).id;
         
           updateDoc(doc(db,'items',itemID),{id:itemID});
