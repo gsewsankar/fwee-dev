@@ -24,13 +24,17 @@ function BuyButton(props){
     
     const buyerRef = user && doc(db,'users', user.uid);
     const[buyerData,buyerLoading] = useDocumentData(buyerRef);
+    
+    const[buyerstoreid, setBuyerStoreid] = useState("default");
+    const buyerStoreRef = doc(db,'stores',buyerstoreid);
+    const[buyerStoreData, storeLoading] = useDocumentData(buyerStoreRef);
 
     const sellerRef = itemData && doc(db,'users',itemData.owner);
-    const[storeid, setStoreid] = useState("default");
+    
+    const[sellerstoreid, setSellerStoreid] = useState("default");
     const[sellerData] = useDocumentData(sellerRef);
-
-    const storeRef = doc(db,'stores',storeid);
-    const[storeData, storeLoading] = useDocumentData(storeRef);
+    const sellerStoreRef = doc(db,'stores',sellerstoreid);
+    
     const isMounted = useRef(true);
 
     useEffect(() => {
@@ -38,39 +42,38 @@ function BuyButton(props){
         return () => { isMounted.current = false}
 
     },[]);
+
     useEffect(() => {
         async function fetchData(){
           const ref1 = await getDoc(itemRef);
           const ref2 = await getDocs(query(collection(db,'stores'),where("owner", "==", ref1.data().owner)));
-          if(isMounted.current)
-            setStoreid(ref2.docs[0].id);
+          if(isMounted.current){
+            setSellerStoreid(ref2.docs[0].id);
+          }
+          const ref3 = await getDocs(query(collection(db,'stores'),where("owner", "==", user.uid)));
+          setBuyerStoreid(ref3.docs[0].id);
         }
         fetchData();
 
-    },[itemRef]);
+    },[itemRef, user.uid]);
 
     if(itemLoading || buyerLoading || authLoading || storeLoading){
         return(<button/>);
     }
-
-    /*const getBalance = (username)=>{
-        const user = accounts.find(account => account.username == username);
-        return user.balance;
-    }*/
 
     async function calculateBalance(){
         let created = buyerData.createdAt.toDate();
         let now = DateTime.now();
         let i = Interval.fromDateTimes(created, now);
         let score = i.length('minutes');
-        score = ((score*0.01)+(Number(storeData.amount_sold))-(Number(buyerData.amount_bought))).toFixed(2);
+        score = ((score*0.01)+(Number(buyerStoreData.amount_sold))-(Number(buyerData.amount_bought))).toFixed(2);
         await updateDoc(buyerRef,{balance: Number(score)});
     }
 
     async function transaction(){
         await calculateBalance();
         // TODO: add check for current user?
-        if(buyerData.balance > itemData.price){
+        if(buyerData.balance >= itemData.price){
             await updateDoc(buyerRef,{
                 balance: Number(buyerData.balance)-Number(itemData.price),
                 amount_bought: increment(Number(itemData.price)),
@@ -81,7 +84,7 @@ function BuyButton(props){
                 balance: increment(Number(itemData.price))
             });
 
-            await updateDoc(storeRef,{
+            await updateDoc(sellerStoreRef,{
                 amount_sold: increment(Number(itemData.price))
             })
 
