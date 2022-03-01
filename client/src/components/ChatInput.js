@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ChatAttachment from './ChatAttachment';
+import ChatAttachmentPopper from './ChatAttachmentPopper';
 import { auth, db } from '../firebaseInitialize';
 import { collection, doc, setDoc } from '@firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -33,7 +33,7 @@ export default function ChatInput({conversationRef})  {
     return (
         <div>
             <input value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
-            <ChatAttachment/>
+            <ChatAttachmentPopper/>
         </div>
     )
 }
