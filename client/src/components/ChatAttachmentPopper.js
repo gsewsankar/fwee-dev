@@ -14,11 +14,13 @@ export default function ChatAttachment() {
     const open = Boolean(anchorEl);
 
     return (
+    <>
         <button onClick={handleClick}>
             <FontAwesomeIcon icon={faPlusCircle}/>
-            <Popper open={open} anchorEl={anchorEl} placement='top-start'>
-                <TransactionForm/>
-            </Popper>
         </button>
+        <Popper open={open} anchorEl={anchorEl} placement='top-start'>
+            <TransactionForm/>
+        </Popper>
+    </>
     )
 }
