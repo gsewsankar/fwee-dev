@@ -1,7 +1,7 @@
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Popper } from '@mui/material';
 import React, { useState } from 'react';
-import { Popper } from '../MaterialUIImports';
 import TransactionForm from './TransactionForm';
 
 export default function ChatAttachment() {
