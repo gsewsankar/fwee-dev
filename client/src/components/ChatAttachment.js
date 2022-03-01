@@ -1,7 +1,7 @@
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { Popper } from '../MaterialUIImports';
+import { Card, Popper } from '../MaterialUIImports';
 
 export default function ChatAttachment() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -16,7 +16,7 @@ export default function ChatAttachment() {
         <button onClick={handleClick}>
             <FontAwesomeIcon icon={faPlusCircle}/>
             <Popper open={open} anchorEl={anchorEl} placement='top-start'>
-                This is the first Popper!
+                <Card>The content on a Card</Card>
             </Popper>
         </button>
     )
