@@ -8,7 +8,6 @@ export default function ChatLog({conversationRef})  {
 
     // Subscribe to this conversation's messages.
     useEffect(() => {
-        console.log(conversationRef.id);
         const q = query(collection(db, 'conversations', conversationRef.id, 'messages'))
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setMessages([]);
