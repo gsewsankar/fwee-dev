@@ -94,7 +94,7 @@ function NavBar(){
                     <button><FontAwesomeIcon icon={faSearch}/></button>
                 </div>
 
-                {user&&<Link className='newUploadButton' to="/newItem"><button>New <FontAwesomeIcon icon={faUpload}/></button></Link>}
+                {user&&<Link className='newUploadButton' to="/newItem"><button><FontAwesomeIcon icon={faUpload}/> New Item</button></Link>}
 
                 {user ? 
                 (<Link to={`/${username}`}>
