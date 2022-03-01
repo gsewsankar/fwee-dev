@@ -11,12 +11,11 @@ export default function ChatAttachment() {
     }
 
     const open = Boolean(anchorEl);
-    const id = open ? 'transaction-form' : undefined;
 
     return (
         <button onClick={handleClick}>
             <FontAwesomeIcon icon={faPlusCircle}/>
-            <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Popper open={open} anchorEl={anchorEl} placement='top-start'>
                 This is the first Popper!
             </Popper>
         </button>
