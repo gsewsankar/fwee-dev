@@ -1,7 +1,7 @@
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
-import { Card, Popper } from '../MaterialUIImports';
+import { Popper } from '../MaterialUIImports';
 import TransactionForm from './TransactionForm';
 
 export default function ChatAttachment() {
@@ -17,7 +17,7 @@ export default function ChatAttachment() {
         <button onClick={handleClick}>
             <FontAwesomeIcon icon={faPlusCircle}/>
             <Popper open={open} anchorEl={anchorEl} placement='top-start'>
-                <Card><TransactionForm/></Card>
+                <TransactionForm/>
             </Popper>
         </button>
     )

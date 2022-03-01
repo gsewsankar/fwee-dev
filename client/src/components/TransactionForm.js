@@ -1,5 +1,6 @@
 import React from 'react'
+import {Card} from '../MaterialUIImports'
 
 export default function TransactionForm(props) {
-  return (<>Content within the TransactionForm</>);
+  return (<Card>Content within the TransactionForm</Card>);
 }
