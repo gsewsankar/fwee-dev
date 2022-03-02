@@ -19,7 +19,7 @@ import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusi
 
 export  const Reply = (props)=>{
     const[replyData, replyLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments', props.commentID, 'replies'),orderBy("createdAt", "asc")));
-    const[writer, writerLoading] = useDocumentData(doc(db,'users',props.info.uid));
+    const[writer, writerLoading] = useDocumentData(doc(db,'users',props.commenter));
 
     const [showText, setShowText] = useState(false)
     const [replyText, setReplyText] = useState("")

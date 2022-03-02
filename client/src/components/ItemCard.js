@@ -111,7 +111,7 @@ function ItemCard(props){
             return (
               <div>
                  <Comment info={comment}/>
-                 <Reply itemID ={props.itemID} commentID={comment.id} info={comment} />
+                 <Reply itemID ={props.itemID} commentID={comment.id} commenter={user.uid} />
 
               </div>
             )
