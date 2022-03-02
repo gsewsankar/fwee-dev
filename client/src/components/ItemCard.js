@@ -111,26 +111,20 @@ function ItemCard(props){
             return (
               <div>
                  <Comment info={comment}/>
-                 <Reply itemID ={props.itemID} commentID={comment.id} />
+                 <Reply itemID ={props.itemID} commentID={comment.id} info={comment} />
 
-                 </div>
+              </div>
             )
           }
           else{
             <div>
-            <Comment info={comment}/>
-
+              <Comment info={comment}/>
             </div>
           }
 
-          
-  
-        
-       
-
           })}
         </div>
-        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
+        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>Send</button>
       </div>:<Loading/>);
     }
 

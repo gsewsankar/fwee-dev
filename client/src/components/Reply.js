@@ -19,6 +19,7 @@ import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusi
 
 export  const Reply = (props)=>{
     const[replyData, replyLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments', props.commentID, 'replies'),orderBy("createdAt", "asc")));
+    const[writer, writerLoading] = useDocumentData(doc(db,'users',props.info.uid));
 
     const [showText, setShowText] = useState(false)
     const [replyText, setReplyText] = useState("")
@@ -44,48 +45,37 @@ export  const Reply = (props)=>{
         }
       };
     
+      if(writerLoading){
+        return(<div></div>);
+    }
+
     return(
         <div>
             {
             showText ?   
                 <div>   
-                    
                     {replyData && replyData.map(reply=>{
-            return (
-              <div>
-                {reply.body}
-                 </div>
-            )
-          
-     
-
-          
-  
-        
-       
-
-          })}      
+                        return (
+                        <div>
+                            <img src={writer && writer.photoURL} alt="brkn"></img>
+                            {reply.body}
+                        </div>
+                    )
+                    })}      
                     <input type="text" onChange={ e => setReplyText(e.target.value)}/>
                     <button onClick={(e) => sendComment(e)}>send</button>
                 </div>
-                :  
-               ( 
-               <div>  
-                        {replyData && replyData.map(reply=>{
-            return (
-              <div>
-                {reply.body}
-                 </div>
-            )
-          
-     
-
-          
-  
-        
-       
-
-          })}    
+                    :
+                    ( 
+                <div>
+                    {replyData && replyData.map(reply=>{
+                        return (
+                                <div>
+                                    <img src={writer && writer.photoURL} alt="brkn"></img>
+                                    {reply.body}
+                                </div>
+                            )
+                    })}    
                     <button onClick={(e) => inputBox(e)}>Reply</button>
                 </div>
                )
