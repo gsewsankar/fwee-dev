@@ -8,7 +8,7 @@ import VideoCard from './all_cards/VideoCard';
 import Comment from './Comment.js';
 import {auth, db, firebaseApp} from '../firebaseInitialize';
 import { doc, collection, orderBy, query, addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
-
+import { ReplyImage } from './ReplyImage'
 import { Link } from "react-router-dom";
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -19,10 +19,10 @@ import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusi
 
 export  const Reply = (props)=>{
     const[replyData, replyLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments', props.commentID, 'replies'),orderBy("createdAt", "asc")));
-    const[writer, writerLoading] = useDocumentData(doc(db,'users',props.commenter));
 
     const [showText, setShowText] = useState(false)
     const [replyText, setReplyText] = useState("")
+
     const inputBox = (e) =>{
         e.preventDefault();
         setShowText(true)
@@ -35,7 +35,8 @@ export  const Reply = (props)=>{
             e.preventDefault()
             addDoc(collection(db,'items',props.itemID,'comments',props.commentID, 'replies'),{
                 createdAt: serverTimestamp(),
-                body: replyText
+                body: replyText,
+                uid: props.commenter
               })
               setShowText(false)
 
@@ -45,9 +46,7 @@ export  const Reply = (props)=>{
         }
       };
     
-      if(writerLoading){
-        return(<div></div>);
-    }
+
 
     return(
         <div>
@@ -57,7 +56,7 @@ export  const Reply = (props)=>{
                     {replyData && replyData.map(reply=>{
                         return (
                         <div>
-                            <img src={writer && writer.photoURL} alt="brkn"></img>
+                            <ReplyImage id={reply.uid} />
                             {reply.body}
                         </div>
                     )
@@ -71,7 +70,7 @@ export  const Reply = (props)=>{
                     {replyData && replyData.map(reply=>{
                         return (
                                 <div>
-                                    <img src={writer && writer.photoURL} alt="brkn"></img>
+                                    <ReplyImage id={reply.uid} />
                                     {reply.body}
                                 </div>
                             )
