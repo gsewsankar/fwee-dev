@@ -1,5 +1,5 @@
 import { collection, getDocs } from '@firebase/firestore';
-import { Autocomplete, Card, CardHeader, TextField } from '@mui/material';
+import { Autocomplete, Button, Card, CardActions, CardHeader, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebaseInitialize';
 
@@ -48,6 +48,14 @@ export default function TransactionForm(props) {
         step: 0.01,
       }}
     />
+    <CardActions>
+      <Button>
+        Accept
+      </Button>
+      <Button>
+        Clear
+      </Button>
+    </CardActions>
   </Card>
   );
 }
