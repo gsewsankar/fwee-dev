@@ -11,23 +11,27 @@ export default function ChatInput({conversationRef})  {
 
     function handleKeyDown(e) {
         if (e.key === 'Enter') { // Send the message to the DB
-            let message = newMessage();
-            message.from = user.uid;
-            message.text = textState;
-            message.transactionId = ""; // TODO: Replace with transaction id, if any
-
-            // Send message to DB
-            let subCollectionRef = collection(db, 'conversations', conversationRef.id, 'messages')
-            let docRef = doc(subCollectionRef, message.timestamp + message.from);
-            setDoc(docRef, message);
-
-            setText("");
+            submitMessage();
         }
     }
 
     function handleChange(e) {
         const newText = e.target.value;
         setText(newText);
+    }
+
+    function submitMessage() {
+        let message = newMessage();
+        message.from = user.uid;
+        message.text = textState;
+        message.transactionId = ""; // TODO: Replace with transaction id, if any
+
+        // Send message to DB
+        let subCollectionRef = collection(db, 'conversations', conversationRef.id, 'messages')
+        let docRef = doc(subCollectionRef, message.timestamp + message.from);
+        setDoc(docRef, message);
+
+        setText("");
     }
 
     return (
