@@ -10,6 +10,7 @@ export default function ChatLog({conversationRef})  {
     useEffect(() => {
         const q = query(collection(db, 'conversations', conversationRef.id, 'messages'))
         const unsubscribe = onSnapshot(q, (snapshot) => {
+            // TODO: Modify so only new messages are rendered.
             setMessages([]);
             snapshot.forEach((message) => {
                 setMessages(prevMessages => prevMessages.concat(message.data()));
