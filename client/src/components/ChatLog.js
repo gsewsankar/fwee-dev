@@ -12,7 +12,7 @@ export default function ChatLog({conversationRef})  {
         const unsubscribe = onSnapshot(q, (snapshot) => {
             setMessages([]);
             snapshot.forEach((message) => {
-                setMessages(messages => messages.concat(message.data()));
+                setMessages(prevMessages => prevMessages.concat(message.data()));
             });
         })
         return unsubscribe;
