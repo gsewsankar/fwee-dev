@@ -215,7 +215,7 @@ const SHA256 = require('crypto-js/sha256');
             }
             
 
-          }, 3000)
+          }, 2000)
       
           return () => clearTimeout(delayDebounceFn)
       
