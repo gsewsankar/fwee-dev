@@ -6,9 +6,9 @@ import Loading from '../components/Loading';
 import LikeButton from './LikeButton';
 import VideoCard from './all_cards/VideoCard';
 import Comment from './Comment.js';
-
-import {auth, db} from '../firebaseInitialize';
-import { doc, collection, orderBy, query, addDoc, serverTimestamp } from "firebase/firestore";
+import {Reply} from './Reply.js'
+import {auth, db, firebaseApp} from '../firebaseInitialize';
+import { doc, collection, orderBy, query, addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 import { Link } from "react-router-dom";
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
@@ -21,6 +21,7 @@ function ItemCard(props){
     const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(itemData && doc(db,'users',itemData.owner));
     const[commentData, commentsLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments'),orderBy("createdAt", "asc")));
+
     const[showComments, setShowComments]= useState(false);
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -74,13 +75,18 @@ function ItemCard(props){
     //temporary?
     let comment_body;
 
-    const sendComment = () =>{
+    async function sendComment()
+    {
       if(comment_body !== ""){
-        addDoc(collection(db,'items',props.itemID,'comments'),{
+        const itemID = (await   addDoc(collection(db,'items',props.itemID,'comments'),{
           uid:user&&user.uid,
           createdAt: serverTimestamp(),
           body: comment_body
-        })
+        })).id;
+
+          updateDoc(doc(db,'items',props.itemID, 'comments', itemID),{id:itemID});
+
+      
       }
       else{
         alert('Comment is empty');
@@ -99,10 +105,26 @@ function ItemCard(props){
       <div className="card">
         <button onClick={()=>setShowComments(false)}>close</button>
         <div className="comments-container">
+
         {commentData && commentData.map(comment=>{
-          return(<Comment info={comment}/>)})}
+          if(comment.id){
+            return (
+              <div>
+                 <Comment info={comment}/>
+                 <Reply itemID ={props.itemID} commentID={comment.id} commenter={user.uid} />
+
+              </div>
+            )
+          }
+          else{
+            <div>
+              <Comment info={comment}/>
+            </div>
+          }
+
+          })}
         </div>
-        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
+        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>Send</button>
       </div>:<Loading/>);
     }
 
