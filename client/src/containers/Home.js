@@ -24,7 +24,7 @@ function Home(){
 
     useEffect(()=>{
       async function fetchData(){
-        let firstBatch = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),limit(10))));
+        let firstBatch = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),limit(30))));
         setFeed(firstBatch.docs);
         setLatestDoc(firstBatch.docs[firstBatch.docs.length - 1]);
       }
@@ -34,7 +34,7 @@ function Home(){
 
     async function loadMore(){
       setNextPostsLoading(true);  
-      let nextBatch = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),startAfter(latestDoc),limit(10))));
+      let nextBatch = (await getDocs(query(collection(db,'items'),orderBy('createdAt', 'desc'),startAfter(latestDoc),limit(30))));
       if(!nextBatch.empty){
         let temp = feed;
         nextBatch.docs.forEach(doc => {
@@ -61,11 +61,11 @@ function Home(){
           {feed.map(item=>{return<LockedItem key={item.id} itemID={item.id}/>})}
           </div>
           {nextPosts_loading ? (
-              <p>Loading..</p>
+              <Loading/>
             ) : latestDoc !== null ? (
               <button onClick={()=>loadMore()}>Load More</button>
             ) : (
-              <span>You are up to date!</span>
+              <Loading/>
             )}
         </div>
       )

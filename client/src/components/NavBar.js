@@ -94,13 +94,13 @@ function NavBar(){
                     <button><FontAwesomeIcon icon={faSearch}/></button>
                 </div>
 
-                {user&&<Link className='newUploadButton' to="/newItem"><button>New <FontAwesomeIcon icon={faUpload}/></button></Link>}
+                {user&&<Link className='newUploadButton' to="/newItem"><button><FontAwesomeIcon icon={faUpload}/> New Item</button></Link>}
 
                 {user ? 
                 (<Link to={`/${username}`}>
                 <div className='right'>
                     <p>{user && user.displayName}</p>
-                    {<img src={user && user.photoURL} alt={user && user.photoURL}></img>}
+                    {<img src={user && user.photoURL} alt="pp"></img>}
                 </div>
                 </Link>)  
                 : <Link className='loginButton' to="/join"><button>Login / SignUp</button></Link>}    
