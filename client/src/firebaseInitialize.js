@@ -10,4 +10,4 @@ const auth = getAuth(firebaseApp); // For Authentication
 const db = getFirestore(firebaseApp); // For Using Database
 const bucket = getStorage(firebaseApp); // For Storage Bucket
 
-export {auth, db, bucket};
+export {auth, db, bucket, firebaseApp};
