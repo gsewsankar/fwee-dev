@@ -63,8 +63,7 @@ function NewItem(){
 
           [e.target.name]: e.target.value.trim(),
         });
-        console.log(formData);
-      };
+    };
 
     const uploadFile = (e) => {
         const file = e.target.files[0];

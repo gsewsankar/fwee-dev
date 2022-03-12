@@ -15,7 +15,7 @@ function About(){
   const accordionData = [
     {
       title: 'Why not use real money?',
-      content: `Real Money is an oxymoron.`
+      content: `Fwee is in an early stage of development, but our goal is to eventually be able to connect users to the real value of their data. For now we ask you, what makes money real?`
     },
     {
       title: 'Is this decentralized?',

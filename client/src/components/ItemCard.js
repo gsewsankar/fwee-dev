@@ -6,8 +6,7 @@ import Loading from '../components/Loading';
 import LikeButton from './LikeButton';
 import VideoCard from './all_cards/VideoCard';
 import Comment from './Comment.js';
-import {Reply} from './Reply.js'
-import {auth, db, firebaseApp} from '../firebaseInitialize';
+import {auth, db} from '../firebaseInitialize';
 import { doc, collection, orderBy, query, addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 import { Link } from "react-router-dom";
@@ -78,15 +77,12 @@ function ItemCard(props){
     async function sendComment()
     {
       if(comment_body !== ""){
-        const itemID = (await   addDoc(collection(db,'items',props.itemID,'comments'),{
+        const commentID = (await addDoc(collection(db,'items',props.itemID,'comments'),{
           uid:user&&user.uid,
           createdAt: serverTimestamp(),
           body: comment_body
         })).id;
-
-          updateDoc(doc(db,'items',props.itemID, 'comments', itemID),{id:itemID});
-
-      
+        await updateDoc(doc(db,'items',props.itemID, 'comments', commentID),{id:commentID});
       }
       else{
         alert('Comment is empty');
@@ -105,26 +101,11 @@ function ItemCard(props){
       <div className="card">
         <button onClick={()=>setShowComments(false)}>close</button>
         <div className="comments-container">
-
         {commentData && commentData.map(comment=>{
-          if(comment.id){
-            return (
-              <div>
-                 <Comment info={comment}/>
-                 <Reply itemID ={props.itemID} commentID={comment.id} commenter={user.uid} />
-
-              </div>
-            )
-          }
-          else{
-            <div>
-              <Comment info={comment}/>
-            </div>
-          }
-
-          })}
+            return (<Comment info={comment} itemID={props.itemID}/>)
+        })}
         </div>
-        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>Send</button>
+        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
       </div>:<Loading/>);
     }
 

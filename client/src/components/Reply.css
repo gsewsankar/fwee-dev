@@ -1,0 +1,17 @@
+.reply{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.reply img{
+    border-radius: 50%;
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.reply p{
+    color: black;
+}
