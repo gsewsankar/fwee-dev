@@ -1,0 +1,16 @@
+.replies-section{
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.replies-section{
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.replies-section .reply-input-box{
+    background-color: white;
+    position: sticky;
+    bottom: 0;
+}
+

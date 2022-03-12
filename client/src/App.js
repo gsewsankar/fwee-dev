@@ -42,6 +42,7 @@ function App() {
           <Route path={"/dms"} element={user ? <DirectMessages/> : <Navigate to="/"/>}></Route>
           <Route path={"/settings"} element={user ? <Settings/> : <Navigate to="/"/>}></Route>
           <Route path={"/newItem"} element={user ? <NewItem/> : <Navigate to="/"/>}></Route>
+          <Route path={"/newItem/:category"} element={user ? <NewItem/> : <Navigate to="/"/>}></Route>
           <Route path={"/item/:itemid"} element={user ? <ItemPage/> : <Navigate to="/"/>}></Route>
           <Route path={"/:username"} element={<Store/>}></Route>
           <Route element={<NotFound/>}></Route>

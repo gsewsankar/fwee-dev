@@ -15,7 +15,7 @@ function About(){
   const accordionData = [
     {
       title: 'Why not use real money?',
-      content: `Real Money is an oxymoron.`
+      content: `Fwee is in an early stage of development, but our goal is to eventually be able to connect users to the real value of their data. For now we ask you, what makes money real?`
     },
     {
       title: 'Is this decentralized?',
@@ -48,7 +48,7 @@ function About(){
           <h1 className='gradient-text'>Design Your Store</h1>
           <div className='content-row'>
           <Fade><img src={store} alt="store" height={500} width="auto"/></Fade>
-          <Zoom><p className='content'>There's two ways to make credits in <b className='gradient-text'>fwee</b>; sit back and <b className='gradient-text'>relax</b>, or <b className='gradient-text'>contribute</b> to the market by selling items.
+          <Zoom><p className='content'>There are two ways to make credits in <b className='gradient-text'>fwee</b>; sit back and <b className='gradient-text'>relax</b>, or <b className='gradient-text'>contribute</b> to the market by selling items.
             <br/>
             <br/>
             We allow you to <b className='gradient-text'>design</b> and <b className='gradient-text'>customize</b> your own store where you can  
