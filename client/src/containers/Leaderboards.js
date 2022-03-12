@@ -21,7 +21,7 @@ function Leaderboards(){
   }
 
     return(
-      <div>
+      <div className='leaderboard'>
           <h1>Leaderboards</h1>
           <table>
             <tbody>
