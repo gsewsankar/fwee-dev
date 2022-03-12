@@ -138,6 +138,57 @@ function NewItem(){
       )
     }
 
+    if(category === 'video'){
+      return(
+        <div>
+          <h2>New Video</h2>
+          <form>
+          <div className="form-section"><input type="file" accept="video/*" onChange={uploadFile}/></div>
+              <div><progress value={value} max='100'></progress> {value.toFixed(0)}%</div>
+              <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
+              <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
+              <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
+              {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
+              {!success && <div className="form-section"><button onClick={handleSubmit}>Post</button></div>}
+          </form>
+        </div>
+      )
+    }
+
+    if(category === 'audio'){
+      return(
+        <div>
+          <h2>New Audio</h2>
+          <form>
+          <div className="form-section"><input type="file" accept="audio/*" onChange={uploadFile}/></div>
+              <div><progress value={value} max='100'></progress> {value.toFixed(0)}%</div>
+              <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
+              <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
+              <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
+              {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
+              {!success && <div className="form-section"><button onClick={handleSubmit}>Post</button></div>}
+          </form>
+        </div>
+      )
+    }
+
+    if(category === 'document'){
+      return(
+        <div>
+          <h2>New Document</h2>
+          <form>
+          <div className="form-section"><input type="file" accept="application/*" onChange={uploadFile}/></div>
+              <div><progress value={value} max='100'></progress> {value.toFixed(0)}%</div>
+              <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
+              <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
+              <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
+              {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
+              {!success && <div className="form-section"><button onClick={handleSubmit}>Post</button></div>}
+          </form>
+        </div>
+      )
+    }
+
     return(
       <div>
           <h2>New Item</h2>
@@ -147,6 +198,20 @@ function NewItem(){
               <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
               <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
               <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
+              <div className="form-section">
+                <label>Category</label>
+                <select onChange={handleChange} name="category" id="category">
+                <option value=''>Select a Category</option>
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+                <option value="music">Music</option>
+                <option value="art">Art</option>
+                <option value="story">Story/Fanfiction</option>
+                <option value="model">3D Model</option>
+                <option value="game">Game</option>
+                <option value="link">Link</option>
+                </select>
+              </div>
               {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
               {!success && <div className="form-section"><button onClick={handleSubmit}>Post</button></div>}
           </form>

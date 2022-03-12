@@ -100,7 +100,7 @@ function NavBar(){
                 (<Link to={`/${username}`}>
                 <div className='right'>
                     <p>{user && user.displayName}</p>
-                    {<img src={user && user.photoURL} alt={user && user.photoURL}></img>}
+                    {<img src={user && user.photoURL} alt="pp"></img>}
                 </div>
                 </Link>)  
                 : <Link className='loginButton' to="/join"><button>Login / SignUp</button></Link>}    
