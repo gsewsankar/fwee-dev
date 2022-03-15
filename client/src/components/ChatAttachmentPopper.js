@@ -4,7 +4,9 @@ import { Button, Popper } from '@mui/material';
 import React, { useState } from 'react';
 import TransactionForm from './TransactionForm';
 
-export default function ChatAttachment() {
+export default function ChatAttachmentPopper(props) {
+    const {onSetTransaction: dispatchSetTransaction} = props;
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [transaction, setTransaction] = useState(null);
 
@@ -15,9 +17,9 @@ export default function ChatAttachment() {
     }
 
     function handleSetTransaction(transaction) {
-        // TODO: Add filling of input box.
         setTransaction(transaction);
-        setAnchorEl(null);
+        setAnchorEl(null); // Close Popper
+        dispatchSetTransaction && dispatchSetTransaction(transaction);
     }
 
     return (

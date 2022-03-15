@@ -9,15 +9,23 @@ export default function ChatInput({conversationRef})  {
     const [textState, setText] = useState("");
     const[user] = useAuthState(auth); // TODO: Probably move up and use as prop.
 
+    function handleChange(e) {
+        const newText = e.target.value;
+        setText(newText);
+    }
+
     function handleKeyDown(e) {
         if (e.key === 'Enter') { // Send the message to the DB
             submitMessage();
         }
     }
 
-    function handleChange(e) {
-        const newText = e.target.value;
-        setText(newText);
+    function handleTransactionSet(transaction) {
+        const transactionText = transaction ? `` +
+        `Hi, ${transaction.target.label}. ` +
+        `I'm sending you ${transaction.amount} fwee coins!\n\n` : 
+        "";
+        setText(transactionText);
     }
 
     function submitMessage() {
@@ -37,7 +45,7 @@ export default function ChatInput({conversationRef})  {
     return (
         <div>
             <input value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
-            <ChatAttachmentPopper/>
+            <ChatAttachmentPopper onSetTransaction={handleTransactionSet}/>
         </div>
     )
 }
