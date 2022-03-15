@@ -4,11 +4,19 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../firebaseInitialize';
 
 export default function TransactionForm(props) {
-  const [target, setTarget] = useState(null)
-  const [amount, setAmount] = useState(0);
+  const {
+    onSetTransaction: dispatchSetTransaction,
+    prefill,
+  } = props;
+
+  const [target, setTarget] = useState(prefill?.target || null);
+  const [amount, setAmount] = useState(prefill?.amount || 0);
 
   const [userSelections, setUserSelections] = useState([])
   useEffect(()=>{
+    // Fetch **all** users from DB and 
+    // add to state for Autocomplete selections.
+    // TODO: Abstract out the DB logic into its own API
     const collectionRef = collection(db, 'users');
     getDocs(collectionRef).then((querySnapshot) => {
       querySnapshot.forEach(snapshot => {
@@ -30,6 +38,18 @@ export default function TransactionForm(props) {
     setAmount(event.target.value);
   }
 
+  function handleAcceptClick() {
+    const transaction = {
+      target,
+      amount,
+    }
+    dispatchSetTransaction(transaction);
+  }
+
+  function handleClearClick() {
+    dispatchSetTransaction(null);
+  }
+
   return (
   <Card>
     <CardHeader title="Transaction"/>
@@ -49,10 +69,10 @@ export default function TransactionForm(props) {
       }}
     />
     <CardActions>
-      <Button>
+      <Button onClick={handleAcceptClick}>
         Accept
       </Button>
-      <Button>
+      <Button onClick={handleClearClick}>
         Clear
       </Button>
     </CardActions>
