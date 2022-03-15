@@ -5,10 +5,12 @@ import React, { useState } from 'react';
 import TransactionForm from './TransactionForm';
 
 export default function ChatAttachmentPopper(props) {
-    const {onSetTransaction: dispatchSetTransaction} = props;
+    const {
+        transaction,
+        onSetTransaction: setTransaction
+    } = props;
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const [transaction, setTransaction] = useState(null);
 
     const open = Boolean(anchorEl);
 
@@ -19,7 +21,6 @@ export default function ChatAttachmentPopper(props) {
     function handleSetTransaction(transaction) {
         setTransaction(transaction);
         setAnchorEl(null); // Close Popper
-        dispatchSetTransaction && dispatchSetTransaction(transaction);
     }
 
     return (

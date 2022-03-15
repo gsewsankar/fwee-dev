@@ -2,6 +2,7 @@ import { collection, getDocs } from '@firebase/firestore';
 import { Autocomplete, Button, Card, CardActions, CardHeader, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { db } from '../firebaseInitialize';
+import { fetchUsername } from './ChatBubble';
 
 export default function TransactionForm(props) {
   const {
@@ -9,7 +10,16 @@ export default function TransactionForm(props) {
     prefill,
   } = props;
 
-  const [target, setTarget] = useState(prefill?.target || null);
+  const [target, setTarget] = useState(null);
+  useEffect(() => { // TODO: Create custom hook for async inits.
+    if (!prefill) return;
+    fetchUsername(prefill.to).then(displayName => {
+      setTarget({
+        label: displayName,
+        id: prefill.to,
+      })
+    })
+  }, [prefill])
   const [amount, setAmount] = useState(prefill?.amount || 0);
 
   const [userSelections, setUserSelections] = useState([])
@@ -22,7 +32,7 @@ export default function TransactionForm(props) {
       querySnapshot.forEach(snapshot => {
         const snapshotData = snapshot.data();
         const selectionObject = {
-          label: snapshotData.displayName,
+          label: snapshotData.username,
           id: snapshot.id,
         }
         setUserSelections(prevSelections => prevSelections.concat(selectionObject));
@@ -40,8 +50,10 @@ export default function TransactionForm(props) {
 
   function handleAcceptClick() {
     const transaction = {
-      target,
+      from: undefined,
+      to: target.id,
       amount,
+      time: Date.now(),
     }
     dispatchSetTransaction(transaction);
   }

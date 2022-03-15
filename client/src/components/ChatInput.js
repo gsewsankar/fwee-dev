@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import ChatAttachmentPopper from './ChatAttachmentPopper';
-import { auth, db } from '../firebaseInitialize';
+import { auth, db, gun } from '../firebaseInitialize';
 import { collection, doc, setDoc } from '@firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { newMessage } from '../firestoreData';
+import { MessageSender } from './MessageSender';
+import { fetchUsername } from './ChatBubble';
 
 export default function ChatInput({conversationRef})  {
     const [textState, setText] = useState("");
+    const [transaction, setTransaction] = useState(null);
     const[user] = useAuthState(auth); // TODO: Probably move up and use as prop.
 
     function handleChange(e) {
@@ -20,11 +23,14 @@ export default function ChatInput({conversationRef})  {
         }
     }
 
-    function handleTransactionSet(transaction) {
-        const transactionText = transaction ? `` +
-        `Hi, ${transaction.target.label}. ` +
-        `I'm sending you ${transaction.amount} fwee coins!\n\n` : 
-        "";
+    async function handleSetTransaction(transaction) {
+        if (!transaction) return clearInput();
+
+        transaction.from = user.uid;
+        setTransaction(transaction);
+        const transactionText = `` +
+            `Hi, ${await fetchUsername(transaction.to)}. ` +
+            `I'm sending you ${transaction.amount} fwee coins!\n\n`;
         setText(transactionText);
     }
 
@@ -39,13 +45,29 @@ export default function ChatInput({conversationRef})  {
         let docRef = doc(subCollectionRef, message.timestamp + message.from);
         setDoc(docRef, message);
 
+        // Send transaction to Gun
+        sendCredits(transaction)
+
+        clearInput();
+    }
+    
+    // set a new message in gun, update the local state to reset the form field
+    function sendCredits(transaction) {
+        const accounts = gun.get('accounts');
+
+        MessageSender(transaction)
+        accounts.set(transaction)
+    }
+
+    function clearInput() {
+        setTransaction(null);
         setText("");
     }
 
     return (
         <div>
             <input value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
-            <ChatAttachmentPopper onSetTransaction={handleTransactionSet}/>
+            <ChatAttachmentPopper transaction={transaction} onSetTransaction={handleSetTransaction}/>
         </div>
     )
 }
