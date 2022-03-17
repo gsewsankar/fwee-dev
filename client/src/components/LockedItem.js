@@ -31,42 +31,42 @@ function LockedItem(props){
     return(<div className='locked-card'></div>);
   }
 
-  if(itemData.category === 'image'){
+  if(itemData&&itemData.category === 'image'){
     category = faCamera;
     cat_name = 'image';
   }
 
-  if(itemData.category === 'video'){
+  if(itemData&&itemData.category === 'video'){
     category = faVideo;
     cat_name = 'video';
   }
 
-  if(itemData.category === 'music'){
+  if(itemData&&itemData.category === 'music'){
     category = faMusic;
     cat_name = 'music';
   }
 
-  if(itemData.category === 'art'){
+  if(itemData&&itemData.category === 'art'){
     category = faPalette;
     cat_name = 'art';
   }
 
-  if(itemData.category === 'story'){
+  if(itemData&&itemData.category === 'story'){
     category = faBook;
     cat_name = 'story';
   }
 
-  if(itemData.category === 'model'){
+  if(itemData&&itemData.category === 'model'){
     category = faCube;
     cat_name = 'model';
   }
 
-  if(itemData.category === 'game'){
+  if(itemData&&itemData.category === 'game'){
     category = faGamepad;
     cat_name = 'game';
   }
 
-  if(itemData.category === 'link'){
+  if(itemData&&itemData.category === 'link'){
     category = faLink;
     cat_name = 'link';
   }

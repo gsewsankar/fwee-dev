@@ -43,8 +43,12 @@ function NavBar(){
             let items = [];
             for(let j = ref1&&ref1.purchases.length - 1; j >= 0; j--){
                 const id = ref1&&ref1.purchases[j];
-                const title = (await getDoc(doc(db, "items", ref1&&ref1.purchases[j]))).data().title;
-                items.push({id,title});
+                let title;
+                const titleSnap = getDoc(doc(db, "items", ref1&&ref1.purchases[j]));
+                if((await titleSnap).exists()){
+                    title = (await titleSnap).data().title;
+                    items.push({id,title});
+                }
             }
             setRecentlyBought(items);
         }
