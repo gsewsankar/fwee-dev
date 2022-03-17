@@ -1,3 +1,4 @@
+import './ChatBubble.css';
 import { doc, getDoc } from '@firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseInitialize';
@@ -21,9 +22,14 @@ export default function ChatBubble(props)  {
     }, [message.from]);
 
     return (
-        <div style={{border: "black thin dashed"}}>
-            <p>{displayName} at {time}</p>
-            <big>{message.text}</big>  
+        <div className='message-row' style={{border: "black thin dashed"}}>
+            <div className='message-col'>
+                <div className='message-line'>
+                    <div className='sender'>{displayName}</div>
+                    <div className='message'>{message.text}</div>  
+                </div>
+                <p className='time'>{time}</p>            
+            </div>
         </div>
     )
 }

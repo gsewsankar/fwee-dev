@@ -1,0 +1,8 @@
+.message-line {
+  display: flex;
+}
+
+.message {
+  background-color: lightgreen;
+}
+
