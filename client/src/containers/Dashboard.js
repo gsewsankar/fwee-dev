@@ -1,5 +1,3 @@
-//updated to v9 on 12-8-2021
-
 import React,{useState,useEffect}  from 'react';
 import './Dashboard.css';
 import Loading from '../components/Loading';
