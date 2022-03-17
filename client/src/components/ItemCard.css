@@ -27,6 +27,13 @@
     background-color: whitesmoke;
 }
 
+.item-card-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .card a:hover{
     color: green;
 }

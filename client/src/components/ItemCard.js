@@ -14,7 +14,7 @@ import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firesto
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
-import BasicModal from './ShareButton'
+import ShareButton from './ShareButton'
 
 function ItemCard(props){
     const[user, authLoading] = useAuthState(auth);
@@ -125,10 +125,11 @@ function ItemCard(props){
         </Link>
           <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
           <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="commentbtn" icon={faComments}/> {commentData.length}</button>
-          <LikeButton itemID={props.itemID}/>
-          <BasicModal url={"https://fwee.io/item/"+itemData.id}/>
-
+          <div className='item-card-buttons'>
+            <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="commentbtn" icon={faComments}/> {commentData.length}</button>
+            <LikeButton itemID={props.itemID}/>
+            <ShareButton url={"https://fwee.io/item/"+itemData.id}/>
+          </div>
       </div>:<Loading/>
     );
   }

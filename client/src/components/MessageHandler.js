@@ -1,7 +1,7 @@
-import {useEffect,useReducer, useRef, useState} from 'react'
-import Gun from 'gun/gun'
-import 'gun/sea'
-import 'gun/axe'
+import {useEffect,useReducer,useState} from 'react';
+import Gun from 'gun/gun';
+import 'gun/sea';
+import 'gun/axe';
 import ReactLoading from 'react-loading';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -65,7 +65,7 @@ const SHA256 = require('crypto-js/sha256');
                 var prevBlock = temp[i];
 
                 var currentBlock=null;
-                if(i != 0)
+                if(i !== 0)
                     currentBlock = temp[i-1];
                 else
                     currentBlock = null
@@ -83,7 +83,7 @@ const SHA256 = require('crypto-js/sha256');
                     currentBlock.hash = calculateHash(currentBlock)
                     
                 }
-                else if(i==0)
+                else if(i===0)
                 {
                             prevBlock.previousHash = temp[1].hash
 
@@ -102,13 +102,13 @@ const SHA256 = require('crypto-js/sha256');
                 for(let i = temp.length-1; i > 0; i--){
                         var prevBlock = temp[i];
                         var currentBlock=null;
-                        if(i != 0)
+                        if(i !== 0)
                             currentBlock = temp[i-1];
 
                         else
                             currentBlock = null
         
-                        if(i==0)
+                        if(i===0)
                         {
 
                                 if(prevBlock.previousHash !== temp[1].hash)
@@ -238,7 +238,7 @@ const SHA256 = require('crypto-js/sha256');
          error ?
 
      
-        <h1>Error occurred in validating blockchain, contact administrator</h1>
+        <h1>403 Unauthorized</h1>
 
         : (props.display && !loading) ?
         <StyledEngineProvider injectFirst>

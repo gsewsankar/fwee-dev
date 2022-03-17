@@ -60,13 +60,7 @@ function Home(){
           <div className='cards'>
           {feed.map(item=>{return<LockedItem key={item.id} itemID={item.id}/>})}
           </div>
-          {nextPosts_loading ? (
-              <Loading/>
-            ) : latestDoc !== null ? (
-              <button onClick={()=>loadMore()}>Load More</button>
-            ) : (
-              <Loading/>
-            )}
+          {nextPosts_loading ? <Loading/> : <button onClick={()=>loadMore()}>Load More</button>}
         </div>
       )
     }
