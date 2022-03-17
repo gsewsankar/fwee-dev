@@ -7,7 +7,6 @@ import RepliesSection from './RepliesSection.js';
 import {db} from '../firebaseInitialize';
 import { doc } from "firebase/firestore";
 import {useDocumentData} from 'react-firebase-hooks/firestore';
-
 function Comment(props){
     const[writer, writerLoading] = useDocumentData(doc(db,'users',props.info.uid));
     const [showReplies, setShowReplies] = useState(false);
@@ -19,6 +18,8 @@ function Comment(props){
     return(
         <>
         <div className="comment">
+            
+
             <img src={writer && writer.photoURL} alt="brkn"></img>
             <p>{props.info.body}</p>
         </div>
