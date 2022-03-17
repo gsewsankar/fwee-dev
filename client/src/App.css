@@ -35,6 +35,10 @@ button:hover{
   color: grey;
 }
 
+button.highlight{
+  background-color: lightgreen;
+}
+
 a{
   color: rgb(5,54,0);
   text-decoration: none;

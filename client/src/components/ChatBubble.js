@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseInitialize';
 import { asMessage } from '../firestoreData';
 
-async function fetchDisplayName(uid) {
+// TODO: Move into a DB controller API.
+export async function fetchUsername(uid) {
     const userRef = await getDoc(doc(db, "users", uid));
-    return userRef.data().displayName;
+    return userRef.data().username;
 }
 
 export default function ChatBubble(props)  {
@@ -14,10 +15,10 @@ export default function ChatBubble(props)  {
 
     const [displayName, setDisplayName] = useState(message.from);
     useEffect(()=>{
-        fetchDisplayName(message.from).then(displayName => {
+        fetchUsername(message.from).then(displayName => {
             setDisplayName(displayName)
         });
-    }, []);
+    }, [message.from]);
 
     return (
         <div style={{border: "black thin dashed"}}>
