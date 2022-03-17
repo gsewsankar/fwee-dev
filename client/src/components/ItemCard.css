@@ -27,6 +27,10 @@
     background-color: whitesmoke;
 }
 
+.card a:hover{
+    color: green;
+}
+
 .comments-container{
     min-height: 300px;
     overflow-y: auto;

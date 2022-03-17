@@ -20,7 +20,7 @@ const RepliesSection = (props) => {
     }
     
     async function sendReply(e){
-        if(replyText != ""){
+        if(replyText !== ""){
             await addDoc(collection(db,'items',props.itemID,'comments',props.commentID, 'replies'),{
                 createdAt: serverTimestamp(),
                 body: replyText,

@@ -5,6 +5,11 @@
     align-items: center;
 }
 
+.new-item-container img{
+    width: 100px;
+    height: auto;
+}
+
 .new-item-category-list{
     display: flex;
     flex-direction: column;

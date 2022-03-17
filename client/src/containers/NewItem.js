@@ -89,6 +89,48 @@ function NewItem(){
       );  
     }
 
+    const uploadThumbnail = (e) => {
+      const file = e.target.files[0];
+      const storageRef = ref(bucket, user.uid + '/' + file.name);
+      const upload = uploadBytesResumable(storageRef, file);
+      upload.on('state_changed',
+      function progress(snapshot){
+          let percent = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+          setValue(()=>percent)
+      },
+      function error(err){
+      },
+      async function complete(){
+          updateFormData({
+              ...formData,
+
+              thumbnail: await getDownloadURL(storageRef)
+            });
+      }
+    );  
+  }
+
+  const uploadAlbumArt = (e) => {
+      const file = e.target.files[0];
+      const storageRef = ref(bucket, user.uid + '/' + file.name);
+      const upload = uploadBytesResumable(storageRef, file);
+      upload.on('state_changed',
+      function progress(snapshot){
+          let percent = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+          setValue(()=>percent)
+      },
+      function error(err){
+      },
+      async function complete(){
+          updateFormData({
+              ...formData,
+
+              albumArt: await getDownloadURL(storageRef)
+            });
+      }
+    );  
+  }
+
     let storeDoc;
     let itemID;
 
@@ -122,7 +164,7 @@ function NewItem(){
 
     if(category === 'image'){
       return(
-        <div>
+        <div className='new-item-container'>
           <h2>New Image</h2>
           <form>
           <div className="form-section"><input type="file" accept="image/*" onChange={uploadFile}/></div>
@@ -139,16 +181,18 @@ function NewItem(){
 
     if(category === 'video'){
       return(
-        <div>
+        <div className='new-item-container'>
           <h2>New Video</h2>
           <form>
-          <div className="form-section"><input type="file" accept="video/*" onChange={uploadFile}/></div>
-              <div><progress value={value} max='100'></progress> {value.toFixed(0)}%</div>
-              <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
-              <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
-              <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
-              {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
-              {!success && <div className="form-section"><button onClick={handleSubmit}>Post</button></div>}
+          <div className="form-section"><label>Select Video File</label><input type="file" accept="video/*" onChange={uploadFile}/></div>
+          <div><progress value={value} max='100'></progress> {value.toFixed(0)}%</div>
+          <div className="form-section"><label>Custom Thumbnail</label><input type="file" accept="image/*" onChange={uploadThumbnail}/></div>
+          {(value >= 100) && <img src={formData.thumbnail} alt='thmbnl'/>}
+          <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
+          <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
+          <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
+          {success && <div> Posted Successfully! <Link to={`/item/${path}`}><button>VIEW NEW ITEM</button></Link></div>}
+          {!success && <div className="form-section"><button onClick={handleSubmit}>Post</button></div>}
           </form>
         </div>
       )
@@ -156,11 +200,13 @@ function NewItem(){
 
     if(category === 'audio'){
       return(
-        <div>
+        <div className='new-item-container'>
           <h2>New Audio</h2>
           <form>
-          <div className="form-section"><input type="file" accept="audio/*" onChange={uploadFile}/></div>
+          <div className="form-section"><label>Your Audio File</label><input type="file" accept="audio/*" onChange={uploadFile}/></div>
               <div><progress value={value} max='100'></progress> {value.toFixed(0)}%</div>
+              <div className="form-section"><label>Album Art</label><input type="file" accept="image/*" onChange={uploadAlbumArt}/></div>
+              {(value >= 100) && <img src={formData.albumArt} alt='aa'/>}
               <div className="form-section"><label>Title</label><input name="title" onChange={handleChange} type="text" placeholder="Name your item"/></div>
               <div className="form-section"><label>Price</label><input name="price" onChange={handleChange} type="number" min={0.00} step={0.01} placeholder="0.00"/></div>
               <div className="form-section"><label>Description</label><input name="description" onChange={handleChange} type="text" placeholder="#Hashtags @Friends"/></div>
@@ -173,7 +219,7 @@ function NewItem(){
 
     if(category === 'document'){
       return(
-        <div>
+        <div className='new-item-container'>
           <h2>New Document</h2>
           <form>
           <div className="form-section"><input type="file" accept="application/*" onChange={uploadFile}/></div>
@@ -189,7 +235,7 @@ function NewItem(){
     }
 
     return(
-      <div>
+      <div className='new-item-container'>
           <h2>New Item</h2>
           <form>
           <div className="form-section"><input type="file" onChange={uploadFile}/></div>
