@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-  
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 import {
     EmailShareButton,
     FacebookShareButton,
@@ -63,6 +64,8 @@ const style = {
 
 export default function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
+  const [copy, setCopy] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -91,6 +94,13 @@ export default function BasicModal(props) {
            <TwitterShareButton url={props.url}>
                <TwitterIcon />
            </TwitterShareButton>
+           <CopyToClipboard text={props.url}>
+           <button>{props.url}
+           <br></br>
+           Copy
+            </button>
+
+        </CopyToClipboard>
         </Box>
       </Modal>
     </div>
