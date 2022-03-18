@@ -38,7 +38,7 @@ const btnStyle = {
 
 export default function ShareButton(props) {
   const [open, setOpen] = React.useState(false);
-  //const [copy, setCopy] = React.useState(false);
+  const [copy, setCopy] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -68,7 +68,7 @@ export default function ShareButton(props) {
            <TwitterShareButton url={props.url}>
                <TwitterIcon style={btnStyle}/>
            </TwitterShareButton>
-           <CopyToClipboard text={props.url}><button>Copy<br></br><br></br>{props.url}</button></CopyToClipboard>
+           <CopyToClipboard text={props.url}><button onClick={()=>setCopy(true)}>{copy ? <b>Copied!</b> : "Copy"}<br></br><br></br>{props.url}</button></CopyToClipboard>
         </Box>
       </Modal>
     </div>

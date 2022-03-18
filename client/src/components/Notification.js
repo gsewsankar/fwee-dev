@@ -27,9 +27,13 @@ function Notification(props){
                 let whoRef = (await getDoc(doc(db,'users',notifData.who))).data().username;
                 setWho(whoRef);
             
-                if(notifData.itemID){
-                    let itemRef = (await getDoc(doc(db,'items',notifData.itemID))).data().title;
-                    setItemTitle(itemRef);
+                
+                let itemRef = (await getDoc(doc(db,'items',notifData.itemID)));
+                if(itemRef.exists()){
+                    setItemTitle(itemRef.data().title);
+                }
+                else{
+                    setItemTitle("deleted");
                 }
 
                 if(notifData.storeID){
@@ -53,13 +57,13 @@ function Notification(props){
                     setWhen(hrs.toFixed(0).toString() + "hrs");
                 }
                 else if(days < 31){
-                    setWhen(days.toFixed(0).toString() + "days")
+                    setWhen(days.toFixed(0).toString() + "d")
                 }
                 else if(months < 12){
-                    setWhen(months.toFixed(0).toString() + "months ago")
+                    setWhen(months.toFixed(0).toString() + " months ago")
                 }
                 else{
-                    setWhen(years.toFixed(0).toString() + "years ago")
+                    setWhen(years.toFixed(0).toString() + " years ago")
                 }
             }
         }

@@ -37,7 +37,7 @@ function App() {
           <Route path="/about" element={<About/>}></Route>
           <Route path="/join" element={user ? <Navigate to="/"/> : <SignUpPage/>}></Route>
           <Route path={"/dashboard"} element={user ? <Dashboard/> : <Navigate to="/"/>}></Route>
-          <Route path={"/messageChain"} element={<MessageChain/>}></Route>
+          <Route path={"/chain"} element={<MessageChain/>}></Route>
           <Route path={"/leaders"} element={<Leaderboards/>}></Route>
           <Route path={"/dms"} element={user ? <DirectMessages/> : <Navigate to="/"/>}></Route>
           <Route path={"/settings"} element={user ? <Settings/> : <Navigate to="/"/>}></Route>

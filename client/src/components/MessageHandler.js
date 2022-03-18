@@ -2,7 +2,7 @@ import {useEffect,useReducer,useState} from 'react';
 import Gun from 'gun/gun';
 import 'gun/sea';
 import 'gun/axe';
-import ReactLoading from 'react-loading';
+import Loading from './Loading.js';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -231,7 +231,7 @@ const SHA256 = require('crypto-js/sha256');
     return(
         <div>
      {  loading?
-         <ReactLoading type={'spin'} color={'black'} height={667} width={375} />
+         <Loading/>
          : null
      }
      {
