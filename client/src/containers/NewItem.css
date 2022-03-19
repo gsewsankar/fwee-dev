@@ -45,11 +45,63 @@
 }
 
 .form-section button{
-    background-color: rgb(30, 114, 13);
+    background-color: rgb(119, 221, 118);
     border-radius: 20px;
     color: white;
 }
 
+.form-section button:hover{
+    background-color: rgb(101, 184, 100);
+}
+
 label{
     float: left;
+}
+
+textarea.thought-input{
+    padding: 10px;
+    width: 300px;
+    height: 250px;
+    font-size: 18px;
+    font-family:sans-serif;
+}
+
+.image{
+    color: rgb(85, 85, 85);
+}
+
+.video{
+    color: rgb(89, 0, 255);
+}
+
+.audio{
+    color: rgb(226, 31, 151);
+}
+
+.art{
+    color: rgb(255, 170, 95);
+}
+
+.document{
+    color: rgb(21, 23, 141);
+}
+
+.model{
+    color: rgb(197, 38, 38);
+}
+
+.game{
+    color: rgb(46, 187, 116);
+}
+
+.link{
+    color: rgb(119, 95, 255);
+}
+
+.poll{
+    color: rgb(255, 95, 220);
+}
+
+.thought{
+    color: rgb(223, 189, 0);
 }
