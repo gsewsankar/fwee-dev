@@ -8,7 +8,8 @@ import { collection, orderBy, query, addDoc, serverTimestamp } from "firebase/fi
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
 const RepliesSection = (props) => {
     const[user, authLoading] = useAuthState(auth);
@@ -20,7 +21,7 @@ const RepliesSection = (props) => {
     }
     
     async function sendReply(e){
-        if(replyText !== ""){
+        if(replyText.trim() !== ""){
             await addDoc(collection(db,'items',props.itemID,'comments',props.commentID, 'replies'),{
                 createdAt: serverTimestamp(),
                 body: replyText,
@@ -48,7 +49,7 @@ const RepliesSection = (props) => {
 
             <div className='reply-input-box'>
             <input id="reply-text" type="text" onChange={ e => setReplyText(e.target.value)} onKeyDown={handleKeyDown}/>
-            <button onClick={(e) => sendReply(e)}>send</button> 
+            <button className='send-comment-button' onClick={(e) => sendReply(e)}><FontAwesomeIcon icon={faAngleDoubleRight}/></button> 
             </div>          
         </div>
         

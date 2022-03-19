@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo } from '@fortawesome/free-solid-svg-icons';
+import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo, faAngleDoubleRight, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import ShareButton from './ShareButton'
 
 function ItemCard(props){
@@ -100,13 +100,13 @@ function ItemCard(props){
     if(showComments){
       return((ownerData&&itemData) ?
       <div className="card">
-        <button onClick={()=>setShowComments(false)}>close</button>
+        <button className='close-cmt-btn' onClick={()=>setShowComments(false)}><FontAwesomeIcon icon={faTimesCircle}/> close</button>
         <div className="comments-container">
         {commentData && commentData.map(comment=>{
             return (<Comment info={comment} itemID={props.itemID}/>)
         })}
         </div>
-        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button onClick={sendComment}>send</button>
+        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button className='send-comment-button' onClick={sendComment}><FontAwesomeIcon icon={faAngleDoubleRight}/></button>
       </div>:<Loading/>);
     }
 

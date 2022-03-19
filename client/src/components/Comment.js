@@ -1,16 +1,28 @@
 //updated to v9 on 12-8-2021
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Comment.css';
 import RepliesSection from './RepliesSection.js';
 
 import {db} from '../firebaseInitialize';
-import { doc } from "firebase/firestore";
+import { collection, doc, getDocs, query } from "firebase/firestore";
 import {useDocumentData} from 'react-firebase-hooks/firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+
 function Comment(props){
     const[writer, writerLoading] = useDocumentData(doc(db,'users',props.info.uid));
     const [showReplies, setShowReplies] = useState(false);
-    
+    const[replyNum, setReplyNum] = useState(0);
+
+    useEffect(()=>{
+        async function fetchData(){
+            let colSnap = (await getDocs(query(collection(db,'items',props.itemID,'comments',props.info.id,'replies')))).size;
+            setReplyNum(colSnap); 
+        }
+        fetchData();
+    },[]);
+
     if(writerLoading){
         return(<div></div>);
     }
@@ -18,13 +30,12 @@ function Comment(props){
     return(
         <>
         <div className="comment">
-            
-
             <img src={writer && writer.photoURL} alt="brkn"></img>
             <p>{props.info.body}</p>
         </div>
-        {showReplies ? <RepliesSection itemID={props.itemID} commentID={props.info.id} /> : <button onClick={()=>setShowReplies(!showReplies)}>reply</button>}
-        {showReplies&&<button onClick={()=>setShowReplies(!showReplies)}>hide replies</button>}
+        {showReplies ? <RepliesSection itemID={props.itemID} commentID={props.info.id} /> : 
+        <button className='reply-button' onClick={()=>setShowReplies(!showReplies)}><FontAwesomeIcon icon={faReply}/> reply ({replyNum})</button>}
+        {showReplies&&<button className='hide-replies-btn' onClick={()=>setShowReplies(!showReplies)}><FontAwesomeIcon icon={faAngleUp}/> hide replies</button>}
         </>
     )
   }

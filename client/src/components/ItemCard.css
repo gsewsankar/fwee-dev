@@ -27,6 +27,27 @@
     background-color: whitesmoke;
 }
 
+.card button.send-comment-button{
+    padding: 5px;
+    font-size: 20px;
+}
+
+.card input{
+    margin-left: 5px;
+    padding: 5px;
+    background-color: whitesmoke;
+    border-radius:5px;
+    color: gray;
+    border: none;
+}
+
+.card button.close-cmt-btn{
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+}
+
 .item-card-buttons{
     display: flex;
     flex-direction: row;
