@@ -1,137 +1,72 @@
-//Updated to v9 on 12-8-2021
-
-import React, { useState } from 'react';
+import React from 'react';
 import './ItemCard.css';
 import Loading from '../components/Loading';
-import LikeButton from './LikeButton';
+import ArtCard from './all_cards/ArtCard';
+import AudioCard from './all_cards/AudioCard';
+import ImageCard from './all_cards/ImageCard';
+import LinkCard from './all_cards/LinkCard';
+import ThoughtCard from './all_cards/ThoughtCard';
 import VideoCard from './all_cards/VideoCard';
-import Comment from './Comment.js';
-import {auth, db} from '../firebaseInitialize';
-import { doc, collection, orderBy, query, addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 
-import { Link } from "react-router-dom";
-import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {  faBook, faCamera, faComments, faCube, faEye, faGamepad, faLink, faMusic, faPalette, faVideo, faAngleDoubleRight, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import ShareButton from './ShareButton'
+import {db} from '../firebaseInitialize';
+import { doc } from "firebase/firestore";
+
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 function ItemCard(props){
-    const[user, authLoading] = useAuthState(auth);
     const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
-    const[ownerData, ownerLoading] = useDocumentData(itemData && doc(db,'users',itemData.owner));
-    const[commentData, commentsLoading] = useCollectionData(query(collection(db,'items',props.itemID,'comments'),orderBy("createdAt", "asc")));
 
-    const[showComments, setShowComments]= useState(false);
-
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    let category = faEye;
-    let cat_name = "";
-
-    if(authLoading || ownerLoading || itemLoading || commentsLoading){
+    if(itemLoading){
       return(<div className='card'><Loading/></div>);
     }
 
-    if(itemData&&itemData.category === 'image'){
-      category = faCamera;
-      cat_name = 'image';
-    }
-
-    if(itemData&&itemData.category === 'video'){
-      category = faVideo;
-      cat_name = 'video';
-    }
-
-    if(itemData&&itemData.category === 'music'){
-      category = faMusic;
-      cat_name = 'music';
-    }
-
     if(itemData&&itemData.category === 'art'){
-      category = faPalette;
-      cat_name = 'art';
+      return(<ArtCard itemID={props.itemID}/>);
     }
 
-    if(itemData&&itemData.category === 'story'){
-      category = faBook;
-      cat_name = 'story';
+    if(itemData&&itemData.category === 'audio'){
+      return(<AudioCard itemID={props.itemID}/>);
     }
-
-    if(itemData&&itemData.category === 'model'){
-      category = faCube;
-      cat_name = 'model';
-    }
-
-    if(itemData&&itemData.category === 'game'){
-      category = faGamepad;
-      cat_name = 'game';
+    
+    if(itemData&&itemData.category === 'image'){
+      return(<ImageCard itemID={props.itemID}/>);
     }
 
     if(itemData&&itemData.category === 'link'){
-      category = faLink;
-      cat_name = 'link';
+      return(<LinkCard itemID={props.itemID}/>);
     }
 
-    //temporary?
-    let comment_body;
-
-    async function sendComment()
-    {
-      if(comment_body !== ""){
-        const commentID = (await addDoc(collection(db,'items',props.itemID,'comments'),{
-          uid:user&&user.uid,
-          createdAt: serverTimestamp(),
-          body: comment_body
-        })).id;
-        await updateDoc(doc(db,'items',props.itemID, 'comments', commentID),{id:commentID});
-      }
-      else{
-        alert('Comment is empty');
-      }
-      document.getElementById('comment-text').value="";
-    };
-
-    const handleKeyDown = (e) =>{
-      if(e.key === 'Enter'){
-        sendComment();
-      }
+    if(itemData&&itemData.category === 'thought'){
+      return(<ThoughtCard itemID={props.itemID}/>);
     }
 
-    if(showComments){
-      return((ownerData&&itemData) ?
-      <div className="card">
-        <button className='close-cmt-btn' onClick={()=>setShowComments(false)}><FontAwesomeIcon icon={faTimesCircle}/> close</button>
-        <div className="comments-container">
-        {commentData && commentData.map(comment=>{
-            return (<Comment info={comment} itemID={props.itemID}/>)
-        })}
-        </div>
-        <input id="comment-text" type="text" onKeyDown={handleKeyDown} onChange={(e)=>{comment_body=e.target.value}}></input><button className='send-comment-button' onClick={sendComment}><FontAwesomeIcon icon={faAngleDoubleRight}/></button>
-      </div>:<Loading/>);
+    if(itemData&&itemData.category === 'video'){
+      return(<VideoCard itemID={props.itemID}/>);
     }
 
-    return((ownerData&&itemData)?
-     <div className="card">
-        <FontAwesomeIcon className={cat_name} icon={category}/>
-        <Link to={'/'+ ownerData.username}>
-        <div className="top-row">
-          <img className="pp" src={ownerData.photoURL} alt="broken"/>
-          <p>{ownerData.username}</p>
-        </div>
-        </Link>
-        <Link to={'/item/'+itemData.id}><h3>{itemData.title}</h3>
-          {(itemData.category === 'art' || itemData.category === 'image') &&<img width="300px" height="auto" src={itemData.location} alt={"broken"}></img>}
-          {(itemData.category === 'video') && <VideoCard itemID={props.itemID}/>}
-        </Link>
-          <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
-          <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
-          <div className='item-card-buttons'>
-            <button onClick={()=>setShowComments(true)}><FontAwesomeIcon className="commentbtn" icon={faComments}/> {commentData.length}</button>
-            <LikeButton itemID={props.itemID}/>
-            <ShareButton url={"https://fwee.io/item/"+itemData.id}/>
-          </div>
-      </div>:<div className="card">card deleted</div>
-    );
+
+
+    // if(itemData&&itemData.category === 'document'){
+    //   category = faBook;
+    //   cat_name = 'document';
+    // }
+
+    // if(itemData&&itemData.category === 'game'){
+    //   category = faGamepad;
+    //   cat_name = 'game';
+    // }
+
+    // if(itemData&&itemData.category === 'model'){
+    //   category = faCube;
+    //   cat_name = 'model';
+    // }
+
+    // if(itemData&&itemData.category === 'poll'){
+    //   category = faPoll;
+    //   cat_name = 'poll';
+    // }
+
+    return(<div className="card">card deleted</div>);
   }
 
 export default ItemCard;

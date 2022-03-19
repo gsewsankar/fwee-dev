@@ -178,6 +178,7 @@ function NewItem(){
       formData.price = Number(formData.price);
       formData.createdAt = serverTimestamp();
       formData.location = formData.url;
+      formData.owner = user.uid;
 
       if(formData.title !== "" && formData.url !== ""){
 
@@ -207,6 +208,7 @@ function NewItem(){
       formData.category = category;
       formData.price = Number(formData.price);
       formData.createdAt = serverTimestamp();
+      formData.owner = user.uid;
 
       if(formData.title !== "" && formData.thought !== ""){
 

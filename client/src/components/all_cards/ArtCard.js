@@ -9,10 +9,10 @@ import { doc, getDocs, query, collection } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComments, faEye, faVideo } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faEye, faPalette } from '@fortawesome/free-solid-svg-icons';
 import ShareButton from '../ShareButton';
 
-function ThoughtCard(props){
+function ArtCard(props){
     const[itemData, itemLoading] = useDocumentData(doc(db,'items',props.itemID));
     const[ownerData, ownerLoading] = useDocumentData(itemData && doc(db,'users',itemData.owner));
     const[showComments, setShowComments]= useState(false);
@@ -37,7 +37,7 @@ function ThoughtCard(props){
 
     return((ownerData&&itemData)?
     <div className="card">
-       <FontAwesomeIcon className="video" icon={faVideo}/>
+       <FontAwesomeIcon className='art' icon={faPalette}/>
        <Link to={'/'+ ownerData.username}>
        <div className="top-row">
          <img className="pp" src={ownerData.photoURL} alt="broken"/>
@@ -46,7 +46,7 @@ function ThoughtCard(props){
        </Link>
        <Link to={'/item/'+itemData.id}>
         <h3>{itemData.title}</h3>
-        <video src={itemData&&itemData.location} width="300px" height="auto" controls></video>
+        <img width="300px" height="auto" src={itemData.location} alt={"broken"}></img>
        </Link>
          <p><FontAwesomeIcon icon={faEye}/> {itemData&&itemData.buyers.length}</p>
          <p>{itemData.description + " " + months[itemData.createdAt.toDate().getMonth()] + " " + itemData.createdAt.toDate().getDate().toString() + ", " + itemData.createdAt.toDate().getFullYear().toString()}</p>
@@ -62,4 +62,4 @@ function ThoughtCard(props){
 
 }
 
-export default ThoughtCard;
+export default ArtCard;

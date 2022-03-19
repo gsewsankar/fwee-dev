@@ -21,7 +21,7 @@ function Comment(props){
             setReplyNum(colSnap); 
         }
         fetchData();
-    },[]);
+    },[props.itemID,props.info.id]);
 
     if(writerLoading){
         return(<div></div>);

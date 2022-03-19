@@ -48,6 +48,10 @@
     font-size: 22px;
 }
 
+.card h3, .card p{
+    max-width: 300px;
+}
+
 .item-card-buttons{
     display: flex;
     flex-direction: row;
@@ -98,7 +102,7 @@ h3{
     float: right;
 }
 
-.card .music{
+.card .audio{
     padding: 10px;
     color: rgb(226, 31, 151);
     float: right;
@@ -131,6 +135,12 @@ h3{
 .card .link{
     padding: 10px;
     color: rgb(119, 95, 255);
+    float: right;
+}
+
+.card .thought{
+    padding: 10px;
+    color: rgb(223, 189, 0);
     float: right;
 }
 
