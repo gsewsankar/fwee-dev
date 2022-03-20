@@ -3,12 +3,13 @@ button.buy{
     box-shadow: 0 0 2pt 1pt lightgray;
     border: none;
     border-radius: 30px;
-    padding: 5px;
+    padding: 10px;
+    font-size: 20px;
 }
 
 button.buy:hover{
     color:white;
     background-color:green;
     border-radius: 30px;
-    padding: 5px;
+    padding: 10px;
 }

@@ -64,7 +64,7 @@ h3{
     float: right;
 }
 
-.locked-card .music{
+.locked-card .audio{
     padding: 10px;
     color: rgb(226, 31, 151);
     float: right;
@@ -97,6 +97,12 @@ h3{
 .locked-card .link{
     padding: 10px;
     color: rgb(119, 95, 255);
+    float: right;
+}
+
+.locked-card .thought{
+    padding: 10px;
+    color: rgb(223, 189, 0);
     float: right;
 }
 
