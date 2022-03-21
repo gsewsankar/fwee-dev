@@ -1,7 +1,6 @@
 import React from 'react';
 import "./ShareButton.css";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -45,7 +44,7 @@ export default function ShareButton(props) {
 
   return (
     <div>
-      <Button className='share-btn' onClick={handleOpen}><FontAwesomeIcon icon={faShareAlt}/></Button>
+      <button className='share-btn' onClick={handleOpen}><FontAwesomeIcon icon={faShareAlt}/></button>
       <Modal
         open={open}
         onClose={handleClose}

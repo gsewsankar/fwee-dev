@@ -1,9 +1,18 @@
+.item-page{
+    max-width: 80vw;
+}
+
 .item-page img{
     width: 50vw;
     height: auto;
 }
 
 .item-page video{
-    width: 95vw;
+    width: 70vw;
     height: auto;
+}
+
+@media only screen and (max-width: 600px) {
+
+
 }
