@@ -1,3 +1,18 @@
+.message-row {
+  border: black thin dashed;
+  width: 800px;
+}
+
+.received * {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.sent * {
+  justify-content: flex-end;
+  text-align: right;
+}
+
 .message-line {
   display: flex;
 }

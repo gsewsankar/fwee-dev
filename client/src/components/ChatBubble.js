@@ -1,9 +1,10 @@
 import './ChatBubble.css';
 import { doc, getDoc } from '@firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebaseInitialize';
+import { auth, db } from '../firebaseInitialize';
 import { Avatar } from '@mui/material';
 import { asMessage } from '../firestoreData';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 // TODO: Move into a DB controller API.
 export async function fetchUserData(uid) {
@@ -17,8 +18,15 @@ export async function fetchUsername(uid) {
 }
 
 export default function ChatBubble(props)  {
+    // Props
     const message = asMessage(props.message);
+
+    // Hooks
+    const [user] = useAuthState(auth);
+
+    // Fields
     const time = message.timestamp.toDate().toLocaleString();
+    const alignment = message.from == user.uid? 'sent' : 'received';
 
     // State
     const [displayName, setDisplayName] = useState(message.from);
@@ -31,7 +39,7 @@ export default function ChatBubble(props)  {
     }, [message.from]);
 
     return (
-        <div className='message-row' style={{border: "black thin dashed"}}>
+        <div className={`message-row ${alignment}`}>
             <div className='message-col'>
                 <div className='message-line'>
                     <div className='sender'>
