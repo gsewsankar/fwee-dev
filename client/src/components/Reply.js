@@ -5,7 +5,7 @@ import './Reply.css';
 import {db} from '../firebaseInitialize';
 import { doc } from "firebase/firestore";
 import { useDocumentData } from 'react-firebase-hooks/firestore';
-
+import ReplyLike from './ReplyLike'
 const Reply = (props)=>{
     const[writer, writerLoading] = useDocumentData(doc(db,'users',props.info.uid));
 
@@ -15,6 +15,7 @@ const Reply = (props)=>{
  
     return(
         <div className='reply'>
+            <ReplyLike itemID ={props.itemID} commentID = {props.commentID} replyID = {props.replyID} />
             <img src={writer && writer.photoURL} alt="brkn"></img>
             <p>{props.info.body}</p>
         </div>
