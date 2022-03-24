@@ -1,0 +1,35 @@
+.message-row {
+  display: flex;
+  margin: 1rem 0;
+}
+
+.message-col {
+  width: 50%;
+  margin: 0 1rem;
+}
+
+*.received, .received * {
+  text-align: left;
+}
+
+*.sent, .sent * {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.sent .message {
+  background-color: lightgray;
+}
+
+.message-line {
+  display: flex;
+}
+
+.message {
+  background-color: lightgreen;
+  border-radius: 10pt;
+  padding: 5pt;
+}
+ .time {
+   margin: 0;
+ }

@@ -1,0 +1,5 @@
+.log  {
+  max-height: 85vh;
+  min-width: 30vw;
+  overflow-y: scroll;
+}

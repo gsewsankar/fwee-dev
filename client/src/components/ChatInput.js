@@ -35,6 +35,9 @@ export default function ChatInput({conversationRef})  {
     }
 
     function submitMessage() {
+        // Validate
+        if (!textState.trim()) return;
+
         let message = newMessage();
         message.from = user.uid;
         message.text = textState;
@@ -66,7 +69,7 @@ export default function ChatInput({conversationRef})  {
 
     return (
         <div>
-            <input value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
+            <textarea value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
             <ChatAttachmentPopper transaction={transaction} onSetTransaction={handleSetTransaction}/>
         </div>
     )

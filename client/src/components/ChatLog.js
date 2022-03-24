@@ -1,3 +1,4 @@
+import './ChatLog.css'
 import { collection, onSnapshot, query } from '@firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebaseInitialize';
@@ -20,7 +21,7 @@ export default function ChatLog({conversationRef})  {
     }, [conversationRef]);
 
     return (
-        <div>
+        <div className='log'>
             {messages.map((message, index) =>
                 <ChatBubble key={index} message={message}/>
             )}
