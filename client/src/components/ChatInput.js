@@ -35,6 +35,9 @@ export default function ChatInput({conversationRef})  {
     }
 
     function submitMessage() {
+        // Validate
+        if (!textState) return;
+
         let message = newMessage();
         message.from = user.uid;
         message.text = textState;
