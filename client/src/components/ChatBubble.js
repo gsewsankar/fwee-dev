@@ -26,7 +26,7 @@ export default function ChatBubble(props)  {
 
     // Fields
     const time = message.timestamp.toDate().toLocaleString();
-    const alignment = message.from == user.uid? 'sent' : 'received';
+    const alignment = message.from === user.uid? 'sent' : 'received';
 
     // State
     const [displayName, setDisplayName] = useState(message.from);
@@ -40,16 +40,13 @@ export default function ChatBubble(props)  {
 
     return (
         <div className={`message-row ${alignment}`}>
+            <Avatar alt={displayName}
+                    src={imgSrc}
+                    className='avatar'>
+                {displayName}
+            </Avatar>
             <div className='message-col'>
                 <div className='message-line'>
-                    <div className='sender'>
-                        <Avatar 
-                            alt={displayName}
-                            src={imgSrc}
-                        >
-                            {displayName}
-                        </Avatar>
-                    </div>
                     <div className='message'>{message.text}</div>  
                 </div>
                 <p className='time'>{time}</p>            

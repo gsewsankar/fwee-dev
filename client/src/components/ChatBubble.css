@@ -1,16 +1,24 @@
 .message-row {
-  border: black thin dashed;
-  width: 800px;
+  display: flex;
+  margin: 1rem 0;
 }
 
-.received * {
-  justify-content: flex-start;
+.message-col {
+  width: 50%;
+  margin: 0 1rem;
+}
+
+*.received, .received * {
   text-align: left;
 }
 
-.sent * {
-  justify-content: flex-end;
+*.sent, .sent * {
+  flex-direction: row-reverse;
   text-align: right;
+}
+
+.sent .message {
+  background-color: lightgray;
 }
 
 .message-line {
@@ -21,4 +29,6 @@
   background-color: lightgreen;
   border-radius: 10pt;
 }
-
+ .time {
+   margin: 0;
+ }
