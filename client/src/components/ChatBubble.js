@@ -40,7 +40,8 @@ export default function ChatBubble(props)  {
 
     return (
         <div className={`message-row ${alignment}`}>
-            <Avatar alt={displayName}
+            <Avatar title={displayName}
+                    alt={displayName}
                     src={imgSrc}
                     className='avatar'>
                 {displayName}
