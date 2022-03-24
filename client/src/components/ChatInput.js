@@ -69,7 +69,7 @@ export default function ChatInput({conversationRef})  {
 
     return (
         <div>
-            <input value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
+            <textarea value={textState} onChange={handleChange} onKeyDown={handleKeyDown}/>
             <ChatAttachmentPopper transaction={transaction} onSetTransaction={handleSetTransaction}/>
         </div>
     )
