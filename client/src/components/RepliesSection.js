@@ -4,7 +4,7 @@ import Loading from './Loading';
 import Reply from './Reply.js';
 
 import {auth, db} from '../firebaseInitialize';
-import { collection, orderBy, query, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, orderBy, query, addDoc, serverTimestamp, updateDoc, doc } from "firebase/firestore";
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -22,11 +22,14 @@ const RepliesSection = (props) => {
     
     async function sendReply(e){
         if(replyText.trim() !== ""){
-            await addDoc(collection(db,'items',props.itemID,'comments',props.commentID, 'replies'),{
+            const replyID =( await addDoc(collection(db,'items',props.itemID,'comments',props.commentID, 'replies'),{
                 createdAt: serverTimestamp(),
                 body: replyText,
-                uid: user.uid
-            });
+                uid: user.uid,
+                like: false
+            })).id;
+            await updateDoc(doc(db,'items',props.itemID,'comments',props.commentID, 'replies', replyID),{id:replyID});
+
         }
         else{
             console.log('reply is empty');
@@ -44,12 +47,13 @@ const RepliesSection = (props) => {
         
         <div className='replies-section'>   
             {repliesData && repliesData.map(reply=>{
-                return (<Reply info={reply} />);
+                return (<Reply info={reply} itemID ={props.itemID} commentID = {props.commentID} replyID = {reply.id}  />);
             })}    
 
             <div className='reply-input-box'>
             <input id="reply-text" type="text" onChange={ e => setReplyText(e.target.value)} onKeyDown={handleKeyDown}/>
-            <button className='send-comment-button' onClick={(e) => sendReply(e)}><FontAwesomeIcon icon={faAngleDoubleRight}/></button> 
+            <button className='send-comment-button' onClick={(e) => sendReply(e)}><FontAwesomeIcon icon={faAngleDoubleRight}/></button>
+ 
             </div>          
         </div>
         
