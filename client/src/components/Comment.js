@@ -1,6 +1,6 @@
 //updated to v9 on 12-8-2021
 
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Comment.css';
 import RepliesSection from './RepliesSection.js';
 

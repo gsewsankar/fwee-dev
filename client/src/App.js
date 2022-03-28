@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import NotFound from './containers/NotFound';
 import Leaderboards from './containers/Leaderboards';
 import DirectMessages from './containers/DirectMessages';
+import Search from './containers/Search';
 import Settings from './containers/Settings';
 import NewItem from './containers/NewItem';
 import ItemPage from './containers/ItemPage';
@@ -39,6 +40,7 @@ function App() {
           <Route path={"/dashboard"} element={user ? <Dashboard/> : <Navigate to="/"/>}></Route>
           <Route path={"/chain"} element={<MessageChain/>}></Route>
           <Route path={"/leaders"} element={<Leaderboards/>}></Route>
+          <Route path={"/search"} element={<Search/>}></Route>
           <Route path={"/dms"} element={user ? <DirectMessages/> : <Navigate to="/"/>}></Route>
           <Route path={"/settings"} element={user ? <Settings/> : <Navigate to="/"/>}></Route>
           <Route path={"/newItem"} element={user ? <NewItem/> : <Navigate to="/"/>}></Route>

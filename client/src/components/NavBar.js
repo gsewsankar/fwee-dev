@@ -13,7 +13,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog, faDiceD20, faUpload } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
 
 function NavBar(){
@@ -24,6 +24,8 @@ function NavBar(){
     const[username, setUsername] = useState("username");
     const[supporting, setSupporting] = useState([]);
     const[recentlyBought, setRecentlyBought] = useState([]);
+    const[searchtxt, setSearchText] = useState("");
+    let navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData(){
@@ -55,8 +57,21 @@ function NavBar(){
         
         user && fetchData();
 
-      },[username,user])
+      },[username,user]);
 
+
+    function sendSearch(txt){
+        txt = "q="+txt;
+        let params = new URLSearchParams((txt), [txt]).toString();
+        navigate('/search?'+ params);
+        document.getElementById('search-text').value="";
+    }
+
+    const handleKeyDown = (e) =>{
+        if(e.key === 'Enter'){
+            sendSearch(searchtxt);
+        }
+    }  
     
     if(loading){
         return(<div className='nav-frame'/>);
@@ -94,8 +109,8 @@ function NavBar(){
                 </div>
                 
                 <div className='search'>
-                    <input className="search" placeholder="Search"></input>
-                    <button><FontAwesomeIcon icon={faSearch}/></button>
+                    <input onKeyDown={handleKeyDown} onChange={ e => setSearchText(e.target.value)} className="search" placeholder="Search" id="search-text"></input>
+                    <button onClick={()=>sendSearch(searchtxt)}><FontAwesomeIcon icon={faSearch}/></button>
                 </div>
 
                 {user&&<Link className='newUploadButton' to="/newItem"><button><FontAwesomeIcon icon={faUpload}/> New Item</button></Link>}

@@ -3,7 +3,7 @@
 import React,{useState,useEffect} from 'react';
 
 import {auth, db} from '../firebaseInitialize';
-import { doc, collection, getDocs, addDoc, deleteDoc, serverTimestamp, getDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
