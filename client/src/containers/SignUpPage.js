@@ -5,6 +5,8 @@ import SignIn from '../components/SignIn';
 function SignUpPage(){
     const [checked, setChecked] = useState(false);
 
+    window.scroll(0,0);
+
     return(
       <div className='sign-up-container'>
           <h1>Welcome to fwee!</h1>

@@ -1,0 +1,49 @@
+.search-tabs{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabname{
+    padding: 15px;
+    font-size: medium;
+}
+
+.tabname-selected{
+    padding: 15px;
+    font-size: medium;
+    background-color: whitesmoke;
+    color: black;
+    border-bottom: 2px solid black;
+}
+
+.tabname:hover{
+    cursor: pointer;
+    background-color: whitesmoke;
+    color: black;
+}
+
+.search-user-result{ 
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: center;
+     padding: 5px;
+     margin: 2px;
+}
+
+.search-user-result:hover{ 
+    background-color: whitesmoke;
+    color: green;
+}
+
+.search-user-result img{ 
+    height: 40px;
+    width: auto;
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50px;
+    margin-right: 3px;
+}
+

@@ -15,9 +15,9 @@ const Reply = (props)=>{
  
     return(
         <div className='reply'>
-            <ReplyLike itemID ={props.itemID} commentID = {props.commentID} replyID = {props.replyID} />
             <img src={writer && writer.photoURL} alt="brkn"></img>
             <p>{props.info.body}</p>
+            <ReplyLike itemID ={props.itemID} commentID = {props.commentID} replyID = {props.replyID} />
         </div>
     )
 }
