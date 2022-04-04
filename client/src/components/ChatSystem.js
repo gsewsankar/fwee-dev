@@ -4,6 +4,7 @@ import { db } from "../firebaseInitialize";
 import { newConversation } from "../firestoreData";
 import ChatInput from "./ChatInput";
 import ChatLog from "./ChatLog";
+import ChatOptions from "./ChatOptions";
 import ChatSelector from "./ChatSelector";
 
 export function ChatSystem() {
@@ -38,6 +39,7 @@ export function ChatSystem() {
   return (
     <div>
       <ChatSelector onChange={handleConversationChange} conversationRef={currentConversationRef}/>
+      <ChatOptions></ChatOptions>
       <ChatLog conversationRef={currentConversationRef}/>
       <ChatInput conversationRef={currentConversationRef}/>
     </div>
