@@ -9,12 +9,13 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 // TODO: Move into a DB controller API.
 export async function fetchUserData(uid) {
     const userRef = await getDoc(doc(db, "users", uid));
+    if (!userRef) throw new Error('uid not found.')
     return userRef.data();
 }
 
 export async function fetchUsername(uid) {
     const userData = await fetchUserData(uid);
-    return userData.username;
+    return userData?.username;
 }
 
 export default function ChatBubble(props)  {
