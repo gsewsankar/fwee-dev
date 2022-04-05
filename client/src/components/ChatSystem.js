@@ -1,13 +1,16 @@
 import { collection, doc, getDoc, getDocs, limit, query, setDoc } from "@firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../firebaseInitialize";
+import { auth, db } from "../firebaseInitialize";
 import { newConversation } from "../firestoreData";
 import ChatInput from "./ChatInput";
 import ChatLog from "./ChatLog";
 import ChatSettingsButton from "./ChatSettingsButton";
 import ChatSelector from "./ChatSelector";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export function ChatSystem() {
+  const[user] = useAuthState(auth);
+
   const [currentConversationRef, setConversationRef] = useState(null);
   // Fetch the initial conversation.
   useEffect(() => {
@@ -24,8 +27,9 @@ export function ChatSystem() {
       if (docSnap.exists()) {
         setConversationRef(docSnap);
       } else { // Add the conversation to the DB
-        const newConversationData = newConversation();
         const newDocRef = doc(db, "conversations", newConversationId);
+        const newConversationData = newConversation();
+        newConversationData.members.push(user.uid)
         setDoc(newDocRef, newConversationData);
         setConversationRef(newDocRef);
       }
