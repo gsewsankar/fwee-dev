@@ -39,7 +39,7 @@ export function ChatSystem() {
   return (
     <div>
       <ChatSelector onChange={handleConversationChange} conversationRef={currentConversationRef}/>
-      <ChatSettingsButton></ChatSettingsButton>
+      <ChatSettingsButton/>
       <ChatLog conversationRef={currentConversationRef}/>
       <ChatInput conversationRef={currentConversationRef}/>
     </div>
