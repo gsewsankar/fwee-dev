@@ -12,6 +12,10 @@ export default function ChatSettingsForm(props) {
     setConversationData(currentConversationRef.data());
   }, [currentConversationRef])
 
+  function refreshConversationData() {
+    setConversationData(currentConversationRef.data());
+  }
+
   return(<>
     <DialogTitle>Conversation Settings</DialogTitle>
     <Stack direction='row'>
