@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, limit, query, setDoc } from "@firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, query, setDoc, where } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebaseInitialize";
 import { newConversation } from "../firestoreData";
@@ -18,7 +18,9 @@ export function ChatSystem() {
   const [currentConversationRef, setConversationRef] = useState(null);
   // Fetch the initial conversation.
   useEffect(() => {
-    const q = query(collection(db, "conversations"), limit(1));
+    const q = query(collection(db, "conversations"), 
+      limit(1), 
+      where('access', '==', 'public'));
     getDocs(q).then(querySnapshot => {
       // Since query should be limited to 1 result, forEach is just used to access the single result.
       querySnapshot.forEach(doc => setConversationRef(doc));
