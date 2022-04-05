@@ -8,6 +8,10 @@ import ChatSettingsButton from "./ChatSettingsButton";
 import ChatSelector from "./ChatSelector";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+async function fetchConversation(conversationId) {
+  return getDoc(doc(db, "conversations", conversationId));
+}
+
 export function ChatSystem() {
   const[user] = useAuthState(auth);
 
@@ -23,15 +27,16 @@ export function ChatSystem() {
 
   function handleConversationChange(newConversationId) {
     setConversationRef(null); // Force loading
-    getDoc(doc(db, "conversations", newConversationId)).then(docSnap => {
+    fetchConversation(newConversationId).then(docSnap => {
       if (docSnap.exists()) {
         setConversationRef(docSnap);
       } else { // Add the conversation to the DB
         const newDocRef = doc(db, "conversations", newConversationId);
         const newConversationData = newConversation();
         newConversationData.members.push(user.uid)
-        setDoc(newDocRef, newConversationData);
-        setConversationRef(newDocRef);
+        setDoc(newDocRef, newConversationData).then(async () => {
+          setConversationRef(await fetchConversation(newDocRef.id));
+        });
       }
     })
   }
