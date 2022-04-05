@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import ChatSettingsForm from './ChatSettingsForm';
 
 export default function ChatSettingsButton(props) {
+  const {conversationRef: currentConversationRef} = props;
+  
   const [open, setOpen] = useState(false);
 
   function handleClick() {
@@ -20,7 +22,7 @@ export default function ChatSettingsButton(props) {
       <FontAwesomeIcon icon={faEllipsisV}/>
     </Button>
     <Dialog open={open} onClose={handleClose}>
-      <ChatSettingsForm/>
+      <ChatSettingsForm conversationRef={currentConversationRef}/>
     </Dialog>
   </>)
 }
