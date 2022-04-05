@@ -1,7 +1,8 @@
+import { arrayUnion, getDoc, updateDoc } from '@firebase/firestore';
 import { faCopy, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogTitle, ListItemText, ListSubheader, Stack, TextField } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import UserCard from './UserCard';
 
 export default function ChatSettingsForm(props) {
@@ -12,8 +13,23 @@ export default function ChatSettingsForm(props) {
     setConversationData(currentConversationRef.data());
   }, [currentConversationRef])
 
+  const newMemberField = useRef(null);
+
   function refreshConversationData() {
-    setConversationData(currentConversationRef.data());
+    // TODO: Eliminate the need for this by subscribing to conversation
+    // in ChatSystem.js via onSnapshot().
+    getDoc(currentConversationRef.ref).then((conversationSnapshot) => {
+      setConversationData(conversationSnapshot.data());
+    })
+  }
+
+  function handleAddMemberClick() {
+    const newMemberId = newMemberField.current.value;
+    if (!newMemberId) return;
+    
+    updateDoc(currentConversationRef.ref, {
+      members: arrayUnion(newMemberId),
+    }).then(() => {refreshConversationData()})
   }
 
   return(<>
@@ -37,8 +53,9 @@ export default function ChatSettingsForm(props) {
     }
     <Stack direction='row'>
       <TextField  label='Add Member'
+                  inputRef={newMemberField}
                   variant='standard'/>
-      <Button><FontAwesomeIcon icon={faPlus}/></Button>
+      <Button onClick={handleAddMemberClick}><FontAwesomeIcon icon={faPlus}/></Button>
     </Stack>
   </>)
 }
