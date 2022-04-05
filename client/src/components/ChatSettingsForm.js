@@ -25,7 +25,8 @@ export default function ChatSettingsForm(props) {
       <Button><FontAwesomeIcon icon={faCopy}/></Button>
     </Stack>
     <TextField  label='Conversation Name'
-                placeholder={conversationData?.name}/>
+                placeholder={conversationData?.name || 
+                  currentConversationRef.id}/>
     <ListSubheader>Members</ListSubheader>
     {conversationData && 
       conversationData.members.map((memberId) => {
