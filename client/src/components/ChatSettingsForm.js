@@ -2,6 +2,7 @@ import { faCopy, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, DialogTitle, ListItemText, ListSubheader, Stack, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import UserCard from './UserCard';
 
 export default function ChatSettingsForm(props) {
   const {conversationRef: currentConversationRef} = props;
@@ -24,7 +25,9 @@ export default function ChatSettingsForm(props) {
     <ListSubheader>Members</ListSubheader>
     {conversationData && 
       conversationData.members.map((memberId) => {
-        return <ListItemText key={memberId}>{memberId}</ListItemText>
+        return  (<ListItemText key={memberId}>
+                  <UserCard uid={memberId}/>
+                </ListItemText>)
       })
     }
   </>)
