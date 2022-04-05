@@ -11,11 +11,15 @@ export default function ChatSettingsButton(props) {
     setOpen(true);
   }
 
+  function handleClose() {
+    setOpen(false);
+  }
+
   return (<>
     <Button onClick={handleClick}>
       <FontAwesomeIcon icon={faEllipsisV}/>
     </Button>
-    <Dialog open={open}>
+    <Dialog open={open} onClose={handleClose}>
       <ChatSettingsForm/>
     </Dialog>
   </>)
