@@ -30,5 +30,10 @@ export default function ChatSettingsForm(props) {
                 </ListItemText>)
       })
     }
+    <Stack direction='row'>
+      <TextField  label='Add Member'
+                  variant='standard'/>
+      <Button><FontAwesomeIcon icon={faPlus}/></Button>
+    </Stack>
   </>)
 }
