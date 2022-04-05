@@ -1,13 +1,31 @@
-import { DialogTitle, TextField } from '@mui/material'
-import React from 'react'
+import { faCopy, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button, DialogTitle, ListItemText, ListSubheader, Stack, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 
 export default function ChatSettingsForm(props) {
   const {conversationRef: currentConversationRef} = props;
 
+  const [conversationData, setConversationData] = useState(null)
+  useEffect(() => {
+    setConversationData(currentConversationRef.data());
+  }, [currentConversationRef])
+
   return(<>
     <DialogTitle>Conversation Settings</DialogTitle>
-    <TextField disabled 
-               label="Conversation ID" 
-               defaultValue={currentConversationRef.id}/>
+    <Stack direction='row'>
+      <TextField  disabled 
+                  label='Conversation ID' 
+                  defaultValue={currentConversationRef.id}/>
+      <Button><FontAwesomeIcon icon={faCopy}/></Button>
+    </Stack>
+    <TextField  label='Conversation Name'
+                placeholder={conversationData?.name}/>
+    <ListSubheader>Members</ListSubheader>
+    {conversationData && 
+      conversationData.members.map((memberId) => {
+        return <ListItemText key={memberId}>{memberId}</ListItemText>
+      })
+    }
   </>)
 }
