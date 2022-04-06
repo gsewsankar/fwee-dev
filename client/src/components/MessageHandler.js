@@ -263,7 +263,7 @@ const SHA256 = require('crypto-js/sha256');
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {i}
+                  {messageState.messageArray.length -i}
                 </TableCell>
                 <TableCell align="right">{message.from}</TableCell>
                 <TableCell align="right">{message.to}</TableCell>
