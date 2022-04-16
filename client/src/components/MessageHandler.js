@@ -238,7 +238,7 @@ const SHA256 = require('crypto-js/sha256');
          error ?
 
      
-        <h1>403 Unauthorized</h1>
+        <h1>403 Unauthorized; Try Ctrl+F5</h1>
 
         : (props.display && !loading) ?
         <StyledEngineProvider injectFirst>
