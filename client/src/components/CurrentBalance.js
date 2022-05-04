@@ -12,6 +12,8 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { DateTime, Interval } from "luxon";
 
+import AnimatedNumbers from "react-animated-numbers";
+
 function CurrentBalance(){
     const[user, loading] = useAuthState(auth);
     let userRef = doc(db,'users',user.uid);
@@ -54,7 +56,7 @@ function CurrentBalance(){
 
     return(
       <div className="myBalance" onClick={updateBalance}>
-          Your balance: {userData&&userData.balance.toFixed(2)}
+          Your balance: <AnimatedNumbers className='balance-area' animateToNumber={userData && userData.balance}/>
       </div>
     )
   }

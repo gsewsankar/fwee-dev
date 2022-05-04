@@ -1,9 +1,10 @@
 import React,{useState,useEffect}  from 'react';
 import './Dashboard.css';
 import Loading from '../components/Loading';
+import Notification from '../components/Notification';
 
 import {auth, db} from '../firebaseInitialize';
-import { doc, getDocs, query, where, updateDoc, collection,orderBy } from "firebase/firestore";
+import { doc, getDocs, query, where, updateDoc, collection, orderBy } from "firebase/firestore";
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useDocumentData, useCollection } from 'react-firebase-hooks/firestore';
@@ -12,7 +13,8 @@ import { DateTime, Interval } from "luxon";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
-import Notification from '../components/Notification';
+import AnimatedNumbers from "react-animated-numbers";
+
 
 function Dashboard(){
     const[user, loading] = useAuthState(auth);
@@ -100,7 +102,9 @@ function Dashboard(){
       return(
         <div className="dash-container">
           <h1>Dashboard</h1>
-          <h3>Account Balance: {userData && userData.balance.toFixed(2)} credits <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button></h3>
+          <div className='balance-area'>
+          Account Balance:&nbsp; <AnimatedNumbers className='balance-area' animateToNumber={userData && userData.balance}/> &nbsp;credits&nbsp; <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button>
+          </div>
           <br/>
           <div>Notifications</div>
           {notifications.docs.map(notif=>{return <Notification key={notif.data().time} notifDocID={notif.id}/>})}

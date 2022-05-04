@@ -13,3 +13,10 @@
     font-size: 18px;
     cursor: pointer;
 }
+
+.myBalance .animated-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,9 +1,16 @@
-.dash-container h3 button{
+.balance-area button{
     padding: 0;
     border: none;
     border-radius: 50px;
 }
 
-.dash-container h3 button:hover{
+.balance-area button:hover{
     background-color: white;
+}
+
+.balance-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

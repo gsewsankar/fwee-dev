@@ -20,6 +20,7 @@
     "gun": "^0.2020.1235",
     "luxon": "^2.2.0",
     "react": "^17.0.2",
+    "react-animated-numbers": "^0.11.0",
     "react-awesome-reveal": "^3.8.1",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
