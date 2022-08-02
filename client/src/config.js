@@ -1,6 +1,6 @@
 let fbconfig = {
     apiKey: "AIzaSyAV52VYVKVpqnbASyHgFvJnKPHd-8jfihs",
-    authDomain: "fwee.io",
+    authDomain: "time-73ed0.firebaseapp.com",
     projectId: "time-73ed0",
     storageBucket: "time-73ed0.appspot.com",
     messagingSenderId: "197843951748",
