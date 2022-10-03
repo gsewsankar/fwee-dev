@@ -13,8 +13,6 @@ import { DateTime, Interval } from "luxon";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
-import AnimatedNumbers from "react-animated-numbers";
-
 
 function Dashboard(){
     const[user, loading] = useAuthState(auth);
@@ -103,7 +101,7 @@ function Dashboard(){
         <div className="dash-container">
           <h1>Dashboard</h1>
           <div className='balance-area'>
-          Account Balance:&nbsp; <AnimatedNumbers className='balance-area' animateToNumber={userData && userData.balance}/> &nbsp;credits&nbsp; <button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button>
+          Account Balance:&nbsp;{userData && userData.balance.toFixed(2)}&nbsp;credits&nbsp;<button onClick={calculateBalance}><FontAwesomeIcon icon={faSyncAlt}/></button>
           </div>
           <br/>
           <div>Notifications</div>

@@ -7,13 +7,13 @@ import Loading from '../components/Loading';
 import { Link } from "react-router-dom";
 
 import {db} from '../firebaseInitialize';
-import { query, collection, orderBy, limit } from "firebase/firestore";
+import { query, collection, orderBy } from "firebase/firestore";
 
 import { useCollectionDataOnce } from 'react-firebase-hooks/firestore';
 
 function Leaderboards(){
 
-  const[data,dataLoading] = useCollectionDataOnce(query(collection(db,'users'),orderBy('balance','desc'),limit(10)));
+  const[data,dataLoading] = useCollectionDataOnce(query(collection(db,'users'),orderBy('balance','desc')));
   let count = 1;
 
   if(dataLoading){
