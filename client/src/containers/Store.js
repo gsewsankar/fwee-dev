@@ -80,7 +80,7 @@ function Store(){
           <h3>+{storeData&&parseFloat(storeData.amount_sold).toFixed(2)} sales</h3>
           <button className="edit"><FontAwesomeIcon icon={faEdit} /> Edit Store</button>
           </div>
-          <div className="grid-container">
+          <div className="cards">
             <Link to="/newItem"><div className="grid-item1"><FontAwesomeIcon icon={faPlus} /> new</div></Link>
             {storeData && storeData.items.map(item=>{return(<LockedItem key={item} itemID={item}/>)}).reverse()}
           </div>
@@ -103,7 +103,7 @@ function Store(){
         <div className="quantics"><button>{storeData && storeData.visitors.length} total visitors</button><button>{storeData && storeData.supporters.length} supporters</button></div>
         {user&&<SupportButton storeid={storeid}/>}
         </div>
-        <div className="grid-container">
+        <div className="cards">
         {storeData && storeData.items.map(item=>{return<LockedItem key={item} itemID={item}/>}).reverse()}
         </div>
       </div>
