@@ -1,6 +1,5 @@
 import './App.css';
 import Dashboard from './containers/Dashboard';
-import MessageChain  from './containers/MessageChain'
 import Store from './containers/Store';
 import Home from './containers/Home';
 import NavBar from './components/NavBar';

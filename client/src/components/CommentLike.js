@@ -27,7 +27,7 @@ function CommentLike(props){
           setLikeNum((await getDocs(collection(db,'items',props.itemID,'comments', props.commentID, 'likes'))).size);
         }
         user && fetchData();
-    },[props.itemID, user]);
+    },[props.commentID, props.itemID, user]);
 
     async function likeButton(){
         if(liked){

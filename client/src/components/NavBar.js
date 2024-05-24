@@ -11,7 +11,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog, faDiceD20, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSearch, faTimes, faEnvelope, faIdCard, faTrophy, faCog, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 import { Link, useNavigate } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
