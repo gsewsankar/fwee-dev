@@ -1,18 +1,14 @@
-import * as admin from 'firebase-admin';
-import {typeDefs} from "./typeDefs";
-import {resolvers} from "./resolvers";
+import admin from 'firebase-admin';
+import typeDefs from "./typeDefs.js";
+import resolvers from "./resolvers.js";
 import { ApolloServer, ApolloError, ValidationError, gql } from 'apollo-server';
-//import serviceAccount from "./service_account.json";
-const express = require('express')
-const Gun = require('gun')
-const expressApp= express()
-expressApp.use(Gun.serve) 
+import serviceAccount from "./service_account.json" with {type:"json"};
 
-/*const startServer = async() => {
+const startServer = async() => {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
   });
-  
+
   const server = new ApolloServer({ typeDefs, resolvers });
 
   server.listen().then(({ url }) => {
@@ -20,13 +16,4 @@ expressApp.use(Gun.serve)
   });
 }
 
-startServer();*/
-
-//TODO: replace this port later with a hosted server
-const server = expressApp.listen(3030, () => {
-console.log("Gun server connection established")
-})
-
-
-
-Gun({web: server});
+startServer();

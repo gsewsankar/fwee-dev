@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import admin from 'firebase-admin';
 
 export const resolvers = {
     Query: {
@@ -16,3 +16,5 @@ export const resolvers = {
       },
     }
   };
+
+  export default resolvers;
